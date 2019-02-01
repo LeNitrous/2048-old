@@ -1,4 +1,4 @@
-Imports osu.Framework
+﻿Imports osu.Framework
 Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Cursor
@@ -10,7 +10,7 @@ Public Class VisualTest
     Inherits Game
 
     <BackgroundDependencyLoader>
-    Public Sub Load()
+    Private Sub Load()
         Child = New DrawSizePreservingFillContainer With {
             .Children = New List(Of Drawable)({
                 New TestBrowser("Block"),
