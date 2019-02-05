@@ -45,8 +45,8 @@ Namespace Screens.Play
                                                                   Dim nextTile = Grid.CellContent(positions.NextCell)
 
                                                                   If Not nextTile Is Nothing Then
-                                                                      If nextTile.Score.Value = tile.Score.Value And nextTile.From Is Nothing Then
-                                                                          Dim merged = New Tile(positions.NextCell, tile.Score.Value)
+                                                                      If nextTile = tile And nextTile.From Is Nothing Then
+                                                                          Dim merged = New Tile(positions.NextCell, CInt(tile))
                                                                           merged.From = New List(Of Tile)({tile, nextTile})
                                                                           Grid.InsertTile(merged)
                                                                           Grid.RemoveTile(tile)
@@ -54,8 +54,8 @@ Namespace Screens.Play
                                                                           tile.UpdatePosition(positions.NextCell, True)
                                                                           nextTile.UpdatePosition(positions.NextCell, True)
 
-                                                                          Score.Value += merged.Score.Value
-                                                                          If merged.Score.Value = 2048 Then
+                                                                          Score.Set(Score.Value + CInt(merged))
+                                                                          If CInt(merged) = 2048 Then
                                                                               RaiseEvent GameWin()
                                                                           End If
                                                                       End If
@@ -92,17 +92,17 @@ Namespace Screens.Play
             End Select
         End Sub
 
+        Public Sub AddStartTiles()
+            For i = 0 To 1
+                AddRandomTile()
+            Next
+        End Sub
+
         Private Sub MoveTile(ByRef tile As Tile, ByVal cell As Vector2)
             Dim tilePos = tile.Position.Value
             Grid.Cells(tilePos.X, tilePos.Y) = Nothing
             Grid.Cells(cell.X, cell.Y) = tile
             tile.UpdatePosition(cell)
-        End Sub
-
-        Private Sub AddStartTiles()
-            For i = 0 To 1
-                AddRandomTile()
-            Next
         End Sub
 
         Private Sub PrepareTiles()
@@ -175,7 +175,7 @@ Namespace Screens.Play
                             Dim cell = New Vector2(x + vector.X, y + vector.Y)
                             Dim other = Grid.CellContent(cell)
                             If Not other Is Nothing Then
-                                If other.Score.Value = tile.Score.Value Then
+                                If other = tile Then
                                     Return True
                                 End If
                             End If

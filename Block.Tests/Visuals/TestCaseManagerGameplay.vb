@@ -8,13 +8,23 @@ Namespace Visuals
 
         <BackgroundDependencyLoader>
         Private Sub Load()
-            Manager.AddRandomTile()
-            Manager.AddRandomTile()
+            Manager.AddStartTiles()
+
+            AddHandler Manager.GameWin, AddressOf OnWin
+            AddHandler Manager.GameOver, AddressOf OnLose
         End Sub
 
         Protected Overrides Function OnKeyDown(e As KeyDownEvent) As Boolean
             Manager.HandleInput(e)
             Return MyBase.OnKeyDown(e)
         End Function
+
+        Private Sub OnWin()
+            Console.WriteLine("YOU WIN")
+        End Sub
+
+        Private Sub OnLose()
+            Console.WriteLine("YOU LOSE")
+        End Sub
     End Class
 End Namespace
