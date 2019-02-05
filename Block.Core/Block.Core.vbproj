@@ -10,8 +10,4 @@
     <PackageReference Include="ppy.osu.Framework" Version="2019.131.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Screens\" />
-  </ItemGroup>
-
 </Project>

@@ -1,8 +1,8 @@
 ﻿Namespace Objects
     Public Enum MoveDirection
         Up
+        Right
         Down
         Left
-        Right
     End Enum
 End Namespace
