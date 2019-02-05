@@ -7,7 +7,9 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Block.Core", "Block.Core\Bl
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Block.Desktop", "Block.Desktop\Block.Desktop.vbproj", "{88D8B1A4-1262-4377-8388-51AF02B4A22B}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Block.Tests", "Block.Tests\Block.Tests.vbproj", "{63E9960D-D3C3-47C7-99F7-E81D68D4D12C}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Block.Tests", "Block.Tests\Block.Tests.vbproj", "{63E9960D-D3C3-47C7-99F7-E81D68D4D12C}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Block.Resources", "Block.Resources\Block.Resources.vbproj", "{C7C25D7B-8D04-4753-9B24-6E8DBB5983AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{63E9960D-D3C3-47C7-99F7-E81D68D4D12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63E9960D-D3C3-47C7-99F7-E81D68D4D12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63E9960D-D3C3-47C7-99F7-E81D68D4D12C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7C25D7B-8D04-4753-9B24-6E8DBB5983AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7C25D7B-8D04-4753-9B24-6E8DBB5983AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7C25D7B-8D04-4753-9B24-6E8DBB5983AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7C25D7B-8D04-4753-9B24-6E8DBB5983AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

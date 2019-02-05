@@ -10,4 +10,8 @@
     <PackageReference Include="ppy.osu.Framework" Version="2019.131.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Block.Resources\Block.Resources.vbproj" />
+  </ItemGroup>
+
 </Project>

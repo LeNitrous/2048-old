@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Block.Resources</RootNamespace>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Fonts\ClearSans-Bold.bin" />
+    <None Remove="Fonts\ClearSans-BoldItalic.bin" />
+    <None Remove="Fonts\ClearSans-BoldItalic_0.png" />
+    <None Remove="Fonts\ClearSans-Bold_0.png" />
+    <None Remove="Fonts\ClearSans-Italic.bin" />
+    <None Remove="Fonts\ClearSans-Italic_0.png" />
+    <None Remove="Fonts\ClearSans-Light.bin" />
+    <None Remove="Fonts\ClearSans-Light_0.png" />
+    <None Remove="Fonts\ClearSans-Medium.bin" />
+    <None Remove="Fonts\ClearSans-MediumItalic.bin" />
+    <None Remove="Fonts\ClearSans-MediumItalic_0.png" />
+    <None Remove="Fonts\ClearSans-Medium_0.png" />
+    <None Remove="Fonts\ClearSans-Medium_1.png" />
+    <None Remove="Fonts\ClearSans-Regular.bin" />
+    <None Remove="Fonts\ClearSans-Regular_0.png" />
+    <None Remove="Fonts\ClearSans-Thin.bin" />
+    <None Remove="Fonts\ClearSans-Thin_0.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Fonts\ClearSans-Bold.bin" />
+    <EmbeddedResource Include="Fonts\ClearSans-BoldItalic.bin" />
+    <EmbeddedResource Include="Fonts\ClearSans-BoldItalic_0.png" />
+    <EmbeddedResource Include="Fonts\ClearSans-Bold_0.png" />
+    <EmbeddedResource Include="Fonts\ClearSans-Italic.bin" />
+    <EmbeddedResource Include="Fonts\ClearSans-Italic_0.png" />
+    <EmbeddedResource Include="Fonts\ClearSans-Light.bin" />
+    <EmbeddedResource Include="Fonts\ClearSans-Light_0.png" />
+    <EmbeddedResource Include="Fonts\ClearSans-Medium.bin" />
+    <EmbeddedResource Include="Fonts\ClearSans-MediumItalic.bin" />
+    <EmbeddedResource Include="Fonts\ClearSans-MediumItalic_0.png" />
+    <EmbeddedResource Include="Fonts\ClearSans-Medium_0.png" />
+    <EmbeddedResource Include="Fonts\ClearSans-Medium_1.png" />
+    <EmbeddedResource Include="Fonts\ClearSans-Regular.bin" />
+    <EmbeddedResource Include="Fonts\ClearSans-Regular_0.png" />
+    <EmbeddedResource Include="Fonts\ClearSans-Thin.bin" />
+    <EmbeddedResource Include="Fonts\ClearSans-Thin_0.png" />
+  </ItemGroup>
+
+</Project>

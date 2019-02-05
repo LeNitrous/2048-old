@@ -21,11 +21,11 @@ Public Class VisualTest
 
     <BackgroundDependencyLoader>
     Private Sub Load()
-        'Resources.AddStore(New NamespacedResourceStore(Of Byte())(New DllResourceStore(Assembly.GetExecutingAssembly().Location), "Resources"))
+        Resources.AddStore(New NamespacedResourceStore(Of Byte())(New DllResourceStore(Assembly.Load("Block.Resources").Location), "Block.Resources"))
 
-        'Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans"))
-        'Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Bold"))
-        'Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Light"))
+        Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Regular"))
+        Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Bold"))
+        Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Light"))
 
         Dependencies.Cache(New BlockColor)
 
