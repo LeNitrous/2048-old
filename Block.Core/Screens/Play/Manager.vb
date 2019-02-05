@@ -40,11 +40,11 @@ Namespace Screens.Play
                                                               Dim cell = New Vector2(x, y)
                                                               Dim tile = Grid.CellContent(cell)
 
-                                                              If Not tile Is Nothing Then
+                                                              If tile IsNot Nothing Then
                                                                   Dim positions = FindFarthestPosition(cell, vector)
                                                                   Dim nextTile = Grid.CellContent(positions.NextCell)
 
-                                                                  If Not nextTile Is Nothing Then
+                                                                  If nextTile IsNot Nothing Then
                                                                       If nextTile = tile And nextTile.From Is Nothing Then
                                                                           Dim merged = New Tile(positions.NextCell, CInt(tile))
                                                                           merged.From = New List(Of Tile)({tile, nextTile})
@@ -58,6 +58,8 @@ Namespace Screens.Play
                                                                           If CInt(merged) = 2048 Then
                                                                               RaiseEvent GameWin()
                                                                           End If
+                                                                      Else
+                                                                          MoveTile(tile, positions.Farthest)
                                                                       End If
                                                                   Else
                                                                       MoveTile(tile, positions.Farthest)
@@ -107,14 +109,14 @@ Namespace Screens.Play
 
         Private Sub PrepareTiles()
             Grid.EachCell(Sub(pos, tile)
-                              If Not tile Is Nothing Then
+                              If tile IsNot Nothing Then
                                   tile.From = Nothing
                                   tile.SavePosition()
                               End If
                           End Sub)
         End Sub
 
-        Private Function BuildTraversals(ByVal vector As MoveVector) As Traversable
+        Private Function BuildTraversals(ByVal vector As Vector2) As Traversable
             Dim traversals = New Traversable
 
             For pos = 0 To Grid.Size
@@ -133,22 +135,22 @@ Namespace Screens.Play
             Return traversals
         End Function
 
-        Private Function GetMoveVector(ByVal direction As MoveDirection) As MoveVector
+        Private Function GetMoveVector(ByVal direction As MoveDirection) As Vector2
             Select Case direction
                 Case MoveDirection.Up
-                    Return New MoveVector(0, -1)
+                    Return New Vector2(0, -1)
                 Case MoveDirection.Right
-                    Return New MoveVector(1, 0)
+                    Return New Vector2(1, 0)
                 Case MoveDirection.Down
-                    Return New MoveVector(0, 1)
+                    Return New Vector2(0, 1)
                 Case MoveDirection.Left
-                    Return New MoveVector(-1, 0)
+                    Return New Vector2(-1, 0)
                 Case Else
                     Log.Add("Invalid move direction!", LogLevel.Error, New ArgumentOutOfRangeException)
             End Select
         End Function
 
-        Private Function FindFarthestPosition(ByVal cell As Vector2, ByVal vector As MoveVector) As FarthestPosition
+        Private Function FindFarthestPosition(ByVal cell As Vector2, ByVal vector As Vector2) As FarthestPosition
             Dim previous As Vector2
 
             Do
@@ -169,12 +171,12 @@ Namespace Screens.Play
                 For y = 0 To Grid.Size
                     tile = Grid.CellContent(New Vector2(x, y))
 
-                    If Not tile Is Nothing Then
-                        For direction = 0 To 3
+                    If tile IsNot Nothing Then
+                        For Each direction In System.Enum.GetValues(GetType(MoveDirection))
                             Dim vector = GetMoveVector(direction)
                             Dim cell = New Vector2(x + vector.X, y + vector.Y)
                             Dim other = Grid.CellContent(cell)
-                            If Not other Is Nothing Then
+                            If other IsNot Nothing Then
                                 If other = tile Then
                                     Return True
                                 End If
@@ -189,16 +191,6 @@ Namespace Screens.Play
         Private Function PositionsEqual(ByVal first As Vector2, ByVal second As Vector2) As Boolean
             Return first.X = second.X And first.Y = second.Y
         End Function
-
-        Private Class MoveVector
-            Public X As Integer
-            Public Y As Integer
-
-            Public Sub New(ByVal xAxis As Integer, ByVal yAxis As Integer)
-                X = xAxis
-                Y = yAxis
-            End Sub
-        End Class
 
         Private Class Traversable
             Public X As New List(Of Integer)
