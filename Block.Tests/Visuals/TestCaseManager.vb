@@ -1,7 +1,6 @@
 ﻿Imports osu.Framework.Testing
 Imports Block.Core.Objects.Drawables
-Imports Block.Core.UI
-Imports osu.Framework.Input.Events
+Imports Block.Core.Screens.Play
 
 Namespace Visuals
     Public Class TestCaseManager

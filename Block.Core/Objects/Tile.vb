@@ -5,7 +5,7 @@ Namespace Objects
     Public Class Tile
 
         Public ReadOnly Position As New Bindable(Of Vector2)
-        Public ReadOnly Score As New BindableInt()
+        Public ReadOnly Score As New BindableInt
         Public IsMerged As Boolean
         Public PreviousPosition As Vector2
         Public From As List(Of Tile)

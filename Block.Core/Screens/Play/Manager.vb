@@ -5,7 +5,7 @@ Imports osuTK
 Imports osuTK.Input
 Imports Block.Core.Objects
 
-Namespace UI
+Namespace Screens.Play
     Public Class Manager
 
         Private ReadOnly Log As Logger
