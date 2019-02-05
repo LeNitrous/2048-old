@@ -10,6 +10,7 @@ Namespace Screens.Play
 
         Private ReadOnly Log As Logger
         Public ReadOnly Score As New BindableInt
+        Public ReadOnly Moves As New BindableInt
         Public Grid As Grid
         Public ShouldAddRandomTile As Boolean = True
         Public Event GameWin()
@@ -72,6 +73,7 @@ Namespace Screens.Play
                                                           End Sub)
                                  End Sub)
             If moved Then
+                Moves.Set(Moves.Value + 1)
                 If ShouldAddRandomTile Then
                     AddRandomTile()
                 End If
