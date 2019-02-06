@@ -9,7 +9,7 @@ Imports Block.Core.Graphics
 
 Namespace Objects.Drawables
     Public Class DrawableTile
-        Inherits Container
+        Inherits CompositeDrawable
 
         Private ReadOnly TileObject As Tile
         Private TileBox As Box
