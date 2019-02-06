@@ -9,7 +9,7 @@ Namespace Screens
     Public Class BlockScreen
         Inherits Screen
 
-        Public Content As Container
+        Public Content As DrawSizePreservingFillContainer
         Private Background As Box
         Public Property BackgroundColor As Color4
             Get
@@ -25,7 +25,7 @@ Namespace Screens
             Background = New Box With {
                 .RelativeSizeAxes = Axes.Both
             }
-            Content = New Container With {
+            Content = New DrawSizePreservingFillContainer With {
                 .RelativeSizeAxes = Axes.Both
             }
             InternalChildren = New List(Of Drawable)({

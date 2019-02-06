@@ -1,6 +1,7 @@
 ﻿Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
+Imports osu.Framework.Graphics.Sprites
 Imports osu.Framework.Input.Events
 Imports osuTK
 Imports Block.Core.Graphics
@@ -28,14 +29,15 @@ Namespace Screens.Play
             BackgroundColor = color.FromHex("#faf8ef")
 
             grid = New DrawableGrid(manager.Grid) With {
-                .Anchor = Anchor.BottomCentre,
-                .Origin = Anchor.BottomCentre,
-                .Y = -85
+                .Anchor = Anchor.TopCentre,
+                .Origin = Anchor.TopCentre,
+                .RelativePositionAxes = Axes.Y,
+                .Y = 0.23
             }
             score = New CounterScore(manager.Score) With {
-                .Anchor = Anchor.CentreRight,
-                .Origin = Anchor.CentreRight,
-                .Y = 3
+                .Anchor = Anchor.BottomRight,
+                .Origin = Anchor.BottomRight,
+                .Y = -72
             }
             moves = New Counter("Moves", manager.Moves) With {
                 .Margin = New MarginPadding With {
@@ -46,9 +48,10 @@ Namespace Screens.Play
 
             Content.Children = New List(Of Drawable)({
                 New Container With {
+                    .RelativeSizeAxes = Axes.Y,
                     .Anchor = Anchor.TopCentre,
                     .Origin = Anchor.TopCentre,
-                    .Size = New Vector2(522, 200),
+                    .Size = New Vector2(522, 0.2),
                     .Children = New List(Of Drawable)({
                         New FillFlowContainer With {
                             .Anchor = Anchor.BottomRight,
