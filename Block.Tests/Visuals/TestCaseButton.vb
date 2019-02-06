@@ -22,12 +22,8 @@ Namespace Visuals
                 },
                 .Children = New List(Of Drawable)({
                     New BlockButton("hello world"),
-                    New BlockButton("accept") With {
-                        .BackgroundColour = color.PoppinOrange
-                    },
-                    New BlockButton("deny") With {
-                        .BackgroundColour = color.DriedBrown
-                    }
+                    New BlockButton("accept"),
+                    New BlockButton("deny")
                 })
             })
         End Sub

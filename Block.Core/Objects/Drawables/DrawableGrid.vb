@@ -11,8 +11,9 @@ Namespace Objects.Drawables
         Inherits CompositeDrawable
 
         Private ReadOnly GridObject As Grid
-        Private TileContainer As Container = CreateTileContainer()
-        Private GridBackground As Box = CreateGridBackground()
+        Private ReadOnly TileContainer As Container = CreateTileContainer()
+        Private ReadOnly GridBackground As Box = CreateFillBox()
+        Private ReadOnly GridBackdrop As Box = CreateFillBox()
         Private GridSlots As FillFlowContainer
 
         Public Sub New(ByVal grid As Grid)
@@ -31,6 +32,15 @@ Namespace Objects.Drawables
             GridSlots = CreateGridSlots(color.FromHex("eee4da"))
             InternalChildren = New List(Of Drawable)({
                 New Container With {
+                    .CornerRadius = 5,
+                    .Masking = True,
+                    .Anchor = Anchor.BottomLeft,
+                    .RelativeSizeAxes = Axes.X,
+                    .Height = 28,
+                    .Y = -12,
+                    .Child = GridBackdrop
+                },
+                New Container With {
                     .RelativeSizeAxes = Axes.Both,
                     .CornerRadius = 5,
                     .Masking = True,
@@ -40,6 +50,7 @@ Namespace Objects.Drawables
                 TileContainer
             })
             GridBackground.Colour = color.FromHex("bbada0")
+            GridBackdrop.Colour = color.FromHex("93857a")
         End Sub
 
         Private Sub OnTileCreated(ByRef tile As Tile)
@@ -53,10 +64,9 @@ Namespace Objects.Drawables
 
         End Sub
 
-        Protected Function CreateGridBackground() As Box
+        Protected Function CreateFillBox() As Box
             Return New Box With {
-                .RelativeSizeAxes = Axes.Both,
-                .Colour = Color4.Gray
+                .RelativeSizeAxes = Axes.Both
             }
         End Function
 

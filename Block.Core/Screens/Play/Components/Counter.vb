@@ -11,25 +11,39 @@ Namespace Screens.Play.Components
     Public Class Counter
         Inherits CompositeDrawable
 
-        Private ReadOnly Background As Box
+        Private ReadOnly Background As Box = CreateFillBox()
+        Private ReadOnly Backdrop As Box = CreateFillBox()
         Private ReadOnly Description As SpriteText
         Protected ReadOnly CounterText As SpriteText
         Protected ReadOnly CounterBindable As New BindableInt
 
         Public Sub New(ByVal desc As String, ByVal bindable As BindableInt)
             Size = New Vector2(100, 50)
-            Background = CreateBackground()
             CounterText = CreateCounterText(bindable)
             Description = CreateDescription(desc)
 
             InternalChild = New Container With {
                 .RelativeSizeAxes = Axes.Both,
-                .CornerRadius = 5,
-                .Masking = True,
                 .Children = New List(Of Drawable)({
-                    Background,
-                    CounterText,
-                    Description
+                    New Container With {
+                        .Anchor = Anchor.BottomLeft,
+                        .RelativeSizeAxes = Axes.X,
+                        .CornerRadius = 5,
+                        .Masking = True,
+                        .Height = 24,
+                        .Y = -12,
+                        .Child = Backdrop
+                    },
+                    New Container With {
+                        .RelativeSizeAxes = Axes.Both,
+                        .CornerRadius = 5,
+                        .Masking = True,
+                        .Children = New List(Of Drawable)({
+                            Background,
+                            CounterText,
+                            Description
+                        })
+                    }
                 })
             }
 
@@ -38,10 +52,11 @@ Namespace Screens.Play.Components
 
         <BackgroundDependencyLoader>
         Private Sub Load(color As BlockColor)
-            Background.Colour = color.FreshBrown
+            Background.Colour = color.FromHex("bbada0")
+            Backdrop.Colour = color.FromHex("93857a")
         End Sub
 
-        Protected Function CreateBackground() As Box
+        Protected Function CreateFillBox() As Box
             Return New Box With {
                 .RelativeSizeAxes = Axes.Both
             }

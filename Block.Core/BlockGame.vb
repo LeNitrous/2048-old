@@ -5,6 +5,7 @@ Imports osu.Framework.IO.Stores
 Imports osu.Framework.Screens
 Imports Block.Core.Graphics
 Imports Block.Core.Screens.Menu
+Imports Block.Core.Screens.Play
 
 Public Class BlockGame
     Inherits Game
@@ -30,7 +31,7 @@ Public Class BlockGame
         Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Thin"))
         Dependencies.Cache(New BlockColor())
 
-        Add(New ScreenStack(New MainMenu) With {
+        Add(New ScreenStack(New Player) With {
             .RelativeSizeAxes = Axes.Both
         })
     End Sub

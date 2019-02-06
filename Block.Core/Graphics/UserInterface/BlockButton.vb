@@ -1,5 +1,6 @@
 ﻿Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
+Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Graphics.Shapes
 Imports osu.Framework.Graphics.Sprites
 Imports osu.Framework.Graphics.UserInterface
@@ -8,55 +9,68 @@ Imports osuTK
 
 Namespace Graphics.UserInterface
     Public Class BlockButton
-        Inherits Button
+        Inherits ClickableContainer
 
-        Private hover As Box
+        Private BackgroundContainer As Container
+        Private Background As Box = CreateFillBox()
+        Private Backdrop As Box = CreateFillBox()
+        Private SpriteText As SpriteText
+        Protected Text As String
 
         Public Sub New(ByVal t As String)
             RelativeSizeAxes = Axes.X
             Height = 40
-            Text = t
-            Margin = New MarginPadding With {
-                .Bottom = 5
-            }
 
-            Content.Masking = True
-            Content.CornerRadius = 3
+            SpriteText = CreateText()
+            BackgroundContainer = New Container With {
+                .RelativeSizeAxes = Axes.Both,
+                .CornerRadius = 5,
+                .Masking = True,
+                .Children = New List(Of Drawable)({
+                    Background,
+                    SpriteText
+                })
+            }
+            InternalChild = New Container With {
+                .RelativeSizeAxes = Axes.Both,
+                .Children = New List(Of Drawable)({
+                    New Container With {
+                        .Anchor = Anchor.BottomLeft,
+                        .RelativeSizeAxes = Axes.X,
+                        .CornerRadius = 5,
+                        .Masking = True,
+                        .Height = 20,
+                        .Y = -11,
+                        .Child = Backdrop
+                    },
+                    BackgroundContainer
+                })
+            }
         End Sub
 
         <BackgroundDependencyLoader>
         Private Sub Load(color As BlockColor)
-            hover = New Box With {
-                .RelativeSizeAxes = Axes.Both,
-                .Blending = BlendingMode.Additive,
-                .Alpha = 0,
-                .Depth = -1
-            }
-            AddRange(New List(Of Drawable)({hover}))
-            BackgroundColour = color.RipeBrown
+            Background.Colour = color.FromHex("8f7a66")
+            Backdrop.Colour = color.FromHex("6c5c4d")
         End Sub
 
-        Protected Overrides Function OnHover(e As HoverEvent) As Boolean
-            hover.FadeTo(0.25, 200)
-            Return MyBase.OnHover(e)
+        Protected Function CreateFillBox() As Box
+            Return New Box With {
+                .RelativeSizeAxes = Axes.Both
+            }
         End Function
 
-        Protected Overrides Sub OnHoverLost(e As HoverLostEvent)
-            hover.FadeOut(200)
-            MyBase.OnHoverLost(e)
-        End Sub
-
         Protected Overrides Function OnMouseDown(e As MouseDownEvent) As Boolean
-            Content.ScaleTo(New Vector2(0.9), 500, Easing.OutCubic)
+            BackgroundContainer.MoveToOffset(New Vector2(0, 11))
             Return MyBase.OnMouseDown(e)
         End Function
 
         Protected Overrides Function OnMouseUp(e As MouseUpEvent) As Boolean
-            Content.ScaleTo(New Vector2(1), 500, Easing.OutElastic)
+            BackgroundContainer.MoveToOffset(New Vector2(0, -11))
             Return MyBase.OnMouseUp(e)
         End Function
 
-        Protected Overrides Function CreateText() As SpriteText
+        Protected Overridable Function CreateText() As SpriteText
             Return New SpriteText With {
                 .Depth = -1,
                 .Origin = Anchor.Centre,
