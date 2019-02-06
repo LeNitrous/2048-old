@@ -1,10 +1,8 @@
-﻿Imports System.Reflection
-Imports osu.Framework
+﻿Imports osu.Framework
 Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Cursor
 Imports osu.Framework.Graphics.Containers
-Imports osu.Framework.IO.Stores
 Imports osu.Framework.Testing
 Imports osu.Framework.Platform
 Imports Block.Core.Graphics
@@ -21,12 +19,6 @@ Public Class VisualTest
 
     <BackgroundDependencyLoader>
     Private Sub Load()
-        Resources.AddStore(New NamespacedResourceStore(Of Byte())(New DllResourceStore(Assembly.Load("Block.Resources").Location), "Block.Resources"))
-
-        Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Regular"))
-        Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Bold"))
-        Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Light"))
-
         Dependencies.Cache(New BlockColor)
 
         Child = New DrawSizePreservingFillContainer With {
