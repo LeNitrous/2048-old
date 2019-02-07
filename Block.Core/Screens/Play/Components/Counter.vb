@@ -6,54 +6,39 @@ Imports osu.Framework.Graphics.Shapes
 Imports osu.Framework.Graphics.Sprites
 Imports osuTK
 Imports Block.Core.Graphics
+Imports Block.Core.Graphics.Shapes
 
 Namespace Screens.Play.Components
     Public Class Counter
         Inherits CompositeDrawable
 
-        Private ReadOnly Background As Box = CreateFillBox()
-        Private ReadOnly Backdrop As Box = CreateFillBox()
         Private ReadOnly Description As SpriteText
         Protected ReadOnly CounterText As SpriteText
         Protected ReadOnly CounterBindable As New BindableInt
 
         Public Sub New(ByVal desc As String, ByVal bindable As BindableInt)
-            Size = New Vector2(100, 50)
+            Size = New Vector2(100, 60)
             CounterText = CreateCounterText(bindable)
             Description = CreateDescription(desc)
-
-            InternalChild = New Container With {
-                .RelativeSizeAxes = Axes.Both,
-                .Children = New List(Of Drawable)({
-                    New Container With {
-                        .Anchor = Anchor.BottomLeft,
-                        .RelativeSizeAxes = Axes.X,
-                        .CornerRadius = 5,
-                        .Masking = True,
-                        .Height = 24,
-                        .Y = -12,
-                        .Child = Backdrop
-                    },
-                    New Container With {
-                        .RelativeSizeAxes = Axes.Both,
-                        .CornerRadius = 5,
-                        .Masking = True,
-                        .Children = New List(Of Drawable)({
-                            Background,
-                            CounterText,
-                            Description
-                        })
-                    }
-                })
-            }
-
             AddHandler CounterBindable.ValueChanged, AddressOf UpdateText
         End Sub
 
         <BackgroundDependencyLoader>
         Private Sub Load(color As BlockColor)
-            Background.Colour = color.FromHex("bbada0")
-            Backdrop.Colour = color.FromHex("93857a")
+            InternalChildren = New List(Of Drawable)({
+                New BeveledBox(color.FromHex("bbada0"), color.FromHex("93857a")) With {
+                    .RelativeSizeAxes = Axes.Both
+                },
+                New Container With {
+                    .RelativeSizeAxes = Axes.Both,
+                    .CornerRadius = 5,
+                    .Masking = True,
+                    .Children = New List(Of Drawable)({
+                        CounterText,
+                        Description
+                    })
+                }
+            })
         End Sub
 
         Protected Function CreateFillBox() As Box
@@ -77,7 +62,7 @@ Namespace Screens.Play.Components
             Return New SpriteText With {
                 .Anchor = Anchor.BottomCentre,
                 .Origin = Anchor.Centre,
-                .Y = -10,
+                .Y = -15,
                 .Text = desc,
                 .TextSize = 14,
                 .Font = "OpenSans-Bold"

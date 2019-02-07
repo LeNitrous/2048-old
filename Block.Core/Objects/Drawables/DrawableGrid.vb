@@ -5,6 +5,7 @@ Imports osu.Framework.Graphics.Shapes
 Imports osuTK
 Imports osuTK.Graphics
 Imports Block.Core.Graphics
+Imports Block.Core.Graphics.Shapes
 
 Namespace Objects.Drawables
     Public Class DrawableGrid
@@ -12,8 +13,6 @@ Namespace Objects.Drawables
 
         Private ReadOnly GridObject As Grid
         Private ReadOnly TileContainer As Container = CreateTileContainer()
-        Private ReadOnly GridBackground As Box = CreateFillBox()
-        Private ReadOnly GridBackdrop As Box = CreateFillBox()
         Private GridSlots As FillFlowContainer
 
         Public Sub New(ByVal grid As Grid)
@@ -24,33 +23,18 @@ Namespace Objects.Drawables
             Origin = Anchor.Centre
 
             AddHandler GridObject.TileAdded, AddressOf OnTileCreated
-            AddHandler GridObject.TileRemoved, AddressOf OnTileDestroyed
         End Sub
 
         <BackgroundDependencyLoader>
         Private Sub Load(ByVal color As BlockColor)
             GridSlots = CreateGridSlots(color.FromHex("eee4da"))
             InternalChildren = New List(Of Drawable)({
-                New Container With {
-                    .CornerRadius = 5,
-                    .Masking = True,
-                    .Anchor = Anchor.BottomLeft,
-                    .RelativeSizeAxes = Axes.X,
-                    .Height = 28,
-                    .Y = -12,
-                    .Child = GridBackdrop
-                },
-                New Container With {
-                    .RelativeSizeAxes = Axes.Both,
-                    .CornerRadius = 5,
-                    .Masking = True,
-                    .Child = GridBackground
+                New BeveledBox(color.FromHex("bbada0"), color.FromHex("93857a")) With {
+                    .RelativeSizeAxes = Axes.Both
                 },
                 GridSlots,
                 TileContainer
             })
-            GridBackground.Colour = color.FromHex("bbada0")
-            GridBackdrop.Colour = color.FromHex("93857a")
         End Sub
 
         Private Sub OnTileCreated(ByRef tile As Tile)
@@ -59,16 +43,6 @@ Namespace Objects.Drawables
             }
             TileContainer.Add(newDrawableTile)
         End Sub
-
-        Private Sub OnTileDestroyed(ByRef tile As Tile)
-
-        End Sub
-
-        Protected Function CreateFillBox() As Box
-            Return New Box With {
-                .RelativeSizeAxes = Axes.Both
-            }
-        End Function
 
         Protected Function CreateGridSlots(ByVal slotColor As Color4) As FillFlowContainer
             Dim container = New FillFlowContainer With {

@@ -32,12 +32,12 @@ Namespace Screens.Play
                 .Anchor = Anchor.TopCentre,
                 .Origin = Anchor.TopCentre,
                 .RelativePositionAxes = Axes.Y,
-                .Y = 0.23
+                .Y = 0.25
             }
             score = New CounterScore(manager.Score) With {
-                .Anchor = Anchor.BottomRight,
-                .Origin = Anchor.BottomRight,
-                .Y = -72
+                .Margin = New MarginPadding With {
+                    .Right = 18
+                }
             }
             moves = New Counter("Moves", manager.Moves) With {
                 .Margin = New MarginPadding With {
@@ -51,7 +51,7 @@ Namespace Screens.Play
                     .RelativeSizeAxes = Axes.Y,
                     .Anchor = Anchor.TopCentre,
                     .Origin = Anchor.TopCentre,
-                    .Size = New Vector2(522, 0.2),
+                    .Size = New Vector2(522, 0.22),
                     .Children = New List(Of Drawable)({
                         New FillFlowContainer With {
                             .Anchor = Anchor.BottomRight,
@@ -60,6 +60,7 @@ Namespace Screens.Play
                             .FillMode = Axes.X,
                             .Children = New List(Of Drawable)({
                                 moves,
+                                score,
                                 timer
                             })
                         },
@@ -82,7 +83,14 @@ Namespace Screens.Play
                                 }
                             })
                         },
-                        score
+                        New SpriteText With {
+                            .Anchor = Anchor.CentreLeft,
+                            .Origin = Anchor.CentreLeft,
+                            .Text = "lazer2048",
+                            .TextSize = 72,
+                            .Colour = color.FromHex("8f7a66"),
+                            .Font = "OpenSans-Bold"
+                        }
                     })
                 },
                 grid

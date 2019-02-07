@@ -6,24 +6,24 @@ Namespace Screens.Play.Components
     Public Class CounterClock
         Inherits Counter
 
-        Private Clock As Timer
+        Private Time As Timer
 
         Public Sub New()
             MyBase.New("Elapsed", Nothing)
 
-            Clock = New Timer With {
+            Time = New Timer With {
                 .Interval = 1000
             }
 
-            AddHandler Clock.Elapsed, AddressOf OnTick
+            AddHandler Time.Elapsed, AddressOf OnTick
         End Sub
 
         Public Sub Start()
-            Clock.Enabled = True
+            Time.Enabled = True
         End Sub
 
         Public Sub Pause()
-            Clock.Enabled = False
+            Time.Enabled = False
         End Sub
 
         Private Sub OnTick()

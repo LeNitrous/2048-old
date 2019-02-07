@@ -31,10 +31,5 @@ Namespace Graphics
                     Throw New ArgumentException("Malformed hex string!")
             End Select
         End Function
-
-        Public ReadOnly PoppinOrange As Color4 = FromHex("#f59563")
-        Public ReadOnly RipeBrown As Color4 = FromHex("#8f7a66")
-        Public ReadOnly FreshBrown As Color4 = FromHex("#bbada0")
-        Public ReadOnly DriedBrown As Color4 = FromHex("#ede0c8")
     End Class
 End Namespace
