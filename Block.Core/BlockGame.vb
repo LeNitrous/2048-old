@@ -1,15 +1,14 @@
 Imports osu.Framework
 Imports osu.Framework.Allocation
-Imports osu.Framework.Graphics
+Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.IO.Stores
 Imports osu.Framework.Screens
 Imports Block.Core.Graphics
-Imports Block.Core.Screens.Menu
-Imports Block.Core.Screens.Play
 
 Public Class BlockGame
     Inherits Game
 
+    Private Stack As ScreenStack
     Private Dependencies As DependencyContainer
 
     Protected Overrides Function CreateChildDependencies(parent As IReadOnlyDependencyContainer) As IReadOnlyDependencyContainer
@@ -29,10 +28,8 @@ Public Class BlockGame
         Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-MediumItalic"))
         Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Regular"))
         Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Thin"))
-        Dependencies.Cache(New BlockColor())
+        Dependencies.Cache(New BlockColour())
 
-        Add(New ScreenStack(New Player) With {
-            .RelativeSizeAxes = Axes.Both
-        })
+        Stack = New ScreenStack()
     End Sub
 End Class

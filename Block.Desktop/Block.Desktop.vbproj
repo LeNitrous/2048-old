@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ppy.osu.Framework" Version="2019.301.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Block.Core\Block.Core.vbproj" />
   </ItemGroup>
 

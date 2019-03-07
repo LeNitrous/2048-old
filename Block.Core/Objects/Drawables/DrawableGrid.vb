@@ -1,9 +1,7 @@
 ﻿Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
-Imports osu.Framework.Graphics.Shapes
 Imports osuTK
-Imports osuTK.Graphics
 Imports Block.Core.Graphics
 Imports Block.Core.Graphics.Shapes
 
@@ -11,74 +9,66 @@ Namespace Objects.Drawables
     Public Class DrawableGrid
         Inherits CompositeDrawable
 
-        Private ReadOnly GridObject As Grid
-        Private ReadOnly TileContainer As Container = CreateTileContainer()
-        Private GridSlots As FillFlowContainer
+        Private GridObject As Grid
+        Private Tiles As Container
+        Private Slots As FillFlowContainer
 
         Public Sub New(ByVal grid As Grid)
             GridObject = grid
 
             Size = New Vector2(GridObject.Size * 128 + 10)
-            Anchor = Anchor.Centre
-            Origin = Anchor.Centre
-
             AddHandler GridObject.TileAdded, AddressOf OnTileCreated
         End Sub
 
         <BackgroundDependencyLoader>
-        Private Sub Load(ByVal color As BlockColor)
-            GridSlots = CreateGridSlots(color.FromHex("eee4da"))
+        Private Sub Load(ByVal colour As BlockColour)
+            Slots = New FillFlowContainer With {
+                .RelativeSizeAxes = Axes.Both,
+                .Padding = New MarginPadding(5)
+            }
+
+            For i = 1 To GridObject.Size ^ 2
+                Slots.Add(New Container With {
+                    .Size = New Vector2(128),
+                    .Child = New RoundedBox() With {
+                        .BackgroundColour = colour.FromHex("eee4da"),
+                        .RelativeSizeAxes = Axes.Both,
+                        .Anchor = Anchor.Centre,
+                        .Origin = Anchor.Centre,
+                        .Scale = New Vector2(0.9),
+                        .Alpha = 0.35
+                    }
+                })
+            Next
+
+            Tiles = New Container With {
+                .RelativeSizeAxes = Axes.Both,
+                .Padding = New MarginPadding(5)
+            }
             InternalChildren = New List(Of Drawable)({
-                New BeveledBox(color.FromHex("bbada0"), color.FromHex("93857a")) With {
-                    .RelativeSizeAxes = Axes.Both
+                New RoundedBox() With {
+                    .BackgroundColour = colour.FromHex("bbada0"),
+                    .RelativeSizeAxes = Axes.Both,
+                    .Anchor = Anchor.Centre,
+                    .Origin = Anchor.Centre
                 },
-                GridSlots,
-                TileContainer
+                Slots,
+                Tiles
             })
         End Sub
 
         Private Sub OnTileCreated(ByRef tile As Tile)
-            Dim newDrawableTile As New DrawableTile(tile) With {
-                .Position = New Vector2(tile.Position.Value.X * 128 + (128 / 2), tile.Position.Value.Y * 128 + (128 / 2))
+            Dim drawableTile As New DrawableTile(tile) With {
+                .Position = New Vector2(tile.Position.Value.X * 128,
+                                        tile.Position.Value.Y * 128)
             }
-            TileContainer.Add(newDrawableTile)
+
+            Tiles.Add(drawableTile)
+
+            If tile.From Is Nothing Then
+                drawableTile.Content.Scale = New Vector2(0)
+                drawableTile.Content.ScaleTo(1, 100, Easing.OutSine)
+            End If
         End Sub
-
-        Protected Function CreateGridSlots(ByVal slotColor As Color4) As FillFlowContainer
-            Dim container = New FillFlowContainer With {
-                .RelativeSizeAxes = Axes.Both,
-                .Padding = New MarginPadding(5)
-            }
-            For i = 1 To GridObject.Size * GridObject.Size
-                container.Add(New Container With {
-                    .Size = New Vector2(128),
-                    .Child = New Container With {
-                        .RelativeSizeAxes = Axes.Both,
-                        .Anchor = Anchor.Centre,
-                        .Origin = Anchor.Centre,
-                        .CornerRadius = 5,
-                        .Masking = True,
-                        .Scale = New Vector2(0.9),
-                        .Child = New Box With {
-                            .RelativeSizeAxes = Axes.Both,
-                            .Colour = slotColor,
-                            .Alpha = 0.35
-                        }
-                    }
-                })
-            Next
-            Return container
-        End Function
-
-        Protected Function CreateTileContainer() As Container
-            Return New Container With {
-                .RelativeSizeAxes = Axes.Both,
-                .Padding = New MarginPadding(5)
-            }
-        End Function
-
-        Public Shared Narrowing Operator CType(ByVal drawable As DrawableGrid) As Grid
-            Return drawable.GridObject
-        End Operator
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿Imports osu.Framework.Configuration
+﻿Imports osu.Framework.Bindables
 Imports osuTK
 
 Namespace Objects
@@ -10,8 +10,13 @@ Namespace Objects
         Public PreviousPosition As Vector2
         Public From As List(Of Tile)
 
-        Public Sub New(ByVal pos As Vector2, ByVal value As Integer)
+        Public Sub New(ByVal value As Integer, ByVal pos As Vector2)
             Position.Value = pos
+            Score.Value = value
+        End Sub
+
+        Public Sub New(ByVal value As Integer)
+            Position.Value = New Vector2()
             Score.Value = value
         End Sub
 

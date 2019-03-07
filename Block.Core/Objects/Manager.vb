@@ -1,14 +1,12 @@
-﻿Imports osu.Framework.Configuration
-Imports osu.Framework.Logging
+﻿Imports osu.Framework.Bindables
 Imports osu.Framework.Input.Events
 Imports osuTK
 Imports osuTK.Input
 Imports Block.Core.Objects
 
-Namespace Screens.Play
+Namespace Objects
     Public Class Manager
 
-        Private ReadOnly Log As Logger
         Public ReadOnly Score As New BindableInt
         Public ReadOnly Moves As New BindableInt
         Public Grid As Grid
@@ -18,13 +16,12 @@ Namespace Screens.Play
 
         Public Sub New(ByVal size As Integer)
             Grid = New Grid(size)
-            Log = Logger.GetLogger(LoggingTarget.Information)
         End Sub
 
         Public Sub AddRandomTile()
             If Grid.GetAvailableCells().Count Then
                 Dim value = If(Grid.RNG.NextDouble() < 0.9, 2, 4)
-                Dim tile = New Tile(Grid.GetRandomAvailableCell(), value)
+                Dim tile = New Tile(value, Grid.GetRandomAvailableCell())
                 Grid.InsertTile(tile)
             End If
         End Sub
@@ -47,8 +44,9 @@ Namespace Screens.Play
 
                                                                   If nextTile IsNot Nothing Then
                                                                       If nextTile = tile And nextTile.From Is Nothing Then
-                                                                          Dim merged = New Tile(positions.NextCell, CInt(tile))
-                                                                          merged.From = New List(Of Tile)({tile, nextTile})
+                                                                          Dim merged = New Tile(CInt(tile), positions.NextCell) With {
+                                                                              .From = New List(Of Tile)({tile, nextTile})
+                                                                          }
                                                                           Grid.InsertTile(merged)
                                                                           Grid.RemoveTile(tile)
                                                                           merged.Increment()
@@ -148,7 +146,7 @@ Namespace Screens.Play
                 Case MoveDirection.Left
                     Return New Vector2(-1, 0)
                 Case Else
-                    Log.Add("Invalid move direction!", LogLevel.Error, New ArgumentOutOfRangeException)
+                    Throw New ArgumentOutOfRangeException
             End Select
         End Function
 
@@ -209,4 +207,11 @@ Namespace Screens.Play
             End Sub
         End Class
     End Class
+
+    Public Enum MoveDirection
+        Up
+        Right
+        Down
+        Left
+    End Enum
 End Namespace

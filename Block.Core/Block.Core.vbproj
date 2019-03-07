@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="ppy.OpenTK" Version="3.0.13" />
-    <PackageReference Include="ppy.osu.Framework" Version="2019.131.0" />
+    <PackageReference Include="ppy.osu.Framework" Version="2019.301.0" />
   </ItemGroup>
 
   <ItemGroup>

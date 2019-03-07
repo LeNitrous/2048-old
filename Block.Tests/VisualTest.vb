@@ -19,7 +19,7 @@ Public Class VisualTest
 
     <BackgroundDependencyLoader>
     Private Sub Load()
-        Dependencies.Cache(New BlockColor)
+        Dependencies.Cache(New BlockColour)
 
         Child = New DrawSizePreservingFillContainer With {
             .Children = New List(Of Drawable)({

@@ -3,33 +3,24 @@ Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Graphics.Shapes
 Imports osu.Framework.Screens
-Imports osuTK.Graphics
+Imports Block.Core.Graphics
 
 Namespace Screens
     Public Class BlockScreen
         Inherits Screen
 
-        Public Content As DrawSizePreservingFillContainer
-        Private Background As Box
-        Public Property BackgroundColor As Color4
-            Get
-                Return Background.Colour
-            End Get
-            Set(value As Color4)
-                Background.FadeColour(value)
-            End Set
-        End Property
+        Public Content As Container
 
         <BackgroundDependencyLoader>
-        Private Sub Load()
-            Background = New Box With {
-                .RelativeSizeAxes = Axes.Both
-            }
-            Content = New DrawSizePreservingFillContainer With {
+        Private Sub Load(ByVal colour As BlockColour)
+            Content = New Container With {
                 .RelativeSizeAxes = Axes.Both
             }
             InternalChildren = New List(Of Drawable)({
-                Background,
+                New Box With {
+                    .RelativeSizeAxes = Axes.Both,
+                    .Colour = colour.FromHex("faf8ef")
+                },
                 Content
             })
         End Sub
