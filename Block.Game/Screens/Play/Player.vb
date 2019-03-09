@@ -2,7 +2,6 @@
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports Block.Game.Graphics
-Imports Block.Game.Graphics.Shapes
 Imports Block.Game.Objects
 Imports Block.Game.Objects.Drawables
 

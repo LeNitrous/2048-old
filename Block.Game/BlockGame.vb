@@ -1,10 +1,11 @@
 Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
+Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.IO.Stores
 Imports osu.Framework.Screens
 Imports Block.Game.Graphics
 Imports Block.Game.Online.API
-Imports Block.Game.Screens.Menu
+Imports Block.Game.Screens.Play
 
 Public Class BlockGame
     Inherits osu.Framework.Game
@@ -38,7 +39,10 @@ Public Class BlockGame
         Stack = New ScreenStack With {
             .RelativeSizeAxes = Axes.Both
         }
-        Stack.Push(New MainMenu)
-        Add(Stack)
+        Stack.Push(New Player(PlayType.Classic, 4))
+        Add(New DrawSizePreservingFillContainer With {
+            .RelativeSizeAxes = Axes.Both,
+            .Child = Stack
+        })
     End Sub
 End Class

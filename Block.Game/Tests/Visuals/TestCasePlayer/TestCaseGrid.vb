@@ -1,10 +1,11 @@
 ﻿Imports osu.Framework.Allocation
+Imports osu.Framework.Input.Events
 Imports osu.Framework.Testing
+Imports osuTK
 Imports Block.Game.Objects
 Imports Block.Game.Objects.Drawables
-Imports osu.Framework.Input.Events
 
-Namespace Visuals.TestCaseGameplay
+Namespace Tests.Visuals.TestCasePlayer
     Public Class TestCaseGrid
         Inherits TestCase
 
@@ -16,7 +17,7 @@ Namespace Visuals.TestCaseGameplay
 
         <BackgroundDependencyLoader>
         Private Sub Load()
-            Manager.Grid.InsertTile(New Tile(2, New osuTK.Vector2(0, 0)))
+            Manager.Grid.InsertTile(New Tile(2, New Vector2(0, 0)))
         End Sub
 
         Protected Overrides Function OnKeyDown(e As KeyDownEvent) As Boolean

@@ -3,7 +3,7 @@ Imports osu.Framework.Graphics
 Imports osu.Framework.Testing
 Imports Block.Game.Screens.Menu
 
-Namespace Visuals.TestCaseMenu
+Namespace Tests.Visuals.TestCaseMenu
     Public Class TestCaseMainMenuButton
         Inherits TestCase
 

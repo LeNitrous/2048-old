@@ -1,4 +1,5 @@
 ﻿Imports osu.Framework.Allocation
+Imports osu.Framework.Bindables
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Graphics.Sprites
@@ -51,23 +52,19 @@ Namespace Objects.Drawables
             }
             InternalChild = Content
 
-            TileObject.Score.BindValueChanged(Sub(score)
-                                                  OnChangeScore(score.NewValue)
-                                              End Sub)
-            TileObject.Position.BindValueChanged(Sub(pos)
-                                                     OnChangePosition(pos.NewValue)
-                                                 End Sub)
+            AddHandler TileObject.Score.ValueChanged, AddressOf OnChangeScore
+            AddHandler TileObject.Position.ValueChanged, AddressOf OnChangePosition
         End Sub
 
-        Public Sub OnChangeScore(newScore As Integer)
-            TextSprite.Text = newScore
+        Public Sub OnChangeScore(ByVal score As ValueChangedEvent(Of Integer))
+            TextSprite.Text = score.NewValue
             Background.BackgroundColour = GetColour()
             ClearTransforms()
 
             Content.Scale = New Vector2(0.6)
             Content.ScaleTo(1, 750, Easing.OutElastic)
 
-            If newScore >= 2048 Then
+            If score.NewValue >= 2048 Then
                 Dim ghost As New DrawableTile(TileObject) With {
                     .Alpha = 1,
                     .Scale = New Vector2(0.75)
@@ -78,8 +75,8 @@ Namespace Objects.Drawables
             End If
         End Sub
 
-        Private Sub OnChangePosition(newPosition As Vector2)
-            MoveTo(New Vector2(newPosition.X * 128, newPosition.Y * 128), 150)
+        Private Sub OnChangePosition(ByVal position As ValueChangedEvent(Of Vector2))
+            MoveTo(New Vector2(position.NewValue.X * 128, position.NewValue.Y * 128), 150)
 
             If TileObject.IsMerged Then
                 Expire()
