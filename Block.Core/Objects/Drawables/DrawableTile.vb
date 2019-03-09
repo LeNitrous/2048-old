@@ -44,10 +44,10 @@ Namespace Objects.Drawables
                 .RelativeSizeAxes = Axes.Both,
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre,
-                .Children = New List(Of Drawable)({
+                .Children = New List(Of Drawable) From {
                     Background,
                     TextSprite
-                })
+                }
             }
             InternalChild = Content
 

@@ -45,7 +45,7 @@ Namespace Objects.Drawables
                 .RelativeSizeAxes = Axes.Both,
                 .Padding = New MarginPadding(5)
             }
-            InternalChildren = New List(Of Drawable)({
+            InternalChildren = New List(Of Drawable) From {
                 New RoundedBox() With {
                     .BackgroundColour = colour.FromHex("bbada0"),
                     .RelativeSizeAxes = Axes.Both,
@@ -54,7 +54,7 @@ Namespace Objects.Drawables
                 },
                 Slots,
                 Tiles
-            })
+            }
         End Sub
 
         Private Sub OnTileCreated(ByRef tile As Tile)

@@ -4,7 +4,7 @@ Imports osu.Framework.Graphics.Containers
 Imports Block.Core.Objects
 Imports Block.Core.Objects.Drawables
 
-Namespace Visuals.TestCaseTile
+Namespace Visuals.TestCaseGameplay
     Public Class TestCaseTileColours
         Inherits TestCase
 

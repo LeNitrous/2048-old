@@ -2,7 +2,6 @@
 Imports osu.Framework.Input.Events
 Imports osuTK
 Imports osuTK.Input
-Imports Block.Core.Objects
 
 Namespace Objects
     Public Class Manager

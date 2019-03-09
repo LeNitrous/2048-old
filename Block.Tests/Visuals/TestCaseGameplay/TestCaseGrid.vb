@@ -4,8 +4,8 @@ Imports Block.Core.Objects
 Imports Block.Core.Objects.Drawables
 Imports osu.Framework.Input.Events
 
-Namespace Visuals.TestCaseGrid
-    Public Class TestCaseDrawableGrid
+Namespace Visuals.TestCaseGameplay
+    Public Class TestCaseGrid
         Inherits TestCase
 
         Public Manager As New Manager(4)
