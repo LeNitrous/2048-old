@@ -17,7 +17,7 @@ Public Class BlockGame
 
     <BackgroundDependencyLoader>
     Private Sub Load()
-        Resources.AddStore(New DllResourceStore("Block.Sokething.dll"))
+        Resources.AddStore(New DllResourceStore("Block.Core.Resources.dll"))
 
         Dependencies.Cache(New BlockColour())
 
