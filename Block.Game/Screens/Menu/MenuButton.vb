@@ -5,8 +5,8 @@ Imports osu.Framework.Graphics.Sprites
 Imports osu.Framework.Graphics.Textures
 Imports osuTK
 Imports osuTK.Graphics
-Imports Block.Core.Graphics
-Imports Block.Core.Graphics.Shapes
+Imports Block.Game.Graphics
+Imports Block.Game.Graphics.Shapes
 Imports osu.Framework.Input.Events
 
 Namespace Screens.Menu
@@ -29,14 +29,14 @@ Namespace Screens.Menu
 
         <BackgroundDependencyLoader>
         Private Sub Load(ByVal colour As BlockColour, ByVal store As TextureStore)
-            Size = New Vector2(192)
+            Size = New Vector2(256)
             Scale = New Vector2(0.9)
             Origin = Anchor.Centre
             TitleSprite = New SpriteText With {
                 .Text = Title,
                 .Anchor = Anchor.BottomCentre,
                 .Origin = Anchor.BottomCentre,
-                .Font = New FontUsage("OpenSans", 24, "Bold"),
+                .Font = New FontUsage("OpenSans", 32, "Bold"),
                 .Y = -24,
                 .Alpha = 0
             }
@@ -44,7 +44,7 @@ Namespace Screens.Menu
                 .Text = Subtitle,
                 .Anchor = Anchor.BottomCentre,
                 .Origin = Anchor.BottomCentre,
-                .Font = New FontUsage("OpenSans", 12),
+                .Font = New FontUsage("OpenSans", 16),
                 .Y = -6,
                 .Alpha = 0
             }
@@ -67,7 +67,7 @@ Namespace Screens.Menu
                         .BackgroundColour = colour.FromHex("8f7a66")
                     },
                     New Sprite With {
-                        .Size = New Vector2(100),
+                        .Size = New Vector2(125),
                         .Anchor = Anchor.Centre,
                         .Origin = Anchor.Centre,
                         .Texture = store.Get(String.Format("Interface/icon-{0}", Title)),

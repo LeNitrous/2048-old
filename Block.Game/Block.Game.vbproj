@@ -1,23 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Block.Core</RootNamespace>
+    <RootNamespace>Block.Game</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug;Release;Tests</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.7.0" />
     <PackageReference Include="ppy.OpenTK" Version="3.0.13" />
     <PackageReference Include="ppy.osu.Framework" Version="2019.308.0" />
+    <PackageReference Include="protobuf-net" Version="2.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Block.Core.Resources\Block.Core.Resources.vbproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Online\API\Responses\" />
-    <Folder Include="Online\API\Requests\" />
+    <ProjectReference Include="..\Block.Game.Resources\Block.Game.Resources.vbproj" />
   </ItemGroup>
 
 </Project>

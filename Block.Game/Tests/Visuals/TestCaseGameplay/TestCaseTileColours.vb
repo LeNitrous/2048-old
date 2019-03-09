@@ -1,8 +1,8 @@
 ﻿Imports osu.Framework.Testing
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
-Imports Block.Core.Objects
-Imports Block.Core.Objects.Drawables
+Imports Block.Game.Objects
+Imports Block.Game.Objects.Drawables
 
 Namespace Visuals.TestCaseGameplay
     Public Class TestCaseTileColours

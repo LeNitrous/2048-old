@@ -1,4 +1,5 @@
-﻿Imports osu.Framework.Bindables
+﻿Imports System.Timers
+Imports osu.Framework.Bindables
 Imports osu.Framework.Input.Events
 Imports osuTK
 Imports osuTK.Input
@@ -6,12 +7,14 @@ Imports osuTK.Input
 Namespace Objects
     Public Class Manager
 
+        Public ReadOnly Watch As New Stopwatch
         Public ReadOnly Score As New BindableInt
         Public ReadOnly Moves As New BindableInt
         Public Grid As Grid
         Public ShouldAddRandomTile As Boolean = True
-        Public Event GameWin()
-        Public Event GameOver()
+        Public Event GameWin As GameEventHandler
+        Public Event GameOver As GameEventHandler
+        Public Event GameEnded As GameEventHandler
 
         Public Sub New(ByVal size As Integer)
             Grid = New Grid(size)
@@ -54,7 +57,7 @@ Namespace Objects
 
                                                                           Score.Set(Score.Value + CInt(merged))
                                                                           If CInt(merged) = 2048 Then
-                                                                              RaiseEvent GameWin()
+                                                                              RaiseEvent GameWin(New ManagerInfo(Me))
                                                                           End If
                                                                       Else
                                                                           MoveTile(tile, positions.Farthest)
@@ -75,7 +78,7 @@ Namespace Objects
                     AddRandomTile()
                 End If
                 If Not MovesAvailable() Then
-                    RaiseEvent GameOver()
+                    RaiseEvent GameOver(New ManagerInfo(Me))
                 End If
             End If
         End Sub
@@ -205,6 +208,20 @@ Namespace Objects
                 NextCell = cell
             End Sub
         End Class
+
+        Public Delegate Sub GameEventHandler(ByVal info As ManagerInfo)
+    End Class
+
+    Public Class ManagerInfo
+        Public TimeElapsed As Long
+        Public Score As Integer
+        Public Moves As Integer
+
+        Public Sub New(ByVal manager As Manager)
+            TimeElapsed = manager.Watch.ElapsedMilliseconds
+            Score = manager.Score.Value
+            Moves = manager.Moves.Value
+        End Sub
     End Class
 
     Public Enum MoveDirection

@@ -3,11 +3,11 @@ Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Graphics.Shapes
 Imports osu.Framework.Screens
-Imports Block.Core.Graphics
+Imports Block.Game.Graphics
 
 Namespace Screens
-    Public Class BlockScreen
-        Inherits Screen
+    Public Class Screen
+        Inherits osu.Framework.Screens.Screen
 
         Public Content As Container
 

@@ -2,8 +2,8 @@
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osuTK
-Imports Block.Core.Graphics
-Imports Block.Core.Graphics.Shapes
+Imports Block.Game.Graphics
+Imports Block.Game.Graphics.Shapes
 
 Namespace Objects.Drawables
     Public Class DrawableGrid

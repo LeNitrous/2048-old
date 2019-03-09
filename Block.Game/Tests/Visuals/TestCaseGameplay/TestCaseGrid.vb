@@ -1,7 +1,7 @@
 ﻿Imports osu.Framework.Allocation
 Imports osu.Framework.Testing
-Imports Block.Core.Objects
-Imports Block.Core.Objects.Drawables
+Imports Block.Game.Objects
+Imports Block.Game.Objects.Drawables
 Imports osu.Framework.Input.Events
 
 Namespace Visuals.TestCaseGameplay

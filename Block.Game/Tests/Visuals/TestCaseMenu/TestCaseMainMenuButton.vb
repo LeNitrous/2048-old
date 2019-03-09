@@ -1,7 +1,7 @@
 ﻿Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Testing
-Imports Block.Core.Screens.Menu
+Imports Block.Game.Screens.Menu
 
 Namespace Visuals.TestCaseMenu
     Public Class TestCaseMainMenuButton

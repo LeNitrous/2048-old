@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Block.Desktop</RootNamespace>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Configurations>Debug;Release;Tests</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Block.Core\Block.Core.vbproj" />
+    <ProjectReference Include="..\Block.Game\Block.Game.vbproj" />
   </ItemGroup>
 
 </Project>
