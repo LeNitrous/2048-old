@@ -17,8 +17,16 @@ Public Class BlockGame
 
     <BackgroundDependencyLoader>
     Private Sub Load()
-        Resources.AddStore(New DllResourceStore("Block.Core.Resources.dll"))
+        Resources.AddStore(New DllResourceStore("Block.Sokething.dll"))
 
         Dependencies.Cache(New BlockColour())
+
+        Add(New Sprite With {
+            .Size = New osuTK.Vector2(125),
+            .Anchor = Anchor.Centre,
+            .Origin = Anchor.Centre,
+            .FillMode = FillMode.Fill,
+            .Texture = Textures.Get("Interface/icon-exit")
+        })
     End Sub
 End Class

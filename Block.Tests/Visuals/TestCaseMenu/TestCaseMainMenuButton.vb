@@ -8,7 +8,7 @@ Namespace Visuals.TestCaseMenu
         Inherits TestCase
 
         <BackgroundDependencyLoader>
-        Private Sub Load(ByVal store As TextureStore)
+        Private Sub Load()
             Add(New MenuButton("play", "some classic 2048") With {.Anchor = Anchor.Centre})
         End Sub
     End Class
