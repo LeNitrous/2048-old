@@ -21,7 +21,7 @@ Namespace Screens.Menu
         Private SubtitleSprite As SpriteText
         Private Overlay As RoundedBox
 
-        Public Sub New(ByVal title As String, ByVal subtitle As String, Optional ByVal action As Action = Nothing)
+        Public Sub New(ByVal title As String, Optional ByVal subtitle As String = "", Optional ByVal action As Action = Nothing)
             Me.Title = title
             Me.Subtitle = subtitle
             ClickAction = action

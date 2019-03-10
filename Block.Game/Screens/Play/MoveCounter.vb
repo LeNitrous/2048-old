@@ -9,10 +9,13 @@ Namespace Screens.Play
         Public Sub New(ByVal counter As BindableInt)
             MyBase.New()
             Title = "moves"
+
             Me.Counter = counter
-            Me.Counter.BindValueChanged(Sub(v)
-                                            UpdateDisplayText()
-                                        End Sub)
+            AddHandler Me.Counter.ValueChanged, AddressOf Append
+        End Sub
+
+        Private Sub Append(ByVal value As ValueChangedEvent(Of Integer))
+            UpdateDisplayText()
         End Sub
 
         Protected Overrides Function GetDisplayText() As String
