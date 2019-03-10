@@ -9,9 +9,7 @@ Imports Block.Game.Graphics
 Imports Block.Game.Graphics.Shapes
 
 Namespace Objects.Drawables
-    Public Class DrawableTile
-        Inherits CompositeDrawable
-
+    Public Class DrawableTile : Inherits CompositeDrawable
         Public Content As Container
 
         Private TileObject As Tile

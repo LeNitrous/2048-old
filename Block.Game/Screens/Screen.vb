@@ -6,8 +6,7 @@ Imports osu.Framework.Screens
 Imports Block.Game.Graphics
 
 Namespace Screens
-    Public Class Screen
-        Inherits osu.Framework.Screens.Screen
+    Public Class Screen : Inherits osu.Framework.Screens.Screen
 
         Public Content As Container
 

@@ -7,21 +7,19 @@ Imports Block.Game.Graphics
 Imports Block.Game.Graphics.Shapes
 
 Namespace Screens.Play
-    Public MustInherit Class CounterComponent
-        Inherits CompositeDrawable
-
+    Public MustInherit Class CounterComponent : Inherits CompositeDrawable
         Private Display As SpriteText
 
         Protected Title As String
 
         <BackgroundDependencyLoader>
         Private Sub Load(ByVal colour As BlockColour)
-            Size = New Vector2(100, 60)
+            Size = New Vector2(120, 80)
             Display = New SpriteText With {
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre,
                 .Text = "",
-                .Font = New FontUsage("OpenSans", 36),
+                .Font = New FontUsage("OpenSans", 48),
                 .Y = -5
             }
             AddRangeInternal(New List(Of Drawable) From {
@@ -36,7 +34,7 @@ Namespace Screens.Play
                     .Origin = Anchor.BottomCentre,
                     .Y = -5,
                     .Text = Title,
-                    .Font = New FontUsage("OpenSans", 14, "Bold"),
+                    .Font = New FontUsage("OpenSans", 20, "Bold"),
                     .Colour = colour.FromHex("eee4da")
                 },
                 Display

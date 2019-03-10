@@ -12,9 +12,9 @@ Namespace Objects
         Public ReadOnly Moves As New BindableInt
         Public Grid As Grid
         Public ShouldAddRandomTile As Boolean = True
-        Public Event GameWin As GameEventHandler
-        Public Event GameOver As GameEventHandler
-        Public Event GameEnded As GameEventHandler
+
+        Public Event Win()
+        Public Event Lose()
 
         Public Sub New(ByVal size As Integer)
             Grid = New Grid(size)
@@ -57,7 +57,7 @@ Namespace Objects
 
                                                                           Score.Set(Score.Value + CInt(merged))
                                                                           If CInt(merged) = 2048 Then
-                                                                              RaiseEvent GameWin(New ManagerInfo(Me))
+                                                                              RaiseEvent Win()
                                                                           End If
                                                                       Else
                                                                           MoveTile(tile, positions.Farthest)
@@ -78,7 +78,7 @@ Namespace Objects
                     AddRandomTile()
                 End If
                 If Not MovesAvailable() Then
-                    RaiseEvent GameOver(New ManagerInfo(Me))
+                    RaiseEvent Lose()
                 End If
             End If
         End Sub
@@ -209,19 +209,6 @@ Namespace Objects
             End Sub
         End Class
 
-        Public Delegate Sub GameEventHandler(ByVal info As ManagerInfo)
-    End Class
-
-    Public Class ManagerInfo
-        Public TimeElapsed As Long
-        Public Score As Integer
-        Public Moves As Integer
-
-        Public Sub New(ByVal manager As Manager)
-            TimeElapsed = manager.Watch.ElapsedMilliseconds
-            Score = manager.Score.Value
-            Moves = manager.Moves.Value
-        End Sub
     End Class
 
     Public Enum MoveDirection

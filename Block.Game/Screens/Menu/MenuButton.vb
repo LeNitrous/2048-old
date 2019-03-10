@@ -10,9 +10,7 @@ Imports Block.Game.Graphics.Shapes
 Imports osu.Framework.Input.Events
 
 Namespace Screens.Menu
-    Public Class MenuButton
-        Inherits ClickableContainer
-
+    Public Class MenuButton : Inherits ClickableContainer
         Private ReadOnly Title As String
         Private ReadOnly Subtitle As String
         Private ReadOnly ClickAction As Action

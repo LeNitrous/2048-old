@@ -1,9 +1,7 @@
 ﻿Imports osu.Framework.Bindables
 
 Namespace Screens.Play
-    Public Class MoveCounter
-        Inherits CounterComponent
-
+    Public Class MoveCounter : Inherits CounterComponent
         Public Counter As BindableInt
 
         Public Sub New(ByVal counter As BindableInt)

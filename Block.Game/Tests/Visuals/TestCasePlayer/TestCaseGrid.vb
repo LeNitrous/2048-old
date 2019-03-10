@@ -6,9 +6,7 @@ Imports Block.Game.Objects
 Imports Block.Game.Objects.Drawables
 
 Namespace Tests.Visuals.TestCasePlayer
-    Public Class TestCaseGrid
-        Inherits TestCase
-
+    Public Class TestCaseGrid : Inherits TestCase
         Public Manager As New Manager(4)
 
         Public Sub New()
@@ -17,7 +15,7 @@ Namespace Tests.Visuals.TestCasePlayer
 
         <BackgroundDependencyLoader>
         Private Sub Load()
-            Manager.Grid.InsertTile(New Tile(2, New Vector2(0, 0)))
+            Manager.AddStartTiles()
         End Sub
 
         Protected Overrides Function OnKeyDown(e As KeyDownEvent) As Boolean

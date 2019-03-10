@@ -3,7 +3,6 @@ Imports osuTK
 
 Namespace Objects
     Public Class Tile
-
         Public ReadOnly Position As New Bindable(Of Vector2)
         Public ReadOnly Score As New BindableInt
         Public IsMerged As Boolean

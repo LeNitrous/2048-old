@@ -6,9 +6,7 @@ Imports Block.Game.Objects
 Imports Block.Game.Screens.Play
 
 Namespace Tests.Visuals.TestCasePlayer
-    Public Class TestCaseCounter
-        Inherits TestCase
-
+    Public Class TestCaseCounter : Inherits TestCase
         Public GameManager As New Manager(4)
 
         <BackgroundDependencyLoader>

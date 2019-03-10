@@ -6,9 +6,7 @@ Imports Block.Game.Graphics
 Imports Block.Game.Graphics.Shapes
 
 Namespace Objects.Drawables
-    Public Class DrawableGrid
-        Inherits CompositeDrawable
-
+    Public Class DrawableGrid : Inherits CompositeDrawable
         Private GridObject As Grid
         Private Tiles As Container
         Private Slots As FillFlowContainer

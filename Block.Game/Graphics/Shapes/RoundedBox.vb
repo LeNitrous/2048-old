@@ -5,9 +5,7 @@ Imports osu.Framework.Graphics.Shapes
 Imports osuTK.Graphics
 
 Namespace Graphics.Shapes
-    Public Class RoundedBox
-        Inherits CompositeDrawable
-
+    Public Class RoundedBox : Inherits CompositeDrawable
         Public BackgroundColour As New Color4
 
         <BackgroundDependencyLoader>

@@ -7,9 +7,7 @@ Imports Block.Game.Graphics
 Imports Block.Game.Online.API
 Imports Block.Game.Screens.Menu
 
-Public Class BlockGame
-    Inherits osu.Framework.Game
-
+Public Class BlockGame : Inherits osu.Framework.Game
     Public Stack As ScreenStack
 
     Private Shadows Dependencies As DependencyContainer
@@ -33,9 +31,6 @@ Public Class BlockGame
         Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-MediumItalic"))
         Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Thin"))
 
-        Dependencies.Cache(New API)
-        Dependencies.Cache(New BlockColour())
-
         Stack = New ScreenStack With {
             .RelativeSizeAxes = Axes.Both
         }
@@ -44,5 +39,9 @@ Public Class BlockGame
             .RelativeSizeAxes = Axes.Both,
             .Child = Stack
         })
+
+        Dependencies.Cache(Stack)
+        Dependencies.Cache(New API)
+        Dependencies.Cache(New BlockColour())
     End Sub
 End Class

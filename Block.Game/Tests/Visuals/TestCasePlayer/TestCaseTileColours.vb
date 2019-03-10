@@ -5,9 +5,7 @@ Imports Block.Game.Objects
 Imports Block.Game.Objects.Drawables
 
 Namespace Tests.Visuals.TestCasePlayer
-    Public Class TestCaseTileColours
-        Inherits TestCase
-
+    Public Class TestCaseTileColours : Inherits TestCase
         Public FlowContainer As FillFlowContainer
 
         Public Sub New()

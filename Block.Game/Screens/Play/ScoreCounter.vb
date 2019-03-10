@@ -4,9 +4,7 @@ Imports osu.Framework.Graphics.Sprites
 Imports osuTK
 
 Namespace Screens.Play
-    Public Class ScoreCounter
-        Inherits MoveCounter
-
+    Public Class ScoreCounter : Inherits MoveCounter
         Public Sub New(ByVal counter As BindableInt)
             MyBase.New(counter)
             Title = "score"

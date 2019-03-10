@@ -3,9 +3,7 @@ Imports osu.Framework.Graphics.Containers
 Imports osuTK
 
 Namespace Screens.Menu
-    Public Class MenuButtonGroup
-        Inherits FillFlowContainer
-
+    Public Class MenuButtonGroup : Inherits FillFlowContainer
         Private ReadOnly Level As Integer
         Private FromGroup As MenuButtonGroup
 

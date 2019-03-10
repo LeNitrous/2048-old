@@ -1,6 +1,5 @@
 ﻿Namespace Screens.Play
-    Public Class TimerCounter
-        Inherits CounterComponent
+    Public Class TimerCounter : Inherits CounterComponent
 
         Private ReadOnly Watch As Stopwatch
 
