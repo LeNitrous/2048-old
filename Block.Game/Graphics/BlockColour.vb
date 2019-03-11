@@ -2,14 +2,6 @@
 
 Namespace Graphics
     Public Class BlockColour
-        Public Function Gray(ByVal amt As Single) As Color4
-            Return New Color4(amt, amt, amt, 1.0F)
-        End Function
-
-        Public Function Gray(ByVal amt As Byte) As Color4
-            Return New Color4(amt, amt, amt, 255)
-        End Function
-
         Public Function FromHex(ByVal hex As String) As Color4
             If hex(0) = "#" Then
                 hex = hex.Substring(1)
@@ -33,8 +25,8 @@ Namespace Graphics
         End Function
 
         Public TileColours As New List(Of Color4) From {
-            FromHex("f3d774"),
-            FromHex("f3d774"),
+            FromHex("eee4da"),
+            FromHex("ede0c8"),
             FromHex("f2b179"),
             FromHex("f59563"),
             FromHex("f67c5f"),

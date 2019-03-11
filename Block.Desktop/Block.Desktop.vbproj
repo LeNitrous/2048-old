@@ -5,6 +5,7 @@
     <RootNamespace>Block.Desktop</RootNamespace>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <Configurations>Debug;Release;Tests</Configurations>
+    <OptionCompare>Binary</OptionCompare>
   </PropertyGroup>
 
   <ItemGroup>

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Block.Game.Resources\Block.Game.Resources.vbproj" />
+    <ProjectReference Include="..\Block.Game.Resources\Block.Game.Resources.csproj" />
   </ItemGroup>
 
 </Project>

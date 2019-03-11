@@ -37,10 +37,6 @@ Namespace Objects
             Position.TriggerChange()
         End Sub
 
-        Public Function GetProgress() As Integer
-            Return Math.Log(Score.Value) / Math.Log(2)
-        End Function
-
         Public Shared Narrowing Operator CType(ByVal tile As Tile) As Integer
             Return If(Not tile Is Nothing, tile.Score.Value, 0)
         End Operator

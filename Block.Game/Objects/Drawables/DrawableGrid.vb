@@ -15,7 +15,6 @@ Namespace Objects.Drawables
             GridObject = grid
 
             Size = New Vector2(GridObject.Size * 128 + 10)
-            AddHandler GridObject.TileAdded, AddressOf OnTileCreated
         End Sub
 
         <BackgroundDependencyLoader>
@@ -28,7 +27,7 @@ Namespace Objects.Drawables
             For i = 1 To GridObject.Size ^ 2
                 Slots.Add(New Container With {
                     .Size = New Vector2(128),
-                    .Child = New RoundedBox() With {
+                    .Child = New RoundedBox With {
                         .BackgroundColour = colour.FromHex("eee4da"),
                         .RelativeSizeAxes = Axes.Both,
                         .Anchor = Anchor.Centre,
@@ -44,7 +43,7 @@ Namespace Objects.Drawables
                 .Padding = New MarginPadding(5)
             }
             InternalChildren = New List(Of Drawable) From {
-                New RoundedBox() With {
+                New RoundedBox With {
                     .BackgroundColour = colour.FromHex("bbada0"),
                     .RelativeSizeAxes = Axes.Both,
                     .Anchor = Anchor.Centre,
@@ -53,6 +52,8 @@ Namespace Objects.Drawables
                 Slots,
                 Tiles
             }
+
+            AddHandler GridObject.TileAdded, AddressOf OnTileCreated
         End Sub
 
         Private Sub OnTileCreated(ByRef tile As Tile)

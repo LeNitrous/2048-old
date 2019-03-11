@@ -15,7 +15,9 @@ Namespace Objects.Drawables
         Private TileObject As Tile
         Private Background As RoundedBox
         Private TextSprite As SpriteText
-        Private Colours As New List(Of Color4)
+        Private BackgroundColours As List(Of Color4)
+        Private DefaultTextColour As Color4
+        Private TextColour As Color4
 
         Public Sub New(ByVal tile As Tile)
             TileObject = tile
@@ -23,11 +25,12 @@ Namespace Objects.Drawables
 
         <BackgroundDependencyLoader>
         Private Sub Load(ByVal colour As BlockColour)
-            Colours = colour.TileColours
+            BackgroundColours = colour.TileColours
+            DefaultTextColour = colour.FromHex("776e65")
+            TextColour = colour.FromHex("f9f6f2")
 
             Size = New Vector2(128)
             Background = New RoundedBox With {
-                .BackgroundColour = GetColour(),
                 .RelativeSizeAxes = Axes.Both,
                 .Size = New Vector2(0.9),
                 .Anchor = Anchor.Centre,
@@ -36,8 +39,7 @@ Namespace Objects.Drawables
             TextSprite = New SpriteText With {
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre,
-                .Text = TileObject.Score.Value,
-                .Font = New FontUsage("OpenSans", GetFontSize(TileObject.Score.Value))
+                .Text = TileObject.Score.Value
             }
             Content = New Container With {
                 .RelativeSizeAxes = Axes.Both,
@@ -50,13 +52,14 @@ Namespace Objects.Drawables
             }
             InternalChild = Content
 
+            UpdateTile(TileObject.Score.Value)
+
             AddHandler TileObject.Score.ValueChanged, AddressOf OnChangeScore
             AddHandler TileObject.Position.ValueChanged, AddressOf OnChangePosition
         End Sub
 
         Public Sub OnChangeScore(ByVal score As ValueChangedEvent(Of Integer))
-            TextSprite.Text = score.NewValue
-            Background.BackgroundColour = GetColour()
+            UpdateTile(score.NewValue)
             ClearTransforms()
 
             Content.Scale = New Vector2(0.6)
@@ -81,22 +84,16 @@ Namespace Objects.Drawables
             End If
         End Sub
 
-        Protected Function GetColour() As Color4
-            If TileObject.GetProgress() - 1 >= Colours.Count Then
-                Return Colours.ElementAt(Colours.Count - 1)
-            Else
-                Return Colours.ElementAt(TileObject.GetProgress() - 1)
-            End If
-        End Function
-
-        Protected Function GetFontSize(ByVal score As Integer) As Single
-            Select Case score.ToString().Length
-                Case 1 To 3
-                    Return 64
-                Case Else
-                    Return 48
-            End Select
-        End Function
+        Private Sub UpdateTile(ByVal score As Integer)
+            With TextSprite
+                .Text = score
+                .Font = New FontUsage("ClearSans", If(score.ToString().Length < 4, 64, 48), "Bold")
+                .Colour = If(score < 8, DefaultTextColour, TextColour)
+            End With
+            Dim progress = Math.Log(score) / Math.Log(2)
+            Background.BackgroundColour = If(progress - 1 >= BackgroundColours.Count,
+                BackgroundColours.ElementAt(BackgroundColours.Count - 1), BackgroundColours.ElementAt(progress - 1))
+        End Sub
 
         Public Shared Narrowing Operator CType(ByVal drawable As DrawableTile) As Tile
             Return drawable.TileObject

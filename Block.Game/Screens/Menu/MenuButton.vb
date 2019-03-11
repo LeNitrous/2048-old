@@ -34,7 +34,7 @@ Namespace Screens.Menu
                 .Text = Title,
                 .Anchor = Anchor.BottomCentre,
                 .Origin = Anchor.BottomCentre,
-                .Font = New FontUsage("OpenSans", 32, "Bold"),
+                .Font = New FontUsage("ClearSans", 32, "Bold"),
                 .Y = -24,
                 .Alpha = 0
             }
@@ -42,7 +42,7 @@ Namespace Screens.Menu
                 .Text = Subtitle,
                 .Anchor = Anchor.BottomCentre,
                 .Origin = Anchor.BottomCentre,
-                .Font = New FontUsage("OpenSans", 16),
+                .Font = New FontUsage("ClearSans", 16),
                 .Y = -6,
                 .Alpha = 0
             }
