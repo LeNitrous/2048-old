@@ -15,9 +15,9 @@ Namespace Objects.Drawables
         Private TileObject As Tile
         Private Background As RoundedBox
         Private TextSprite As SpriteText
-        Private BackgroundColours As List(Of Color4)
-        Private DefaultTextColour As Color4
-        Private TextColour As Color4
+
+        <Resolved>
+        Private Property BlockColour As BlockColour
 
         Public Sub New(ByVal tile As Tile)
             TileObject = tile
@@ -25,10 +25,6 @@ Namespace Objects.Drawables
 
         <BackgroundDependencyLoader>
         Private Sub Load(ByVal colour As BlockColour)
-            BackgroundColours = colour.TileColours
-            DefaultTextColour = colour.FromHex("776e65")
-            TextColour = colour.FromHex("f9f6f2")
-
             Size = New Vector2(128)
             Background = New RoundedBox With {
                 .RelativeSizeAxes = Axes.Both,
@@ -88,11 +84,11 @@ Namespace Objects.Drawables
             With TextSprite
                 .Text = score
                 .Font = New FontUsage("ClearSans", If(score.ToString().Length < 4, 64, 48), "Bold")
-                .Colour = If(score < 8, DefaultTextColour, TextColour)
+                .Colour = If(score < 8, BlockColour.FromHex("776e65"), BlockColour.FromHex("f9f6f2"))
             End With
             Dim progress = Math.Log(score) / Math.Log(2)
-            Background.BackgroundColour = If(progress - 1 >= BackgroundColours.Count,
-                BackgroundColours.ElementAt(BackgroundColours.Count - 1), BackgroundColours.ElementAt(progress - 1))
+            Background.BackgroundColour = If(progress - 1 >= BlockColour.TileColours.Count,
+                BlockColour.TileColours.ElementAt(BlockColour.TileColours.Count - 1), BlockColour.TileColours.ElementAt(progress - 1))
         End Sub
 
         Public Shared Narrowing Operator CType(ByVal drawable As DrawableTile) As Tile
