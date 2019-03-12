@@ -11,10 +11,20 @@ Namespace Objects.Drawables
         Private Tiles As Container
         Private Slots As FillFlowContainer
 
+        Public Property GridAreaSize As Single
+            Set(value As Single)
+                Scale = New Vector2(value / Size.X)
+            End Set
+            Get
+                Return Width
+            End Get
+        End Property
+
         Public Sub New(ByVal grid As Grid)
             GridObject = grid
 
             Size = New Vector2(GridObject.Size * 128 + 10)
+            Scale = New Vector2(528 / Size.X)
         End Sub
 
         <BackgroundDependencyLoader>

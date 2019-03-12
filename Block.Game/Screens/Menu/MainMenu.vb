@@ -32,11 +32,11 @@ Namespace Screens.Menu
                 New MenuButton("back", "", Sub() PlaySystem.Back()),
                 New MenuButton("classic", "reach the 2048 tile", Sub()
                                                                      stack.Exit()
-                                                                     stack.Push(New Player(New GameRuleClassic, 6))
+                                                                     stack.Push(New Player(New GameRuleClassic, 3))
                                                                  End Sub),
                 New MenuButton("endless", "play as long as you can", Sub()
                                                                          stack.Exit()
-                                                                         stack.Push(New Player(New GameRuleEndless, 6))
+                                                                         stack.Push(New Player(New GameRuleEndless, 3))
                                                                      End Sub)
             })
 

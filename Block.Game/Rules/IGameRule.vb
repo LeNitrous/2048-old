@@ -2,6 +2,7 @@
 
 Namespace Rules
     Public Interface IGameRule
+        Property ID As Integer
         Property Name As String
         Property ShowTimer As Boolean
         Property ShowMoves As Boolean
