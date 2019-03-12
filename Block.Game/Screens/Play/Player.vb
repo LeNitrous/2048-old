@@ -1,20 +1,19 @@
 ﻿Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
-Imports osu.Framework.Input.Events
-Imports osuTK
+Imports osu.Framework.Input.Bindings
 Imports Block.Game.Graphics
-Imports Block.Game.Objects
+Imports Block.Game.Objects.Managers
 Imports Block.Game.Objects.Drawables
 Imports Block.Game.Rules
 
 Namespace Screens.Play
-    Public Class Player : Inherits Screen
-        Private ReadOnly GameManager As Manager
-        Private ReadOnly GameRule As IGameRule
+    Public Class Player : Inherits Screen : Implements IKeyBindingHandler(Of MoveDirection)
+        Private ReadOnly GameManager As GridManager
+        Private ReadOnly GameRule As GameRule
 
         Public Sub New(ByVal rule As IGameRule, ByVal size As Integer)
-            GameManager = New Manager(size)
+            GameManager = New GridManager(size)
             GameRule = rule
         End Sub
 
@@ -72,9 +71,13 @@ Namespace Screens.Play
             GameManager.Watch.Stop()
         End Sub
 
-        Protected Overrides Function OnKeyDown(e As KeyDownEvent) As Boolean
-            GameManager.HandleInput(e)
-            Return MyBase.OnKeyDown(e)
+        Public Function OnPressed(action As MoveDirection) As Boolean Implements IKeyBindingHandler(Of MoveDirection).OnPressed
+            GameManager.Move(action)
+            Return True
+        End Function
+
+        Public Function OnReleased(action As MoveDirection) As Boolean Implements IKeyBindingHandler(Of MoveDirection).OnReleased
+            Return True
         End Function
     End Class
 End Namespace

@@ -1,13 +1,12 @@
 ﻿Imports osu.Framework.Allocation
-Imports osu.Framework.Input.Events
+Imports osu.Framework.Input.Bindings
 Imports osu.Framework.Testing
-Imports osuTK
-Imports Block.Game.Objects
+Imports Block.Game.Objects.Managers
 Imports Block.Game.Objects.Drawables
 
 Namespace Tests.Visuals.TestCasePlayer
-    Public Class TestCaseGrid : Inherits TestCase
-        Public Manager As New Manager(4)
+    Public Class TestCaseGrid : Inherits TestCase : Implements IKeyBindingHandler(Of MoveDirection)
+        Public Manager As New GridManager(4)
 
         Public Sub New()
             Add(New DrawableGrid(Manager.Grid))
@@ -18,9 +17,13 @@ Namespace Tests.Visuals.TestCasePlayer
             Manager.AddStartTiles()
         End Sub
 
-        Protected Overrides Function OnKeyDown(e As KeyDownEvent) As Boolean
-            Manager.HandleInput(e)
-            Return MyBase.OnKeyDown(e)
+        Public Function OnPressed(action As MoveDirection) As Boolean Implements IKeyBindingHandler(Of MoveDirection).OnPressed
+            Manager.Move(action)
+            Return True
+        End Function
+
+        Public Function OnReleased(action As MoveDirection) As Boolean Implements IKeyBindingHandler(Of MoveDirection).OnReleased
+            Return True
         End Function
     End Class
 End Namespace

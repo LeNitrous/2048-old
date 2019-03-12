@@ -2,12 +2,12 @@
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Testing
-Imports Block.Game.Objects
+Imports Block.Game.Objects.Managers
 Imports Block.Game.Screens.Play
 
 Namespace Tests.Visuals.TestCasePlayer
     Public Class TestCaseCounter : Inherits TestCase
-        Public GameManager As New Manager(4)
+        Public GameManager As New GridManager(4)
 
         <BackgroundDependencyLoader>
         Private Sub Load()
