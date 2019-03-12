@@ -43,7 +43,7 @@ Namespace Screens.Play
 
             If GameRule.ShowTimer Then
                 Counter.Add(New TimerCounter(GameManager.Watch) With {
-                    .Margin = New MarginPadding() With {.Right = 5}
+                    .Margin = New MarginPadding()
                  })
             End If
 

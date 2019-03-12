@@ -8,12 +8,10 @@ Imports Block.Game.Graphics.Shapes
 
 Namespace Screens.Play
     Public MustInherit Class CounterComponent : Inherits CompositeDrawable
-        Private Display As SpriteText
-
+        Protected Display As SpriteText
         Protected Title As String
 
-        <BackgroundDependencyLoader>
-        Private Sub Load(ByVal colour As BlockColour)
+        Public Sub New()
             Size = New Vector2(120, 80)
             Display = New SpriteText With {
                 .Anchor = Anchor.Centre,
@@ -22,6 +20,10 @@ Namespace Screens.Play
                 .Font = New FontUsage("ClearSans", 48),
                 .Y = -5
             }
+        End Sub
+
+        <BackgroundDependencyLoader>
+        Private Sub Load(ByVal colour As BlockColour)
             AddRangeInternal(New List(Of Drawable) From {
                 New RoundedBox With {
                     .Anchor = Anchor.Centre,

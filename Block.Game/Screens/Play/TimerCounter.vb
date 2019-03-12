@@ -4,7 +4,9 @@
         Private ReadOnly Watch As Stopwatch
 
         Public Sub New(ByVal watch As Stopwatch)
+            MyBase.New()
             Title = "elapsed"
+            Display.Font = Display.Font.With(fixedWidth:=True)
             Me.Watch = watch
         End Sub
 
