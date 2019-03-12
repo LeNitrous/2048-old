@@ -24,7 +24,7 @@ Namespace Objects.Drawables
         End Sub
 
         <BackgroundDependencyLoader>
-        Private Sub Load(ByVal colour As BlockColour)
+        Private Sub Load()
             Size = New Vector2(128)
             Background = New RoundedBox With {
                 .RelativeSizeAxes = Axes.Both,
