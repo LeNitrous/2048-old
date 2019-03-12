@@ -1,4 +1,5 @@
-﻿Imports osu.Framework.Screens
+﻿Imports System.Reflection
+Imports osu.Framework.Screens
 Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Sprites
@@ -13,8 +14,11 @@ Namespace Screens.Menu
         Public ModeSystem As MenuButtonGroup
         Public LeadSystem As MenuButtonGroup
 
+        <Resolved>
+        Private Property Stack As ScreenStack
+
         <BackgroundDependencyLoader>
-        Private Sub Load(ByVal stack As ScreenStack, ByVal colour As BlockColour)
+        Private Sub Load(ByVal colour As BlockColour)
             MainSystem = New MenuButtonGroup
             MainSystem.AddButtonRange(New List(Of MenuButton) From {
                 New MenuButton("exit", "leaving so soon?"),
@@ -28,17 +32,13 @@ Namespace Screens.Menu
             })
 
             ModeSystem = New MenuButtonGroup(1)
-            ModeSystem.AddButtonRange(New List(Of MenuButton) From {
-                New MenuButton("back", "", Sub() PlaySystem.Back()),
-                New MenuButton("classic", "reach the 2048 tile", Sub()
-                                                                     stack.Exit()
-                                                                     stack.Push(New Player(New GameRuleClassic, 3))
-                                                                 End Sub),
-                New MenuButton("endless", "play as long as you can", Sub()
-                                                                         stack.Exit()
-                                                                         stack.Push(New Player(New GameRuleEndless, 3))
-                                                                     End Sub)
-            })
+            ModeSystem.AddButton(New MenuButton("back", "", Sub() PlaySystem.Back()))
+            For Each Rule As Type In GetGameRules()
+                If Rule.IsSubclassOf(GetType(GameRule)) Then
+                    Dim gamerule = CType(Activator.CreateInstance(Rule), GameRule)
+                    ModeSystem.AddButton(New MenuButton(gamerule.Name.ToLower(), gamerule.Description, Sub() OnPlay(gamerule)))
+                End If
+            Next
 
             LeadSystem = New MenuButtonGroup(1)
             LeadSystem.AddButtonRange(New List(Of MenuButton) From {
@@ -62,5 +62,14 @@ Namespace Screens.Menu
                 ModeSystem
             })
         End Sub
+
+        Private Sub OnPlay(ByVal rule As IGameRule, Optional ByVal size As Integer = 4)
+            Stack.Exit()
+            Stack.Push(New Player(rule, 4))
+        End Sub
+
+        Private Function GetGameRules() As IEnumerable(Of Type)
+            Return Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) String.Equals(t.Namespace, "Block.Game.Rules", StringComparison.Ordinal))
+        End Function
     End Class
 End Namespace

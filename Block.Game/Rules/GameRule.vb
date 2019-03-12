@@ -8,10 +8,12 @@ Namespace Rules
         <ProtoMember(2)>
         MustOverride ReadOnly Property Name As String
         <ProtoMember(3)>
-        MustOverride ReadOnly Property ShowTimer As Boolean
+        MustOverride ReadOnly Property Description As String
         <ProtoMember(4)>
-        MustOverride ReadOnly Property ShowMoves As Boolean
+        MustOverride ReadOnly Property ShowTimer As Boolean
         <ProtoMember(5)>
+        MustOverride ReadOnly Property ShowMoves As Boolean
+        <ProtoMember(6)>
         MustOverride ReadOnly Property ShowScore As Boolean
 
         Public MustOverride Function NewRecordCondition() As Boolean Implements IGameRule.NewRecordCondition

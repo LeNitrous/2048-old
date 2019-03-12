@@ -68,7 +68,7 @@ Namespace Screens.Menu
                         .Size = New Vector2(125),
                         .Anchor = Anchor.Centre,
                         .Origin = Anchor.Centre,
-                        .Texture = store.Get(String.Format("Interface/icon-{0}", Title)),
+                        .Texture = store.Get(String.Format("Interface/icon-{0}", Title.Replace(" ", String.Empty))),
                         .FillMode = FillMode.Fill,
                         .FillAspectRatio = 1.0F
                     },
