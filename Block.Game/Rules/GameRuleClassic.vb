@@ -1,22 +1,12 @@
-﻿Imports Block.Game.Objects
+﻿Namespace Rules
+    Public Class GameRuleClassic : Inherits GameRule
+        Public Overrides ReadOnly Property ID As Integer = 0
+        Public Overrides ReadOnly Property Name As String = "Classic"
+        Public Overrides ReadOnly Property ShowTimer As Boolean = True
+        Public Overrides ReadOnly Property ShowMoves As Boolean = True
+        Public Overrides ReadOnly Property ShowScore As Boolean = True
 
-Namespace Rules
-    Public Class GameRuleClassic : Implements IGameRule
-        Public Property ID As Integer Implements IGameRule.ID
-        Public Property Name As String Implements IGameRule.Name
-        Public Property ShowTimer As Boolean Implements IGameRule.ShowTimer
-        Public Property ShowMoves As Boolean Implements IGameRule.ShowMoves
-        Public Property ShowScore As Boolean Implements IGameRule.ShowScore
-
-        Public Sub New()
-            ID = 0
-            Name = "Classic"
-            ShowTimer = True
-            ShowMoves = True
-            ShowScore = True
-        End Sub
-
-        Public Function NewRecordCondition(ByVal manager As Manager) As Boolean Implements IGameRule.NewRecordCondition
+        Public Overrides Function NewRecordCondition() As Boolean
             Return False
         End Function
     End Class

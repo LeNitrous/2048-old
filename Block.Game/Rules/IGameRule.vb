@@ -1,13 +1,5 @@
-﻿Imports Block.Game.Objects
-
-Namespace Rules
+﻿Namespace Rules
     Public Interface IGameRule
-        Property ID As Integer
-        Property Name As String
-        Property ShowTimer As Boolean
-        Property ShowMoves As Boolean
-        Property ShowScore As Boolean
-
-        Function NewRecordCondition(ByVal Manager As Manager) As Boolean
+        Function NewRecordCondition() As Boolean
     End Interface
 End Namespace
