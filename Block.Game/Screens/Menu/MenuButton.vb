@@ -43,7 +43,7 @@ Namespace Screens.Menu
                 .Anchor = Anchor.BottomCentre,
                 .Origin = Anchor.BottomCentre,
                 .Font = New FontUsage("ClearSans", 16),
-                .Y = -6,
+                .Y = -8,
                 .Alpha = 0
             }
             Overlay = New RoundedBox With {

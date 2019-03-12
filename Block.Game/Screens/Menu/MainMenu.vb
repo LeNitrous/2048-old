@@ -30,10 +30,14 @@ Namespace Screens.Menu
             ModeSystem = New MenuButtonGroup(1)
             ModeSystem.AddButtonRange(New List(Of MenuButton) From {
                 New MenuButton("back", "", Sub() PlaySystem.Back()),
-                New MenuButton("classic", "reach the 2048 tile!", Sub()
-                                                                      stack.Exit()
-                                                                      stack.Push(New Player(New GameRuleClassic, 4))
-                                                                  End Sub)
+                New MenuButton("classic", "reach the 2048 tile", Sub()
+                                                                     stack.Exit()
+                                                                     stack.Push(New Player(New GameRuleClassic, 6))
+                                                                 End Sub),
+                New MenuButton("endless", "play as long as you can", Sub()
+                                                                         stack.Exit()
+                                                                         stack.Push(New Player(New GameRuleEndless, 6))
+                                                                     End Sub)
             })
 
             LeadSystem = New MenuButtonGroup(1)
@@ -48,7 +52,7 @@ Namespace Screens.Menu
                     .Anchor = Anchor.Centre,
                     .Origin = Anchor.Centre,
                     .Text = "2048",
-                    .Font = New FontUsage("OpenSans", 192, "Bold"),
+                    .Font = New FontUsage("ClearSans", 192, "Bold"),
                     .Colour = colour.FromHex("#776e65"),
                     .Y = -150
                 },

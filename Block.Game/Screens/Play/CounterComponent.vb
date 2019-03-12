@@ -19,7 +19,7 @@ Namespace Screens.Play
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre,
                 .Text = "",
-                .Font = New FontUsage("OpenSans", 48),
+                .Font = New FontUsage("ClearSans", 48),
                 .Y = -5
             }
             AddRangeInternal(New List(Of Drawable) From {
@@ -33,8 +33,8 @@ Namespace Screens.Play
                     .Anchor = Anchor.BottomCentre,
                     .Origin = Anchor.BottomCentre,
                     .Y = -5,
-                    .Text = Title,
-                    .Font = New FontUsage("OpenSans", 20, "Bold"),
+                    .Text = Title.ToUpper(),
+                    .Font = New FontUsage("ClearSans", 20, "Bold"),
                     .Colour = colour.FromHex("eee4da")
                 },
                 Display

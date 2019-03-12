@@ -39,9 +39,13 @@ Namespace Screens.Play
             End If
 
             Content.AddRange(New List(Of Drawable) From {
-                New DrawableGrid(GameManager.Grid) With {
+                New DrawSizePreservingFillContainer With {
                     .Anchor = Anchor.Centre,
-                    .Origin = Anchor.Centre
+                    .Origin = Anchor.Centre,
+                    .RelativeSizeAxes = Axes.None,
+                    .Strategy = DrawSizePreservationStrategy.Average,
+                    .Size = New osuTK.Vector2(528),
+                    .Child = New DrawableGrid(GameManager.Grid)
                 },
                 Counter
             })

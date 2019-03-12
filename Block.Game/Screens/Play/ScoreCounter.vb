@@ -17,7 +17,7 @@ Namespace Screens.Play
                 .Origin = Anchor.Centre,
                 .Position = New Vector2(-20, 0),
                 .Text = String.Format("{0}+", score.NewValue - score.OldValue),
-                .Font = New FontUsage("OpenSans", 24, "Bold")
+                .Font = New FontUsage("ClearSans", 24, "Bold")
             }
             AddInternal(ghost)
             ghost.MoveToY(-30, 500, Easing.OutQuart)
