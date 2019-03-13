@@ -34,8 +34,6 @@ Namespace Screens.Menu
             AutoSizeAxes = Axes.Y
             Anchor = Anchor.Centre
             Origin = Anchor.Centre
-            Y = 100
-
         End Sub
 
         Public Overrides Sub Add(group As ButtonGroup)
