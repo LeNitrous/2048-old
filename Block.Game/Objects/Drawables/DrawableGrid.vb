@@ -1,13 +1,15 @@
 ﻿Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
+Imports osu.Framework.Input.Bindings
 Imports osuTK
 Imports Block.Game.Graphics
 Imports Block.Game.Graphics.Shapes
+Imports Block.Game.Objects.Managers
 
 Namespace Objects.Drawables
-    Public Class DrawableGrid : Inherits CompositeDrawable
-        Private GridObject As Grid
+    Public Class DrawableGrid : Inherits CompositeDrawable : Implements IKeyBindingHandler(Of MoveDirection)
+        Private Manager As GridManager
         Private Tiles As Container
         Private Slots As FillFlowContainer
 
@@ -20,10 +22,9 @@ Namespace Objects.Drawables
             End Get
         End Property
 
-        Public Sub New(ByVal grid As Grid)
-            GridObject = grid
-
-            Size = New Vector2(GridObject.Size * 128 + 10)
+        Public Sub New(ByVal manager As GridManager)
+            Me.Manager = manager
+            Size = New Vector2(manager.Grid.Size * 128 + 10)
             Scale = New Vector2(528 / Size.X)
         End Sub
 
@@ -34,7 +35,7 @@ Namespace Objects.Drawables
                 .Padding = New MarginPadding(5)
             }
 
-            For i = 1 To GridObject.Size ^ 2
+            For i = 1 To Manager.Grid.Size ^ 2
                 Slots.Add(New Container With {
                     .Size = New Vector2(128),
                     .Child = New RoundedBox With {
@@ -63,7 +64,7 @@ Namespace Objects.Drawables
                 Tiles
             }
 
-            AddHandler GridObject.TileAdded, AddressOf OnTileCreated
+            AddHandler Manager.Grid.TileAdded, AddressOf OnTileCreated
         End Sub
 
         Private Sub OnTileCreated(ByRef tile As Tile)
@@ -79,5 +80,14 @@ Namespace Objects.Drawables
                 drawableTile.Content.ScaleTo(1, 100, Easing.OutSine)
             End If
         End Sub
+
+        Public Function OnPressed(action As MoveDirection) As Boolean Implements IKeyBindingHandler(Of MoveDirection).OnPressed
+            Manager.Move(action)
+            Return True
+        End Function
+
+        Public Function OnReleased(action As MoveDirection) As Boolean Implements IKeyBindingHandler(Of MoveDirection).OnReleased
+            Return False
+        End Function
     End Class
 End Namespace

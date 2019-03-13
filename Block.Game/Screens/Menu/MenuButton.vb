@@ -11,6 +11,7 @@ Imports osu.Framework.Input.Events
 
 Namespace Screens.Menu
     Public Class MenuButton : Inherits ClickableContainer
+        Private ReadOnly Icon As String
         Private ReadOnly Title As String
         Private ReadOnly Subtitle As String
         Private ReadOnly ClickAction As Action
@@ -19,9 +20,10 @@ Namespace Screens.Menu
         Private SubtitleSprite As SpriteText
         Private Overlay As RoundedBox
 
-        Public Sub New(ByVal title As String, Optional ByVal subtitle As String = "", Optional ByVal action As Action = Nothing)
+        Public Sub New(ByVal title As String, Optional ByVal subtitle As String = "", Optional ByVal action As Action = Nothing, Optional ByVal icon As String = Nothing)
             Me.Title = title
             Me.Subtitle = subtitle
+            Me.Icon = If(icon, title)
             ClickAction = action
         End Sub
 
@@ -68,7 +70,7 @@ Namespace Screens.Menu
                         .Size = New Vector2(125),
                         .Anchor = Anchor.Centre,
                         .Origin = Anchor.Centre,
-                        .Texture = store.Get(String.Format("Interface/icon-{0}", Title.Replace(" ", String.Empty))),
+                        .Texture = store.Get(String.Format("Interface/{0}", Icon)),
                         .FillMode = FillMode.Fill,
                         .FillAspectRatio = 1.0F
                     },

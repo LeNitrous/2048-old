@@ -6,10 +6,10 @@ Namespace Objects.Managers
         Public Overrides ReadOnly Property DefaultKeyBindings As IEnumerable(Of KeyBinding)
             Get
                 Return New List(Of KeyBinding) From {
-                    New KeyBinding(New InputKey() {InputKey.Up}, MoveDirection.Up),
-                    New KeyBinding(New InputKey() {InputKey.Down}, MoveDirection.Down),
-                    New KeyBinding(New InputKey() {InputKey.Left}, MoveDirection.Left),
-                    New KeyBinding(New InputKey() {InputKey.Right}, MoveDirection.Right)
+                    New KeyBinding(InputKey.Up, MoveDirection.Up),
+                    New KeyBinding(InputKey.Down, MoveDirection.Down),
+                    New KeyBinding(InputKey.Left, MoveDirection.Left),
+                    New KeyBinding(InputKey.Right, MoveDirection.Right)
                 }
             End Get
         End Property

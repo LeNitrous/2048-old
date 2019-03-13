@@ -1,4 +1,5 @@
 ﻿Imports osu.Framework.Allocation
+Imports osu.Framework.Graphics
 Imports osu.Framework.Input.Bindings
 Imports osu.Framework.Testing
 Imports Block.Game.Objects.Managers
@@ -9,7 +10,11 @@ Namespace Tests.Visuals.TestCasePlayer
         Public Manager As New GridManager(4)
 
         Public Sub New()
-            Add(New DrawableGrid(Manager.Grid))
+            Add(New GridInputContainer With {
+                .RelativeSizeAxes = Axes.None,
+                .AutoSizeAxes = Axes.Both,
+                .Child = New DrawableGrid(Manager)
+            })
         End Sub
 
         <BackgroundDependencyLoader>

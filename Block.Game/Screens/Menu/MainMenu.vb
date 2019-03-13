@@ -36,7 +36,8 @@ Namespace Screens.Menu
             For Each Rule As Type In GetGameRules()
                 If Rule.IsSubclassOf(GetType(GameRule)) Then
                     Dim gamerule = CType(Activator.CreateInstance(Rule), GameRule)
-                    ModeSystem.AddButton(New MenuButton(gamerule.Name.ToLower(), gamerule.Description, Sub() OnPlay(gamerule)))
+                    ModeSystem.AddButton(New MenuButton(gamerule.Name.ToLower(), gamerule.Description, Sub() OnPlay(gamerule),
+                                                        String.Format("mode-{0}", gamerule.Name.ToLower().Replace(" ", String.Empty))))
                 End If
             Next
 

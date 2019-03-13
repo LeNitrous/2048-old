@@ -2,7 +2,9 @@
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Input.Bindings
+Imports osuTK
 Imports Block.Game.Graphics
+Imports Block.Game.Graphics.UserInterface
 Imports Block.Game.Objects.Managers
 Imports Block.Game.Objects.Drawables
 Imports Block.Game.Rules
@@ -20,40 +22,55 @@ Namespace Screens.Play
         <BackgroundDependencyLoader>
         Private Sub Load(ByVal colour As BlockColour)
             Dim Counter As New FillFlowContainer With {
-                .AutoSizeAxes = Axes.Y,
-                .Width = 600,
                 .Direction = FillDirection.Horizontal,
                 .Anchor = Anchor.Centre,
-                .Origin = Anchor.Centre,
-                .Y = -320
+                .Position = New Vector2(-300, -360),
+                .Size = New Vector2(300, 80)
+            }
+            Dim Buttons As New FillFlowContainer With {
+                .Direction = FillDirection.Horizontal,
+                .Anchor = Anchor.Centre,
+                .Position = New Vector2(0, -360),
+                .Size = New Vector2(300, 80),
+                .Children = New List(Of Drawable) From {
+                    New ButtonIcon("exit"),
+                    New ButtonIcon("restart")
+                }
             }
 
             If GameRule.ShowMoves Then
-                Counter.Add(New MoveCounter(GameManager.Moves) With {
-                    .Margin = New MarginPadding() With {.Right = 5}
-                })
+                Counter.Add(New MoveCounter(GameManager.Moves))
             End If
 
             If GameRule.ShowScore Then
-                Counter.Add(New ScoreCounter(GameManager.Score) With {
-                    .Margin = New MarginPadding() With {.Right = 5}
-                })
+                Counter.Add(New ScoreCounter(GameManager.Score))
             End If
 
             If GameRule.ShowTimer Then
-                Counter.Add(New TimerCounter(GameManager.Watch) With {
-                    .Margin = New MarginPadding()
-                 })
+                Counter.Add(New TimerCounter(GameManager.Watch))
             End If
 
+            For Each Child In Counter.Children
+                Child.Margin = New MarginPadding With {.Right = 5}
+            Next
+
+            For Each Child In Buttons.Children
+                Child.Margin = New MarginPadding With {.Left = 5}
+                Child.Anchor = Anchor.BottomRight
+                Child.Origin = Anchor.BottomRight
+            Next
+
             Content.AddRange(New List(Of Drawable) From {
-                New DrawableGrid(GameManager.Grid) With {
+                New GridInputContainer With {
                     .Anchor = Anchor.Centre,
                     .Origin = Anchor.Centre,
-                    .GridAreaSize = 600,
-                    .Y = 30
+                    .Y = 30,
+                    .RelativeSizeAxes = Axes.None,
+                    .AutoSizeAxes = Axes.Both,
+                    .Child = New DrawableGrid(GameManager) With {.GridAreaSize = 600}
                 },
-                Counter
+                Counter,
+                Buttons
             })
 
             GameManager.AddStartTiles()
