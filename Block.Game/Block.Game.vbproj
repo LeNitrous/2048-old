@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Block.Game.Resources\Block.Game.Resources.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Graphics\Backgrounds\" />
+  </ItemGroup>
+
 </Project>

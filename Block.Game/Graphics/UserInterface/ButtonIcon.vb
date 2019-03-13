@@ -10,6 +10,8 @@ Imports osu.Framework.Input.Events
 
 Namespace Graphics.UserInterface
     Public Class ButtonIcon : Inherits ClickableContainer
+        Public IconSprite As Sprite
+
         Private ReadOnly Icon As String
         Private ReadOnly ClickAction As Action
         Private Overlay As RoundedBox
@@ -27,17 +29,18 @@ Namespace Graphics.UserInterface
                 .Colour = Color4.WhiteSmoke,
                 .Alpha = 0F
             }
+            IconSprite = New Sprite With {
+                .Texture = store.Get(String.Format("Interface/{0}", Icon)),
+                .Size = New Vector2(24),
+                .Anchor = Anchor.Centre,
+                .Origin = Anchor.Centre
+            }
             Children = New List(Of Drawable) From {
                 New RoundedBox With {
                     .RelativeSizeAxes = Axes.Both,
                     .Colour = colour.FromHex("8f7a66")
                 },
-                New Sprite With {
-                    .Texture = store.Get(String.Format("Interface/{0}", Icon)),
-                    .Size = New Vector2(24),
-                    .Anchor = Anchor.Centre,
-                    .Origin = Anchor.Centre
-                },
+                IconSprite,
                 Overlay
             }
         End Sub
