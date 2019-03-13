@@ -1,6 +1,5 @@
 ﻿Imports osu.Framework.Allocation
 Imports osu.Framework.Audio
-Imports osu.Framework.Audio.Track
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Sprites
 Imports osu.Framework.Screens
@@ -37,7 +36,5 @@ Namespace Screens.Menu
             Stack.Exit()
             Stack.Push(New Player(rule, 4))
         End Sub
-
-
     End Class
 End Namespace

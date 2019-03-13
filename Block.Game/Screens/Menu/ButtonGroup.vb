@@ -4,8 +4,8 @@ Imports osu.Framework.Graphics.Containers
 
 Namespace Screens.Menu
     Public Class ButtonGroup : Inherits FillFlowContainer(Of MenuButton) : Implements IStateful(Of ButtonGroupState)
-        Public ID As String
-        Public ParentID As String
+        Public ReadOnly Id As String
+        Public ReadOnly ParentId As String
         Private Visible As ButtonGroupState
 
         Public Event StateChanged As Action(Of ButtonGroupState) Implements IStateful(Of ButtonGroupState).StateChanged
@@ -33,7 +33,9 @@ Namespace Screens.Menu
             End Set
         End Property
 
-        Public Sub New(ByVal buttons As List(Of MenuButton))
+        Public Sub New(ByVal name As String, ByVal buttons As List(Of MenuButton), Optional ByVal parent As String = "")
+            Id = name
+            ParentId = parent
             RelativeSizeAxes = Axes.X
             AutoSizeAxes = Axes.Y
             Direction = FillDirection.Horizontal

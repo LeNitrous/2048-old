@@ -1,24 +1,24 @@
 ﻿Imports System.Reflection
-Imports osu.Framework
-Imports osu.Framework.Bindables
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
+Imports osu.Framework.Logging
 Imports Block.Game.Rules
 
 Namespace Screens.Menu
     Public Class ButtonSystem : Inherits Container(Of ButtonGroup)
-        Public Page As New Bindable(Of ButtonGroup)
+        Public PrevPage As String
+        Public NextPage As String = "main"
 
         Public Sub New()
             AddRange(New List(Of ButtonGroup) From {
-                New ButtonGroup(New List(Of MenuButton)) From {
-                    New MenuButton("play", "lets begin our <Play>"),
+                New ButtonGroup("main", New List(Of MenuButton) From {
+                    New MenuButton("play", "lets begin our <Play>", Sub() GoToPage("play")),
                     New MenuButton("exit", "leaving so soon?")
-                },
-                New ButtonGroup(New List(Of MenuButton)) From {
-                    New MenuButton("solo", "you're alone on this"),
+                }),
+                New ButtonGroup("play", New List(Of MenuButton) From {
+                    New MenuButton("solo", "you're alone on this", Sub() GoToPage("solo")),
                     New MenuButton("multi", "play with others")
-                }
+                }, "main")
             })
 
             Dim ruleButtons As New List(Of MenuButton)
@@ -28,7 +28,7 @@ Namespace Screens.Menu
                                                String.Format("mode-{0}", Rule.Name.ToLower().Replace(" ", String.Empty))))
             Next
 
-            Add(New ButtonGroup(ruleButtons))
+            Add(New ButtonGroup("solo", ruleButtons, "play"))
 
             RelativeSizeAxes = Axes.X
             AutoSizeAxes = Axes.Y
@@ -36,22 +36,44 @@ Namespace Screens.Menu
             Origin = Anchor.Centre
             Y = 100
 
-            AddHandler Page.ValueChanged, AddressOf HandlePageChange
         End Sub
 
-        Public Overrides Sub Add(page As ButtonGroup)
+        Public Overrides Sub Add(group As ButtonGroup)
             If Children.Count > 0 Then
-                page.Add(New MenuButton("back", ""))
-                page.State = ButtonGroupState.Backward
+                group.Add(New MenuButton("back", "", Sub() GoToPage("back")))
+                group.State = ButtonGroupState.Backward
+            Else
+                group.State = ButtonGroupState.Visible
             End If
 
-            MyBase.Add(page)
+            MyBase.Add(group)
         End Sub
 
-        Private Sub HandlePageChange(ByVal page As ValueChangedEvent(Of ButtonGroup))
-            page.OldValue.State = ButtonGroupState.Forward
-            page.NewValue.State = ButtonGroupState.Visible
+        Private Sub GoToPage(ByVal page As String)
+            If page = "back" Then
+                Dim temp = NextPage
+                NextPage = GetPageByName(NextPage).ParentId
+                PrevPage = temp
+            Else
+                PrevPage = NextPage
+                NextPage = page
+            End If
+
+            Dim old As ButtonGroup = GetPageByName(PrevPage)
+            Dim now As ButtonGroup = GetPageByName(NextPage)
+
+            old.State = If(page = "back", ButtonGroupState.Backward, ButtonGroupState.Forward)
+            now.State = ButtonGroupState.Visible
         End Sub
+
+        Private Function GetPageByName(ByVal name As String) As ButtonGroup
+            Try
+                Return [Single](Function(p) p.Id = name)
+            Catch e As InvalidOperationException
+                Logger.Log(String.Format("ButtonGroup {0} is not found.", name))
+                Return Nothing
+            End Try
+        End Function
 
         Private Function GetGameRules() As List(Of GameRule)
             Dim rules As New List(Of GameRule)
