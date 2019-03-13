@@ -33,9 +33,7 @@ Namespace Screens.Menu
             End Set
         End Property
 
-        Public Sub New(ByVal id As String, ByVal parentId As String, ByVal buttons As List(Of MenuButton))
-            Me.ID = id
-            Me.ParentID = parentId
+        Public Sub New(ByVal buttons As List(Of MenuButton))
             RelativeSizeAxes = Axes.X
             AutoSizeAxes = Axes.Y
             Direction = FillDirection.Horizontal

@@ -7,7 +7,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Fonts\**\*" />
     <EmbeddedResource Include="Textures\**\*" />
+    <EmbeddedResource Include="Tracks\**\*" />
     <EmbeddedResource Include="Samples\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Tracks\" />
   </ItemGroup>
 
 </Project>

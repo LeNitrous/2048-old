@@ -1,7 +1,9 @@
-﻿Imports osu.Framework.Screens
-Imports osu.Framework.Allocation
+﻿Imports osu.Framework.Allocation
+Imports osu.Framework.Audio
+Imports osu.Framework.Audio.Track
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Sprites
+Imports osu.Framework.Screens
 Imports Block.Game.Graphics
 Imports Block.Game.Rules
 Imports Block.Game.Screens.Play
@@ -12,7 +14,11 @@ Namespace Screens.Menu
         Private Property Stack As ScreenStack
 
         <BackgroundDependencyLoader>
-        Private Sub Load(ByVal colour As BlockColour)
+        Private Sub Load(ByVal colour As BlockColour, ByVal audio As AudioManager)
+            Dim music = audio.Track.Get("newfriendly")
+            music.RestartPoint = 25061
+            music.Looping = True
+            music.Start()
 
             Content.AddRange(New List(Of Drawable) From {
                 New SpriteText With {
