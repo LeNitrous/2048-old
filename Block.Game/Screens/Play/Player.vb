@@ -1,4 +1,5 @@
 ﻿Imports osu.Framework.Allocation
+Imports osu.Framework.Audio
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Input.Bindings
@@ -25,7 +26,9 @@ Namespace Screens.Play
         End Sub
 
         <BackgroundDependencyLoader>
-        Private Sub Load(ByVal colour As BlockColour)
+        Private Sub Load(ByVal audio As AudioManager, ByVal colour As BlockColour)
+            BackgroundTrack = audio.Track.Get("gameplay-solo")
+
             Dim Counter As New FillFlowContainer With {
                 .Direction = FillDirection.Horizontal,
                 .Anchor = Anchor.Centre,

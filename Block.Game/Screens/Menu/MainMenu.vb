@@ -6,7 +6,6 @@ Imports osu.Framework.Graphics.Textures
 Imports osu.Framework.Screens
 Imports osuTK
 Imports Block.Game.Graphics
-Imports Block.Game.Rules
 Imports Block.Game.Screens.Play
 
 Namespace Screens.Menu
@@ -18,6 +17,8 @@ Namespace Screens.Menu
 
         <BackgroundDependencyLoader>
         Private Sub Load(ByVal colour As BlockColour, ByVal audio As AudioManager, ByVal store As TextureStore)
+            BackgroundTrack = audio.Track.Get("mainmenu")
+
             Dim logo = New Sprite With {
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre,
@@ -26,14 +27,12 @@ Namespace Screens.Menu
                 .Scale = New Vector2(1.5),
                 .Y = -200
             }
-
             Selector = New RuleSelector With {
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre,
                 .SelectRule = AddressOf OnPlay,
                 .Y = 50
             }
-
             Content.AddRange(New List(Of Drawable) From {
                 logo,
                 Selector,
@@ -59,7 +58,6 @@ Namespace Screens.Menu
                     .Position = New Vector2(-10, 50)
                 }
             })
-
             logo.MoveToY(-190, 1000, Easing.OutSine).Then().MoveToY(-200, 1000, Easing.OutSine).Loop()
         End Sub
 

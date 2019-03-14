@@ -1,4 +1,5 @@
 ﻿Imports osu.Framework.Allocation
+Imports osu.Framework.Audio.Track
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Graphics.Shapes
@@ -10,7 +11,9 @@ Imports Block.Game.Graphics
 
 Namespace Screens
     Public Class Screen : Inherits osu.Framework.Screens.Screen
+        Public BackgroundTrack As Track
         Public Content As Container
+        Private LastPoint As Single
 
         <BackgroundDependencyLoader>
         Private Sub Load(ByVal colour As BlockColour, ByVal store As TextureStore)
@@ -36,21 +39,35 @@ Namespace Screens
 
         Public Overrides Sub OnEntering(last As IScreen)
             FadeInFromZero(250)
+            If Not BackgroundTrack Is Nothing Then
+                BackgroundTrack.Start()
+            End If
             MyBase.OnEntering(last)
         End Sub
 
         Public Overrides Sub OnResuming(last As IScreen)
             FadeInFromZero(250)
+            If Not BackgroundTrack Is Nothing Then
+                BackgroundTrack.Seek(LastPoint)
+                BackgroundTrack.Start()
+            End If
             MyBase.OnResuming(last)
         End Sub
 
         Public Overrides Function OnExiting([next] As IScreen) As Boolean
             FadeOutFromOne(250)
+            If Not BackgroundTrack Is Nothing Then
+                BackgroundTrack.Stop()
+            End If
             Return MyBase.OnExiting([next])
         End Function
 
         Public Overrides Sub OnSuspending([next] As IScreen)
             FadeOutFromOne(250)
+            If Not BackgroundTrack Is Nothing Then
+                LastPoint = BackgroundTrack.CurrentTime
+                BackgroundTrack.Stop()
+            End If
             MyBase.OnSuspending([next])
         End Sub
     End Class
