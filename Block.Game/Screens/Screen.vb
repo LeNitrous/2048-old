@@ -2,23 +2,33 @@
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Graphics.Shapes
+Imports osu.Framework.Graphics.Sprites
+Imports osu.Framework.Graphics.Textures
 Imports osu.Framework.Screens
+Imports osuTK
 Imports Block.Game.Graphics
 
 Namespace Screens
     Public Class Screen : Inherits osu.Framework.Screens.Screen
-
         Public Content As Container
 
         <BackgroundDependencyLoader>
-        Private Sub Load(ByVal colour As BlockColour)
+        Private Sub Load(ByVal colour As BlockColour, ByVal store As TextureStore)
             Content = New Container With {
                 .RelativeSizeAxes = Axes.Both
             }
             InternalChildren = New List(Of Drawable)({
                 New Box With {
                     .RelativeSizeAxes = Axes.Both,
-                    .Colour = colour.FromHex("faf8ef")
+                    .Colour = colour.LightestBrown
+                },
+                New Sprite With {
+                    .Anchor = Anchor.Centre,
+                    .Origin = Anchor.Centre,
+                    .Colour = colour.DarkestBrown,
+                    .Alpha = 0.1,
+                    .Texture = store.Get("logo-notext"),
+                    .Scale = New Vector2(2)
                 },
                 Content
             })

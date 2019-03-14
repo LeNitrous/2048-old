@@ -2,17 +2,22 @@
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Input.Bindings
+Imports osu.Framework.Screens
 Imports osuTK
 Imports Block.Game.Graphics
 Imports Block.Game.Graphics.UserInterface
 Imports Block.Game.Objects.Managers
 Imports Block.Game.Objects.Drawables
 Imports Block.Game.Rules
+Imports Block.Game.Screens.Menu
 
 Namespace Screens.Play
     Public Class Player : Inherits Screen : Implements IKeyBindingHandler(Of MoveDirection)
         Private ReadOnly GameManager As GridManager
         Private ReadOnly GameRule As GameRule
+
+        <Resolved>
+        Private Property Stack As ScreenStack
 
         Public Sub New(ByVal rule As IGameRule, ByVal size As Integer)
             GameManager = New GridManager(size)
@@ -81,11 +86,15 @@ Namespace Screens.Play
         End Sub
 
         Private Sub OnWin()
-
+            GameManager.Watch.Stop()
+            Stack.Exit()
+            Stack.Push(New MainMenu)
         End Sub
 
         Private Sub OnLose()
             GameManager.Watch.Stop()
+            Stack.Exit()
+            Stack.Push(New MainMenu)
         End Sub
 
         Public Function OnPressed(action As MoveDirection) As Boolean Implements IKeyBindingHandler(Of MoveDirection).OnPressed

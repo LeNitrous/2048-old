@@ -4,25 +4,22 @@ Imports osu.Framework.Graphics.Shapes
 Imports osuTK.Graphics
 
 Namespace Graphics.Shapes
-    Public Class RoundedBox : Inherits CompositeDrawable
+    Public Class RoundedBox : Inherits Container
         Public Property BackgroundColour As Color4
             Get
-                Return InnerBox.Colour
+                Return Background.Colour
             End Get
             Set(value As Color4)
-                InnerBox.Colour = value
+                Background.Colour = value
             End Set
         End Property
-        Private InnerBox As Box
+        Private Background As Box
 
         Public Sub New()
-            InnerBox = New Box With {.RelativeSizeAxes = Axes.Both}
-            InternalChild = New Container With {
-                .RelativeSizeAxes = Axes.Both,
-                .Masking = True,
-                .CornerRadius = 5,
-                .Child = InnerBox
-            }
+            Masking = True
+            CornerRadius = 5
+            Background = New Box With {.RelativeSizeAxes = Axes.Both}
+            InternalChild = Background
         End Sub
     End Class
 End Namespace
