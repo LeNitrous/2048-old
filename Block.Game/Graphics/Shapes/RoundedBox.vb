@@ -5,8 +5,6 @@ Imports osuTK.Graphics
 
 Namespace Graphics.Shapes
     Public Class RoundedBox : Inherits CompositeDrawable
-
-        Private InnerBox As Box
         Public Property BackgroundColour As Color4
             Get
                 Return InnerBox.Colour
@@ -15,6 +13,7 @@ Namespace Graphics.Shapes
                 InnerBox.Colour = value
             End Set
         End Property
+        Private InnerBox As Box
 
         Public Sub New()
             InnerBox = New Box With {.RelativeSizeAxes = Axes.Both}

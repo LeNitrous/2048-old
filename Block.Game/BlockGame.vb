@@ -1,3 +1,4 @@
+Imports System.Reflection
 Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
@@ -5,6 +6,7 @@ Imports osu.Framework.Graphics.Shapes
 Imports osu.Framework.IO.Stores
 Imports osu.Framework.Screens
 Imports Block.Game.Graphics
+Imports Block.Game.Rules
 Imports Block.Game.Online.API
 Imports Block.Game.Screens.Menu
 
@@ -51,5 +53,17 @@ Public Class BlockGame : Inherits osu.Framework.Game
         Dependencies.Cache(New API)
         Dependencies.Cache(stack)
         Dependencies.Cache(blockColour)
+        Dependencies.Cache(GetAvailableRules())
     End Sub
+
+    Private Function GetAvailableRules() As List(Of GameRule)
+        Dim rules As New List(Of GameRule)
+        Dim found = Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) String.Equals(t.Namespace, "Block.Game.Rules", StringComparison.Ordinal))
+        For Each instance In found
+            If instance.IsSubclassOf(GetType(GameRule)) Then
+                rules.Add(CType(Activator.CreateInstance(instance), GameRule))
+            End If
+        Next
+        Return rules
+    End Function
 End Class

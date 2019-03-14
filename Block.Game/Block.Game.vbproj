@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Screens\Menu\MenuButton.vb~RF3202ac.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ppy.OpenTK" Version="3.0.13" />
     <PackageReference Include="ppy.osu.Framework" Version="2019.308.0" />
     <PackageReference Include="protobuf-net" Version="2.4.0" />

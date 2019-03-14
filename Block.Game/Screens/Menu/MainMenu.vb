@@ -29,8 +29,7 @@ Namespace Screens.Menu
                     .Colour = colour.FromHex("#776e65"),
                     .Scale = New Vector2(1.5),
                     .Y = -150
-                },
-                New ButtonSystem With {.Y = 175}
+                }
             })
         End Sub
 

@@ -38,5 +38,10 @@ Namespace Graphics
             FromHex("edc22e"),
             FromHex("3c3a32")
         }
+
+        Public LightestBrown As Color4 = FromHex("faf8ef")
+        Public LighterBrown As Color4 = FromHex("bbada0")
+        Public DarkerBrown As Color4 = FromHex("8f7a66")
+        Public DarkestBrown As Color4 = FromHex("776e65")
     End Class
 End Namespace

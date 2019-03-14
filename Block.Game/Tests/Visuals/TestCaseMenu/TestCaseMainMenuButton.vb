@@ -7,7 +7,7 @@ Namespace Tests.Visuals.TestCaseMenu
     Public Class TestCaseMainMenuButton : Inherits TestCase
         <BackgroundDependencyLoader>
         Private Sub Load()
-            Add(New MenuButton("play", "some classic 2048") With {.Anchor = Anchor.Centre})
+            Add(New MenuButton("exit") With {.Anchor = Anchor.Centre})
         End Sub
     End Class
 End Namespace
