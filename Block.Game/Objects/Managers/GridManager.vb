@@ -10,7 +10,7 @@ Namespace Objects.Managers
         Public ReadOnly Moves As New BindableInt
         Public Grid As Grid
         Public ShouldAddRandomTile As Boolean = True
-        Public History As List(Of Tile(,))
+        Public History As New List(Of Tile(,))
 
         Public Event Win()
         Public Event Lose()
