@@ -36,12 +36,13 @@ Namespace Screens.Menu
             Content.AddRange(New List(Of Drawable) From {
                 logo,
                 Selector,
-                New MenuButton("multi") With {
+                New MenuButton("exit", Sub() Game.Exit()) With {
+                    .Scale = New Vector2(0.5),
                     .Anchor = Anchor.Centre,
                     .Origin = Anchor.Centre,
-                    .Y = 300
+                    .Y = 320
                 },
-                New MenuButton("exit", Sub() Game.Exit()) With {
+                New MenuButton("multi") With {
                     .Anchor = Anchor.Centre,
                     .Origin = Anchor.Centre,
                     .Position = New Vector2(-300, 180)
@@ -61,7 +62,7 @@ Namespace Screens.Menu
             logo.MoveToY(-190, 1000, Easing.OutSine).Then().MoveToY(-200, 1000, Easing.OutSine).Loop()
         End Sub
 
-        Private Sub OnPlay(Optional ByVal size As Integer = 4)
+        Private Sub OnPlay()
             Stack.Push(New Player(Selector.GetSelectedRule(), 4))
         End Sub
     End Class

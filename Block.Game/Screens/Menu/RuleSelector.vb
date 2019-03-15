@@ -7,13 +7,14 @@ Imports osu.Framework.Graphics.Textures
 Imports osu.Framework.Input.Events
 Imports osuTK
 Imports osuTK.Graphics
+Imports Block.Game.Bindables
 Imports Block.Game.Graphics
 Imports Block.Game.Rules
 
 Namespace Screens.Menu
     Public Class RuleSelector : Inherits Container
         Public SelectRule As Action
-        Private SelectedRuleId As BindableInt
+        Private SelectedRuleId As WrappingBindableInt
         Private RuleSelected As SelectorSelectButton
         Private RuleNameSprite As SpriteText
         Private RuleDescSprite As SpriteText
@@ -75,7 +76,7 @@ Namespace Screens.Menu
                 RuleNameSprite,
                 RuleDescSprite
             }
-            SelectedRuleId = New BindableInt With {
+            SelectedRuleId = New WrappingBindableInt With {
                 .MinValue = 0,
                 .MaxValue = Rules.Count - 1
             }

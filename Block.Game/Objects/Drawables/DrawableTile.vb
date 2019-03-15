@@ -9,9 +9,7 @@ Imports Block.Game.Graphics
 Imports Block.Game.Graphics.Shapes
 
 Namespace Objects.Drawables
-    Public Class DrawableTile : Inherits CompositeDrawable
-        Public Content As Container
-
+    Public Class DrawableTile : Inherits Container
         Private TileObject As Tile
         Private Background As RoundedBox
         Private TextSprite As SpriteText
@@ -26,6 +24,7 @@ Namespace Objects.Drawables
         <BackgroundDependencyLoader>
         Private Sub Load()
             Size = New Vector2(128)
+            Position = Vector2.Multiply(TileObject.Position.Value, 128)
             Background = New RoundedBox With {
                 .RelativeSizeAxes = Axes.Both,
                 .Size = New Vector2(0.9),
@@ -37,16 +36,15 @@ Namespace Objects.Drawables
                 .Origin = Anchor.Centre,
                 .Text = TileObject.Score.Value
             }
-            Content = New Container With {
-                .RelativeSizeAxes = Axes.Both,
+            Child = New Container With {
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre,
+                .RelativeSizeAxes = Axes.Both,
                 .Children = New List(Of Drawable) From {
                     Background,
                     TextSprite
                 }
             }
-            InternalChild = Content
 
             UpdateTile(TileObject.Score.Value)
 
@@ -54,26 +52,21 @@ Namespace Objects.Drawables
             AddHandler TileObject.Position.ValueChanged, AddressOf OnChangePosition
         End Sub
 
-        Public Sub OnChangeScore(ByVal score As ValueChangedEvent(Of Integer))
+        Public Sub Grow()
+            Child.Scale = New Vector2(0)
+            Child.ScaleTo(1, 100, Easing.OutSine)
+        End Sub
+
+        Private Sub OnChangeScore(ByVal score As ValueChangedEvent(Of Integer))
             UpdateTile(score.NewValue)
             ClearTransforms()
 
-            Content.Scale = New Vector2(0.6)
-            Content.ScaleTo(1, 750, Easing.OutElastic)
-
-            If score.NewValue >= 2048 Then
-                Dim ghost As New DrawableTile(TileObject) With {
-                    .Alpha = 1,
-                    .Scale = New Vector2(0.75)
-                }
-                ghost.ScaleTo(1.25, 800, Easing.OutCirc)
-                ghost.FadeTo(0, 1000, Easing.OutCirc)
-                ghost.Expire()
-            End If
+            Child.Scale = New Vector2(0.6)
+            Child.ScaleTo(1, 750, Easing.OutElastic)
         End Sub
 
         Private Sub OnChangePosition(ByVal position As ValueChangedEvent(Of Vector2))
-            MoveTo(New Vector2(position.NewValue.X * 128, position.NewValue.Y * 128), 150)
+            MoveTo(Vector2.Multiply(position.NewValue, 64), 150)
 
             If TileObject.IsMerged Then
                 Expire()
