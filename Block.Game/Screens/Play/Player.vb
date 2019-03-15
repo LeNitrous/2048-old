@@ -7,6 +7,7 @@ Imports osu.Framework.Screens
 Imports osuTK
 Imports Block.Game.Graphics
 Imports Block.Game.Graphics.UserInterface
+Imports Block.Game.Objects
 Imports Block.Game.Objects.Managers
 Imports Block.Game.Objects.Drawables
 Imports Block.Game.Rules
@@ -41,8 +42,9 @@ Namespace Screens.Play
                 .Position = New Vector2(0, -360),
                 .Size = New Vector2(300, 80),
                 .Children = New List(Of Drawable) From {
-                    New ButtonIcon("exit"),
-                    New ButtonIcon("restart")
+                    New ButtonIcon("exit", AddressOf OnExit),
+                    New ButtonIcon("restart", AddressOf OnRestart),
+                    New ButtonIcon("back")
                 }
             }
 
@@ -98,6 +100,22 @@ Namespace Screens.Play
             GameManager.Watch.Stop()
             Stack.Exit()
             Stack.Push(New MainMenu)
+        End Sub
+
+        Private Sub OnExit()
+            Stack.Exit()
+            Stack.Push(New MainMenu)
+        End Sub
+
+        Private Sub OnRestart()
+            GameManager.Watch.Restart()
+            GameManager.Score.Value = 0
+            GameManager.Moves.Value = 0
+        End Sub
+
+        Private Sub OnRewind()
+            Dim last As Tile(,) = GameManager.History.LastOrDefault()
+            GameManager.Grid.Cells = last
         End Sub
 
         Public Function OnPressed(action As MoveDirection) As Boolean Implements IKeyBindingHandler(Of MoveDirection).OnPressed

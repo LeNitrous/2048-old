@@ -41,7 +41,7 @@ Namespace Screens.Menu
                     .Origin = Anchor.Centre,
                     .Y = 300
                 },
-                New MenuButton("exit") With {
+                New MenuButton("exit", Sub() Game.Exit()) With {
                     .Anchor = Anchor.Centre,
                     .Origin = Anchor.Centre,
                     .Position = New Vector2(-300, 180)
@@ -62,7 +62,6 @@ Namespace Screens.Menu
         End Sub
 
         Private Sub OnPlay(Optional ByVal size As Integer = 4)
-            Stack.Exit()
             Stack.Push(New Player(Selector.GetSelectedRule(), 4))
         End Sub
     End Class

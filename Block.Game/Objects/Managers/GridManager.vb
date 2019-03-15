@@ -1,6 +1,6 @@
 ﻿Imports osu.Framework.Bindables
+Imports osu.Framework.Logging
 Imports osuTK
-Imports osuTK.Input
 
 Namespace Objects.Managers
     Public Class GridManager
@@ -10,6 +10,7 @@ Namespace Objects.Managers
         Public ReadOnly Moves As New BindableInt
         Public Grid As Grid
         Public ShouldAddRandomTile As Boolean = True
+        Public History As List(Of Tile(,))
 
         Public Event Win()
         Public Event Lose()
@@ -21,7 +22,9 @@ Namespace Objects.Managers
         Public Sub AddRandomTile()
             If Grid.GetAvailableCells().Count Then
                 Dim value = If(Grid.RNG.NextDouble() < 0.9, 2, 4)
-                Dim tile = New Tile(value, Grid.GetRandomAvailableCell())
+                Dim position = Grid.GetRandomAvailableCell()
+                Dim tile = New Tile(value, position)
+                Logger.Log(String.Format("Placed a random tile at x{0}y{1}", position.X, position.Y))
                 Grid.InsertTile(tile)
             End If
         End Sub
@@ -32,6 +35,7 @@ Namespace Objects.Managers
             Dim moved = False
 
             PrepareTiles()
+            History.Add(Grid.Cells)
 
             traversals.X.ForEach(Sub(x)
                                      traversals.Y.ForEach(Sub(y)
@@ -55,6 +59,7 @@ Namespace Objects.Managers
 
                                                                           Score.Set(Score.Value + CInt(merged))
                                                                           If CInt(merged) = 2048 Then
+                                                                              Logger.Log("Game Ended with a win.")
                                                                               RaiseEvent Win()
                                                                           End If
                                                                       Else
@@ -76,6 +81,7 @@ Namespace Objects.Managers
                     AddRandomTile()
                 End If
                 If Not MovesAvailable() Then
+                    Logger.Log("Game Ended with a lose.")
                     RaiseEvent Lose()
                 End If
             End If
