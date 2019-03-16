@@ -1,41 +1,36 @@
 ﻿Imports osu.Framework.Allocation
-Imports osu.Framework.Audio
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Sprites
 Imports osu.Framework.Graphics.Textures
 Imports osu.Framework.Screens
-Imports osuTK
 Imports Block.Game.Graphics
+Imports Block.Game.Rules
 Imports Block.Game.Screens.Play
+Imports osuTK
 
 Namespace Screens.Menu
     Public Class MainMenu : Inherits Screen
-        Private Selector As RuleSelector
-
-        <Resolved>
-        Private Property Stack As ScreenStack
+        Private Player As Player
+        Private RuleSelect As RuleSelector
 
         <BackgroundDependencyLoader>
-        Private Sub Load(ByVal colour As BlockColour, ByVal audio As AudioManager, ByVal store As TextureStore)
-            BackgroundTrack = audio.Track.Get("mainmenu")
-
-            Dim logo = New Sprite With {
-                .Anchor = Anchor.Centre,
-                .Origin = Anchor.Centre,
-                .Texture = store.Get("logo"),
-                .Colour = colour.FromHex("#776e65"),
-                .Scale = New Vector2(1.5),
-                .Y = -200
-            }
-            Selector = New RuleSelector With {
+        Private Sub Load(colours As Colours, store As TextureStore)
+            RuleSelect = New RuleSelector With {
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre,
                 .SelectRule = AddressOf OnPlay,
                 .Y = 50
             }
-            Content.AddRange(New List(Of Drawable) From {
-                logo,
-                Selector,
+            InternalChildren = New List(Of Drawable) From {
+                RuleSelect,
+                New Sprite With {
+                    .Anchor = Anchor.Centre,
+                    .Origin = Anchor.Centre,
+                    .Texture = store.Get("logo"),
+                    .Colour = colours.FromHex("#776e65"),
+                    .Scale = New Vector2(1.5),
+                    .Y = -200
+                },
                 New MenuButton("exit", Sub() Game.Exit()) With {
                     .Scale = New Vector2(0.5),
                     .Anchor = Anchor.Centre,
@@ -58,12 +53,13 @@ Namespace Screens.Menu
                     .Scale = New Vector2(0.5),
                     .Position = New Vector2(-10, 50)
                 }
-            })
-            logo.MoveToY(-190, 1000, Easing.OutSine).Then().MoveToY(-200, 1000, Easing.OutSine).Loop()
+            }
+
+
         End Sub
 
-        Private Sub OnPlay()
-            Stack.Push(New Player(Selector.GetSelectedRule(), 4))
+        Private Sub OnPlay(rule As GameRule)
+            LoadComponentAsync(New Player(rule), Sub(s) Push(s))
         End Sub
     End Class
 End Namespace

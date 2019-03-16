@@ -5,15 +5,16 @@ Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Graphics.Sprites
 Imports osu.Framework.Graphics.Textures
 Imports osu.Framework.Input.Events
-Imports osuTK
-Imports osuTK.Graphics
 Imports Block.Game.Bindables
 Imports Block.Game.Graphics
+Imports Block.Game.Graphics.UserInterface
 Imports Block.Game.Rules
+Imports osuTK
+Imports osuTK.Graphics
 
 Namespace Screens.Menu
     Public Class RuleSelector : Inherits Container
-        Public SelectRule As Action
+        Public SelectRule As Action(Of GameRule)
         Private SelectedRuleId As WrappingBindableInt
         Private RuleSelected As SelectorSelectButton
         Private RuleNameSprite As SpriteText
@@ -24,14 +25,10 @@ Namespace Screens.Menu
         Private Property Store As TextureStore
 
         <Resolved>
-        Private Property Colours As BlockColour
+        Private Property Colours As Colours
 
         <Resolved>
         Private Property Rules As List(Of GameRule)
-
-        Public Sub New()
-
-        End Sub
 
         <BackgroundDependencyLoader>
         Private Sub Load()
@@ -80,7 +77,6 @@ Namespace Screens.Menu
                 .MinValue = 0,
                 .MaxValue = Rules.Count - 1
             }
-
             AddHandler RuleSelected.CurrentRule.ValueChanged, AddressOf OnChangeRule
             AddHandler SelectedRuleId.ValueChanged, AddressOf OnChangeSelectedId
             RuleSelected.CurrentRule.Value = Rules.FirstOrDefault()
@@ -105,7 +101,7 @@ Namespace Screens.Menu
 
         Private Sub OnSelectRule()
             If Not SelectRule Is Nothing Then
-                SelectRule.Invoke()
+                SelectRule.Invoke(RuleSelected.CurrentRule.Value)
             End If
         End Sub
 
@@ -117,7 +113,7 @@ Namespace Screens.Menu
             End Sub
 
             <BackgroundDependencyLoader>
-            Private Sub Load(ByVal colours As BlockColour)
+            Private Sub Load(ByVal colours As Colours)
                 CurrentRule = New Bindable(Of GameRule)
                 Size = New Vector2(140)
             End Sub
@@ -136,7 +132,7 @@ Namespace Screens.Menu
             End Sub
 
             <BackgroundDependencyLoader>
-            Private Sub Load(ByVal colours As BlockColour)
+            Private Sub Load(ByVal colours As Colours)
                 Size = New Vector2(140)
                 Flash = CreateSprite()
                 With Flash
@@ -146,6 +142,7 @@ Namespace Screens.Menu
                 Dim base = CreateSprite()
                 base.Colour = colours.DarkerBrown
                 Children = New List(Of Drawable) From {
+                    New ClickSound,
                     base,
                     Flash
                 }
@@ -162,6 +159,7 @@ Namespace Screens.Menu
             End Function
 
             Protected Overrides Function OnClick(e As ClickEvent) As Boolean
+                Flash.ClearTransforms()
                 Flash.Alpha = 0.9
                 Flash.FadeOut(300, Easing.OutQuart)
                 If Not ClickAction Is Nothing Then

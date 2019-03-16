@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Graphics\Backgrounds\**" />
+    <EmbeddedResource Remove="Graphics\Backgrounds\**" />
+    <None Remove="Graphics\Backgrounds\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Screens\Menu\MenuButton.vb~RF3202ac.TMP" />
   </ItemGroup>
 
@@ -18,11 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Block.Game.Resources\Block.Game.Resources.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Graphics\Backgrounds\" />
-    <Folder Include="Graphics\UserInterface\" />
   </ItemGroup>
 
 </Project>

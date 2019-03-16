@@ -1,8 +1,8 @@
 ﻿Imports osuTK.Graphics
 
 Namespace Graphics
-    Public Class BlockColour
-        Public Function FromHex(ByVal hex As String) As Color4
+    Public Class Colours
+        Public Function FromHex(hex As String) As Color4
             If hex(0) = "#" Then
                 hex = hex.Substring(1)
             End If
@@ -24,7 +24,7 @@ Namespace Graphics
             End Select
         End Function
 
-        Public TileColours As New List(Of Color4) From {
+        Public Tile As New List(Of Color4) From {
             FromHex("eee4da"),
             FromHex("ede0c8"),
             FromHex("f2b179"),

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Samples\Interface\" />
     <Folder Include="Tracks\" />
   </ItemGroup>
 

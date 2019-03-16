@@ -1,73 +1,46 @@
 ﻿Imports osu.Framework.Allocation
+Imports osu.Framework.Audio
 Imports osu.Framework.Audio.Track
 Imports osu.Framework.Graphics
-Imports osu.Framework.Graphics.Containers
-Imports osu.Framework.Graphics.Shapes
-Imports osu.Framework.Graphics.Sprites
-Imports osu.Framework.Graphics.Textures
 Imports osu.Framework.Screens
-Imports osuTK
-Imports Block.Game.Graphics
 
 Namespace Screens
     Public Class Screen : Inherits osu.Framework.Screens.Screen
-        Public BackgroundTrack As Track
-        Public Content As Container
-        Private LastPoint As Single
+        Public BGM As Track
+        Protected TrackPath As String
+
+        Public Sub New(Optional TrackPath As String = "")
+            Me.TrackPath = TrackPath
+        End Sub
 
         <BackgroundDependencyLoader>
-        Private Sub Load(ByVal colour As BlockColour, ByVal store As TextureStore)
-            Content = New Container With {
-                .RelativeSizeAxes = Axes.Both
-            }
-            InternalChildren = New List(Of Drawable)({
-                New Box With {
-                    .RelativeSizeAxes = Axes.Both,
-                    .Colour = colour.LightestBrown
-                },
-                New Sprite With {
-                    .Anchor = Anchor.Centre,
-                    .Origin = Anchor.Centre,
-                    .Colour = colour.DarkestBrown,
-                    .Alpha = 0.1,
-                    .Texture = store.Get("logo-notext"),
-                    .Scale = New Vector2(2)
-                },
-                Content
-            })
+        Private Sub Load(Audio As AudioManager)
+            BGM = Audio.Track.Get(TrackPath)
         End Sub
 
         Public Overrides Sub OnEntering(last As IScreen)
             FadeInFromZero(250)
-            If Not BackgroundTrack Is Nothing Then
-                BackgroundTrack.Start()
+            If BGM IsNot Nothing Then
+                BGM.Start()
             End If
             MyBase.OnEntering(last)
         End Sub
 
         Public Overrides Sub OnResuming(last As IScreen)
             FadeInFromZero(250)
-            If Not BackgroundTrack Is Nothing Then
-                BackgroundTrack.Seek(LastPoint)
-                BackgroundTrack.Start()
-            End If
             MyBase.OnResuming(last)
         End Sub
 
         Public Overrides Function OnExiting([next] As IScreen) As Boolean
             FadeOutFromOne(250)
-            If Not BackgroundTrack Is Nothing Then
-                BackgroundTrack.Stop()
+            If BGM IsNot Nothing Then
+                BGM.Stop()
             End If
             Return MyBase.OnExiting([next])
         End Function
 
         Public Overrides Sub OnSuspending([next] As IScreen)
             FadeOutFromOne(250)
-            If Not BackgroundTrack Is Nothing Then
-                LastPoint = BackgroundTrack.CurrentTime
-                BackgroundTrack.Stop()
-            End If
             MyBase.OnSuspending([next])
         End Sub
     End Class

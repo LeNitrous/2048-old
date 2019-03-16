@@ -6,7 +6,7 @@ Imports osu.Framework.Testing
 Imports osu.Framework.Platform
 
 Namespace Tests
-    Public Class BlockTest : Inherits BlockGame
+    Public Class Tests : Inherits Game
         <BackgroundDependencyLoader>
         Private Sub Load()
             Child = New DrawSizePreservingFillContainer With {

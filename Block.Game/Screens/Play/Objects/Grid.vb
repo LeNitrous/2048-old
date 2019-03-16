@@ -1,15 +1,14 @@
 ﻿Imports osuTK
 
-Namespace Objects
+Namespace Screens.Play.Objects
     Public Class Grid
-
         Public RNG As New Random
         Public Size As Integer
         Public Cells As Tile(,)
-        Public Event TileAdded(ByRef tile As Tile)
-        Public Event TileRemoved(ByRef tile As Tile)
+        Public Event TileAdded(tile As Tile)
+        Public Event TileRemoved(tile As Tile)
 
-        Public Sub New(ByVal s As Integer, Optional ByVal previousState As Tile(,) = Nothing)
+        Public Sub New(s As Integer, Optional previousState As Tile(,) = Nothing)
             Size = s
             Cells = If(Not previousState Is Nothing, previousState, Empty())
         End Sub
@@ -40,15 +39,15 @@ Namespace Objects
             Return Not GetAvailableCells().Count = 0
         End Function
 
-        Public Function CellIsAvailable(ByVal cell As Vector2) As Boolean
+        Public Function CellIsAvailable(cell As Vector2) As Boolean
             Return Not CellIsOccupied(cell)
         End Function
 
-        Public Function CellIsOccupied(ByVal cell As Vector2) As Boolean
+        Public Function CellIsOccupied(cell As Vector2) As Boolean
             Return Not CellContent(cell) Is Nothing
         End Function
 
-        Public Function CellContent(ByVal cell As Vector2) As Tile
+        Public Function CellContent(cell As Vector2) As Tile
             If WithinBounds(cell) Then
                 Return Cells(cell.X, cell.Y)
             Else
@@ -56,12 +55,12 @@ Namespace Objects
             End If
         End Function
 
-        Public Function WithinBounds(ByVal cell As Vector2) As Boolean
+        Public Function WithinBounds(cell As Vector2) As Boolean
             Return cell.X >= 0 And cell.X < Size And
                    cell.Y >= 0 And cell.Y < Size
         End Function
 
-        Public Sub EachCell(ByVal callback As Action(Of Vector2, Tile))
+        Public Sub EachCell(callback As Action(Of Vector2, Tile))
             For row = 0 To Size - 1
                 For col = 0 To Size - 1
                     callback.Invoke(New Vector2(row, col), Cells(row, col))
@@ -69,7 +68,7 @@ Namespace Objects
             Next
         End Sub
 
-        Public Sub InsertTile(ByVal tile As Tile)
+        Public Sub InsertTile(tile As Tile)
             Dim tilePos = tile.Position.Value
             If CellIsOccupied(tilePos) Then
                 RemoveTile(tile)
@@ -78,7 +77,7 @@ Namespace Objects
             RaiseEvent TileAdded(tile)
         End Sub
 
-        Public Sub RemoveTile(ByVal tile As Tile)
+        Public Sub RemoveTile(tile As Tile)
             Dim tilePos = tile.Position.Value
             Cells(tilePos.X, tilePos.Y) = Nothing
             RaiseEvent TileRemoved(tile)

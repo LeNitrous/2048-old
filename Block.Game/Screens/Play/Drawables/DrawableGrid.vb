@@ -1,30 +1,31 @@
 ﻿Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
-Imports osu.Framework.Graphics.Shapes
 Imports osu.Framework.Input.Bindings
 Imports osuTK
 Imports Block.Game.Graphics
-Imports Block.Game.Objects.Managers
+Imports Block.Game.Graphics.Shapes
+Imports Block.Game.Screens.Play.Managers
+Imports Block.Game.Screens.Play.Objects
 
-Namespace Objects.Drawables
+Namespace Screens.Play.Drawables
     Public Class DrawableGrid : Inherits Container : Implements IKeyBindingHandler(Of MoveDirection)
         Private Manager As GridManager
         Private Tiles As Container
 
         <Resolved>
-        Private Property Colours As BlockColour
+        Private Property Colours As Colours
 
-        Public Property GridAreaSize As Single
+        Public Property Area As Single
             Set(value As Single)
-                Scale = New Vector2(value / Size.X)
+                Scale = New Vector2(value / Width)
             End Set
             Get
                 Return Width
             End Get
         End Property
 
-        Public Sub New(ByVal manager As GridManager)
+        Public Sub New(manager As GridManager)
             Me.Manager = manager
             Size = New Vector2(manager.Grid.Size * 128 + 10)
             Scale = New Vector2(528 / Size.X)
@@ -32,26 +33,23 @@ Namespace Objects.Drawables
 
         <BackgroundDependencyLoader>
         Private Sub Load()
-            Masking = True
-            CornerRadius = 5
+            Dim Slots = CreateTileSlots()
             Tiles = New Container With {
                 .RelativeSizeAxes = Axes.Both,
                 .Padding = New MarginPadding(5)
             }
             Child = New GridInputContainer With {
-                .RelativeSizeAxes = Axes.Both,
                 .Children = New List(Of Drawable) From {
-                    New Box With {
+                    New RoundedBox With {
                         .Colour = Colours.FromHex("bbada0"),
                         .RelativeSizeAxes = Axes.Both,
                         .Anchor = Anchor.Centre,
                         .Origin = Anchor.Centre
                     },
-                    CreateTileSlots(),
+                    Slots,
                     Tiles
                 }
             }
-
             AddHandler Manager.Grid.TileAdded, AddressOf OnTileCreated
         End Sub
 
@@ -63,25 +61,20 @@ Namespace Objects.Drawables
             For i = 1 To Manager.Grid.Size ^ 2
                 slots.Add(New Container With {
                     .Size = New Vector2(128),
-                    .Child = New Container With {
+                    .Child = New RoundedBox With {
                         .RelativeSizeAxes = Axes.Both,
-                        .CornerRadius = 5,
-                        .Masking = True,
                         .Scale = New Vector2(0.9),
                         .Anchor = Anchor.Centre,
                         .Origin = Anchor.Centre,
-                        .Child = New Box With {
-                            .Colour = Colours.FromHex("eee4da"),
-                            .Alpha = 0.35,
-                            .RelativeSizeAxes = Axes.Both
-                        }
+                        .Colour = Colours.FromHex("eee4da"),
+                        .Alpha = 0.35
                     }
                 })
             Next
             Return slots
         End Function
 
-        Private Sub OnTileCreated(ByRef tile As Tile)
+        Private Sub OnTileCreated(tile As Tile)
             Dim drawableTile As New DrawableTile(tile)
             Tiles.Add(drawableTile)
             If tile.From Is Nothing Then

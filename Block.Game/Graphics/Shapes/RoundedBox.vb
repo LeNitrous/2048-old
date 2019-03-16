@@ -5,21 +5,19 @@ Imports osuTK.Graphics
 
 Namespace Graphics.Shapes
     Public Class RoundedBox : Inherits Container
-        Public Property BackgroundColour As Color4
+        Public Shadows Property Colour As Color4
             Get
-                Return Background.Colour
+                Return Child.Colour
             End Get
             Set(value As Color4)
-                Background.Colour = value
+                Child.Colour = value
             End Set
         End Property
-        Private Background As Box
 
         Public Sub New()
             Masking = True
             CornerRadius = 5
-            Background = New Box With {.RelativeSizeAxes = Axes.Both}
-            InternalChild = Background
+            Child = New Box With {.RelativeSizeAxes = Axes.Both}
         End Sub
     End Class
 End Namespace

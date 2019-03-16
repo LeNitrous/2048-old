@@ -4,20 +4,20 @@ Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Graphics.Sprites
 Imports osuTK
-Imports osuTK.Graphics
 Imports Block.Game.Graphics
 Imports Block.Game.Graphics.Shapes
+Imports Block.Game.Screens.Play.Objects
 
-Namespace Objects.Drawables
+Namespace Screens.Play.Drawables
     Public Class DrawableTile : Inherits Container
         Private TileObject As Tile
         Private Background As RoundedBox
         Private TextSprite As SpriteText
 
         <Resolved>
-        Private Property BlockColour As BlockColour
+        Private Property Colours As Colours
 
-        Public Sub New(ByVal tile As Tile)
+        Public Sub New(tile As Tile)
             TileObject = tile
         End Sub
 
@@ -57,7 +57,7 @@ Namespace Objects.Drawables
             Child.ScaleTo(1, 100, Easing.OutSine)
         End Sub
 
-        Private Sub OnChangeScore(ByVal score As ValueChangedEvent(Of Integer))
+        Private Sub OnChangeScore(score As ValueChangedEvent(Of Integer))
             UpdateTile(score.NewValue)
             ClearTransforms()
 
@@ -65,26 +65,24 @@ Namespace Objects.Drawables
             Child.ScaleTo(1, 750, Easing.OutElastic)
         End Sub
 
-        Private Sub OnChangePosition(ByVal position As ValueChangedEvent(Of Vector2))
+        Private Sub OnChangePosition(position As ValueChangedEvent(Of Vector2))
             MoveTo(Vector2.Multiply(position.NewValue, 64), 150)
-
             If TileObject.IsMerged Then
                 Expire()
             End If
         End Sub
 
-        Private Sub UpdateTile(ByVal score As Integer)
+        Private Sub UpdateTile(score As Integer)
             With TextSprite
                 .Text = score
                 .Font = New FontUsage("ClearSans", If(score.ToString().Length < 4, 64, 48), "Bold")
-                .Colour = If(score < 8, BlockColour.FromHex("776e65"), BlockColour.FromHex("f9f6f2"))
+                .Colour = If(score < 8, Colours.FromHex("776e65"), Colours.FromHex("f9f6f2"))
             End With
-            Dim progress = Math.Log(score) / Math.Log(2)
-            Background.BackgroundColour = If(progress - 1 >= BlockColour.TileColours.Count,
-                BlockColour.TileColours.ElementAt(BlockColour.TileColours.Count - 1), BlockColour.TileColours.ElementAt(progress - 1))
+            Dim progress = (Math.Log(score) / Math.Log(2)) - 1
+            Background.Colour = If(progress < Colours.Tile.Count, Colours.Tile.ElementAt(progress), Colours.Tile.Last())
         End Sub
 
-        Public Shared Narrowing Operator CType(ByVal drawable As DrawableTile) As Tile
+        Public Shared Narrowing Operator CType(drawable As DrawableTile) As Tile
             Return drawable.TileObject
         End Operator
     End Class

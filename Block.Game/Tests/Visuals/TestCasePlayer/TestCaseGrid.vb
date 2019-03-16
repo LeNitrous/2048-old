@@ -1,15 +1,15 @@
-﻿Imports osu.Framework.Graphics
-Imports osu.Framework.Input.Bindings
+﻿Imports osu.Framework.Allocation
 Imports osu.Framework.Testing
-Imports Block.Game.Objects
-Imports Block.Game.Objects.Managers
-Imports Block.Game.Objects.Drawables
+Imports Block.Game.Screens.Play.Drawables
+Imports Block.Game.Screens.Play.Managers
+Imports Block.Game.Screens.Play.Objects
 
 Namespace Tests.Visuals.TestCasePlayer
     Public Class TestCaseGrid : Inherits TestCase
         Public Manager As New GridManager(4)
 
-        Public Sub New()
+        <BackgroundDependencyLoader>
+        Private Sub Load()
             Add(New DrawableGrid(Manager))
 
             AddStep("fill grid", AddressOf FillGrid)

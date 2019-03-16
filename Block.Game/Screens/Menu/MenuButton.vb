@@ -5,9 +5,10 @@ Imports osu.Framework.Graphics.Shapes
 Imports osu.Framework.Graphics.Sprites
 Imports osu.Framework.Graphics.Textures
 Imports osu.Framework.Input.Events
+Imports Block.Game.Graphics
+Imports Block.Game.Graphics.UserInterface
 Imports osuTK
 Imports osuTK.Graphics
-Imports Block.Game.Graphics
 
 Namespace Screens.Menu
     Public Class MenuButton : Inherits ClickableContainer
@@ -22,11 +23,11 @@ Namespace Screens.Menu
         End Sub
 
         <BackgroundDependencyLoader>
-        Private Sub Load(ByVal store As TextureStore, ByVal colours As BlockColour)
+        Private Sub Load(ByVal store As TextureStore, ByVal colours As Colours)
             Size = New Vector2(120)
             Masking = True
-            Rotation = 45.0F
             CornerRadius = 20.0F
+            Rotation = 45.0F
             Flash = New Box With {
                 .RelativeSizeAxes = Axes.Both,
                 .Colour = Color4.WhiteSmoke,
@@ -40,6 +41,7 @@ Namespace Screens.Menu
                 .Rotation = -45.0F
             }
             Children = New List(Of Drawable) From {
+                New ClickSound,
                 New Box With {
                     .RelativeSizeAxes = Axes.Both,
                     .Colour = colours.DarkerBrown
@@ -50,6 +52,7 @@ Namespace Screens.Menu
         End Sub
 
         Protected Overrides Function OnClick(e As ClickEvent) As Boolean
+            Flash.ClearTransforms()
             Flash.Alpha = 0.9F
             Flash.FadeOut(300, Easing.OutQuart)
             If Not ClickAction Is Nothing Then

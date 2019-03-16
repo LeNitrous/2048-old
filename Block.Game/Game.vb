@@ -2,25 +2,20 @@ Imports System.Reflection
 Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
-Imports osu.Framework.Graphics.Shapes
 Imports osu.Framework.IO.Stores
 Imports osu.Framework.Screens
 Imports Block.Game.Graphics
 Imports Block.Game.Rules
-Imports Block.Game.Online.API
+Imports Block.Game.Screens
 Imports Block.Game.Screens.Menu
 
-Public Class BlockGame : Inherits osu.Framework.Game
+Public Class Game : Inherits osu.Framework.Game
     Private Shadows Dependencies As DependencyContainer
 
     Protected Overrides Function CreateChildDependencies(parent As IReadOnlyDependencyContainer) As IReadOnlyDependencyContainer
         Dependencies = New DependencyContainer(MyBase.CreateChildDependencies(parent))
         Return Dependencies
     End Function
-
-    Public Sub New()
-        Name = "lazer2048"
-    End Sub
 
     <BackgroundDependencyLoader>
     Private Sub Load()
@@ -32,38 +27,32 @@ Public Class BlockGame : Inherits osu.Framework.Game
         Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-MediumItalic"))
         Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Thin"))
 
-        Dim stack = New ScreenStack With {
-            .RelativeSizeAxes = Axes.Both
-        }
-        stack.Push(New MainMenu)
+        Dim backgroundStack = New ScreenStack With {.RelativeSizeAxes = Axes.Both}
+        Dim stack = New ScreenStack With {.RelativeSizeAxes = Axes.Both}
 
-        Dim blockColour = New BlockColour()
+        Dependencies.Cache(New Colours())
+        Dependencies.Cache(backgroundStack)
+        Dependencies.Cache(GetAvailableRules())
 
         Child = New DrawSizePreservingFillContainer With {
             .RelativeSizeAxes = Axes.Both,
             .Children = New List(Of Drawable) From {
-                New Box With {
-                    .RelativeSizeAxes = Axes.Both,
-                    .Colour = blockColour.FromHex("faf8ef")
-                },
-                Stack
+                backgroundStack,
+                stack
             }
         }
 
-        Dependencies.Cache(New API)
-        Dependencies.Cache(stack)
-        Dependencies.Cache(blockColour)
-        Dependencies.Cache(GetAvailableRules())
+        LoadComponentAsync(New Splash, Sub(s) stack.Push(s))
     End Sub
 
     Private Function GetAvailableRules() As List(Of GameRule)
-        Dim rules As New List(Of GameRule)
-        Dim found = Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) String.Equals(t.Namespace, "Block.Game.Rules", StringComparison.Ordinal))
-        For Each instance In found
-            If instance.IsSubclassOf(GetType(GameRule)) Then
-                rules.Add(CType(Activator.CreateInstance(instance), GameRule))
+        Dim Rules As New List(Of GameRule)
+        Dim Found = Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) String.Equals(t.Namespace, "Block.Game.Rules", StringComparison.Ordinal))
+        For Each Instance In Found
+            If Instance.IsSubclassOf(GetType(GameRule)) Then
+                Rules.Add(CType(Activator.CreateInstance(Instance), GameRule))
             End If
         Next
-        Return rules
+        Return Rules
     End Function
 End Class
