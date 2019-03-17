@@ -3,14 +3,13 @@ Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Sprites
 Imports osu.Framework.Graphics.Textures
 Imports osu.Framework.Screens
+Imports Block.Game.Gameplay.Rules
 Imports Block.Game.Graphics
-Imports Block.Game.Rules
 Imports Block.Game.Screens.Play
 Imports osuTK
 
 Namespace Screens.Menu
     Public Class MainMenu : Inherits Screen
-        Private Player As Player
         Private RuleSelect As RuleSelector
 
         <BackgroundDependencyLoader>

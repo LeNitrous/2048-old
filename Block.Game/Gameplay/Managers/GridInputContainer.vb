@@ -1,6 +1,6 @@
 ﻿Imports osu.Framework.Input.Bindings
 
-Namespace Screens.Play.Managers
+Namespace Gameplay.Managers
     Public Class GridInputContainer : Inherits KeyBindingContainer(Of MoveDirection)
 
         Public Overrides ReadOnly Property DefaultKeyBindings As IEnumerable(Of KeyBinding)

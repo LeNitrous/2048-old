@@ -1,58 +1,45 @@
-Imports System.Reflection
 Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
-Imports osu.Framework.IO.Stores
 Imports osu.Framework.Screens
-Imports Block.Game.Graphics
-Imports Block.Game.Rules
-Imports Block.Game.Screens
 Imports Block.Game.Screens.Menu
+Imports Block.Game.Overlays
+Imports osuTK.Graphics
 
-Public Class Game : Inherits osu.Framework.Game
-    Private Shadows Dependencies As DependencyContainer
-
-    Protected Overrides Function CreateChildDependencies(parent As IReadOnlyDependencyContainer) As IReadOnlyDependencyContainer
-        Dependencies = New DependencyContainer(MyBase.CreateChildDependencies(parent))
-        Return Dependencies
-    End Function
+Public Class Game : Inherits GameBase
+    Public Stack As ScreenStack
+    Public BackgroundStack As ScreenStack
+    Public OverlayContainer As Container
 
     <BackgroundDependencyLoader>
     Private Sub Load()
-        Resources.AddStore(New DllResourceStore("Block.Game.Resources.dll"))
-        Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans"))
-        Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Bold"))
-        Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Italic"))
-        Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Medium"))
-        Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-MediumItalic"))
-        Fonts.AddStore(New GlyphStore(Resources, "Fonts/ClearSans-Thin"))
-
-        Dim backgroundStack = New ScreenStack With {.RelativeSizeAxes = Axes.Both}
-        Dim stack = New ScreenStack With {.RelativeSizeAxes = Axes.Both}
-
-        Dependencies.Cache(New Colours())
-        Dependencies.Cache(backgroundStack)
-        Dependencies.Cache(GetAvailableRules())
-
+        OverlayContainer = New Container With {.RelativeSizeAxes = Axes.Both}
+        BackgroundStack = New ScreenStack With {.RelativeSizeAxes = Axes.Both}
+        Stack = New ScreenStack With {.RelativeSizeAxes = Axes.Both}
+        Dependencies.CacheAs(Me)
+        Dependencies.Cache(BackgroundStack)
         Child = New DrawSizePreservingFillContainer With {
             .RelativeSizeAxes = Axes.Both,
             .Children = New List(Of Drawable) From {
-                backgroundStack,
-                stack
+                BackgroundStack,
+                Stack,
+                OverlayContainer
             }
         }
-
-        LoadComponentAsync(New Splash, Sub(s) stack.Push(s))
+        LoadComponentAsync(New Splash, Sub(s) Stack.Push(s))
     End Sub
 
-    Private Function GetAvailableRules() As List(Of GameRule)
-        Dim Rules As New List(Of GameRule)
-        Dim Found = Assembly.GetExecutingAssembly().GetTypes().Where(Function(t) String.Equals(t.Namespace, "Block.Game.Rules", StringComparison.Ordinal))
-        For Each Instance In Found
-            If Instance.IsSubclassOf(GetType(GameRule)) Then
-                Rules.Add(CType(Activator.CreateInstance(Instance), GameRule))
-            End If
-        Next
-        Return Rules
-    End Function
+    Private Sub UpdateOverlayFade()
+        Stack.FadeColour(If(OverlayContainer.Any(), Color4.Black, Color4.White), 300, Easing.OutQuad)
+    End Sub
+
+    Public Sub AddOverlay(overlay As Overlay)
+        If Not OverlayContainer.Contains(overlay) Then OverlayContainer.Add(overlay)
+        UpdateOverlayFade()
+    End Sub
+
+    Public Sub RemoveOverlay(overlay As Overlay)
+        If OverlayContainer.Contains(overlay) Then OverlayContainer.Remove(overlay)
+        UpdateOverlayFade()
+    End Sub
 End Class

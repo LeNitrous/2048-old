@@ -3,12 +3,12 @@ Imports osu.Framework.Bindables
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Graphics.Sprites
-Imports osuTK
+Imports Block.Game.Gameplay.Objects
 Imports Block.Game.Graphics
 Imports Block.Game.Graphics.Shapes
-Imports Block.Game.Screens.Play.Objects
+Imports osuTK
 
-Namespace Screens.Play.Drawables
+Namespace Gameplay.Drawables
     Public Class DrawableTile : Inherits Container
         Private TileObject As Tile
         Private Background As RoundedBox
@@ -45,9 +45,7 @@ Namespace Screens.Play.Drawables
                     TextSprite
                 }
             }
-
             UpdateTile(TileObject.Score.Value)
-
             AddHandler TileObject.Score.ValueChanged, AddressOf OnChangeScore
             AddHandler TileObject.Position.ValueChanged, AddressOf OnChangePosition
         End Sub
@@ -60,13 +58,12 @@ Namespace Screens.Play.Drawables
         Private Sub OnChangeScore(score As ValueChangedEvent(Of Integer))
             UpdateTile(score.NewValue)
             ClearTransforms()
-
             Child.Scale = New Vector2(0.6)
             Child.ScaleTo(1, 750, Easing.OutElastic)
         End Sub
 
         Private Sub OnChangePosition(position As ValueChangedEvent(Of Vector2))
-            MoveTo(Vector2.Multiply(position.NewValue, 64), 150)
+            MoveTo(Vector2.Multiply(position.NewValue, 128), 150)
             If TileObject.IsMerged Then
                 Expire()
             End If

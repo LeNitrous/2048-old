@@ -1,4 +1,4 @@
-﻿Namespace Rules
+﻿Namespace Gameplay.Rules
     Public Class GameRuleClassic : Inherits GameRule
         Public Overrides ReadOnly Property ID As Integer = 0
         Public Overrides ReadOnly Property Name As String = "Classic"

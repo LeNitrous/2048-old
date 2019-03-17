@@ -1,7 +1,7 @@
 ﻿Imports osu.Framework.Bindables
 Imports osuTK
 
-Namespace Screens.Play.Objects
+Namespace Gameplay.Objects
     Public Class Tile
         Public ReadOnly Position As New Bindable(Of Vector2)
         Public ReadOnly Score As New BindableInt

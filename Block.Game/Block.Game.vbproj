@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="ppy.OpenTK" Version="3.0.13" />
-    <PackageReference Include="ppy.osu.Framework" Version="2019.308.0" />
+    <PackageReference Include="ppy.osu.Framework" Version="2019.315.0" />
     <PackageReference Include="protobuf-net" Version="2.4.0" />
   </ItemGroup>
 

@@ -2,10 +2,10 @@
 Imports osu.Framework.Testing
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
-Imports Block.Game.Screens.Play.Drawables
-Imports Block.Game.Screens.Play.Objects
+Imports Block.Game.Gameplay.Drawables
+Imports Block.Game.Gameplay.Objects
 
-Namespace Tests.Visuals.TestCasePlayer
+Namespace Tests.Visuals.TestCaseGameplay
     Public Class TestCaseTile : Inherits TestCase
         Public FlowContainer As FillFlowContainer
 

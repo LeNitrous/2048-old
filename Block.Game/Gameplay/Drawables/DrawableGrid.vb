@@ -3,12 +3,12 @@ Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Input.Bindings
 Imports osuTK
+Imports Block.Game.Gameplay.Managers
+Imports Block.Game.Gameplay.Objects
 Imports Block.Game.Graphics
 Imports Block.Game.Graphics.Shapes
-Imports Block.Game.Screens.Play.Managers
-Imports Block.Game.Screens.Play.Objects
 
-Namespace Screens.Play.Drawables
+Namespace Gameplay.Drawables
     Public Class DrawableGrid : Inherits Container : Implements IKeyBindingHandler(Of MoveDirection)
         Private Manager As GridManager
         Private Tiles As Container
@@ -38,17 +38,15 @@ Namespace Screens.Play.Drawables
                 .RelativeSizeAxes = Axes.Both,
                 .Padding = New MarginPadding(5)
             }
-            Child = New GridInputContainer With {
-                .Children = New List(Of Drawable) From {
-                    New RoundedBox With {
-                        .Colour = Colours.FromHex("bbada0"),
-                        .RelativeSizeAxes = Axes.Both,
-                        .Anchor = Anchor.Centre,
-                        .Origin = Anchor.Centre
-                    },
-                    Slots,
-                    Tiles
-                }
+            Children = New List(Of Drawable) From {
+                New RoundedBox With {
+                    .Colour = Colours.LighterBrown,
+                    .RelativeSizeAxes = Axes.Both,
+                    .Anchor = Anchor.Centre,
+                    .Origin = Anchor.Centre
+                },
+                Slots,
+                Tiles
             }
             AddHandler Manager.Grid.TileAdded, AddressOf OnTileCreated
         End Sub
@@ -88,7 +86,7 @@ Namespace Screens.Play.Drawables
         End Function
 
         Public Function OnReleased(action As MoveDirection) As Boolean Implements IKeyBindingHandler(Of MoveDirection).OnReleased
-            Return False
+            Return True
         End Function
     End Class
 End Namespace

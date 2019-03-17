@@ -1,10 +1,10 @@
 ﻿Imports osu.Framework.Allocation
 Imports osu.Framework.Testing
-Imports Block.Game.Screens.Play.Drawables
-Imports Block.Game.Screens.Play.Managers
-Imports Block.Game.Screens.Play.Objects
+Imports Block.Game.Gameplay.Drawables
+Imports Block.Game.Gameplay.Managers
+Imports Block.Game.Gameplay.Objects
 
-Namespace Tests.Visuals.TestCasePlayer
+Namespace Tests.Visuals.TestCaseGameplay
     Public Class TestCaseGrid : Inherits TestCase
         Public Manager As New GridManager(4)
 

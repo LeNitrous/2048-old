@@ -1,4 +1,4 @@
-﻿Namespace Rules
+﻿Namespace Gameplay.Rules
     Public Class GameRuleEndless : Inherits GameRule
         Public Overrides ReadOnly Property ID As Integer = 1
         Public Overrides ReadOnly Property Name As String = "Endless"

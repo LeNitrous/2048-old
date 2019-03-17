@@ -1,6 +1,6 @@
 ﻿Imports osuTK
 
-Namespace Screens.Play.Objects
+Namespace Gameplay.Objects
     Public Class Grid
         Public RNG As New Random
         Public Size As Integer

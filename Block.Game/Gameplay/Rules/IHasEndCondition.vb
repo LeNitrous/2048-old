@@ -1,6 +1,6 @@
-﻿Imports Block.Game.Screens.Play.Managers
+﻿Imports Block.Game.Gameplay.Managers
 
-Namespace Rules
+Namespace Gameplay.Rules
     Public Interface IHasEndCondition
         Function GetWinCondition(manager As RuleManager) As Boolean
         Function GetLoseCondition(manager As RuleManager) As Boolean

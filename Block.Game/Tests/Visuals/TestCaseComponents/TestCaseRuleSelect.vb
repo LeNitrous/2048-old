@@ -3,11 +3,11 @@ Imports osu.Framework.Graphics
 Imports osu.Framework.Testing
 Imports Block.Game.Screens.Menu
 
-Namespace Tests.Visuals.TestCaseMenu
-    Public Class TestCaseMenuButton : Inherits TestCase
+Namespace Tests.Visuals.TestCaseComponents
+    Public Class TestCaseRuleSelect : Inherits TestCase
         <BackgroundDependencyLoader>
         Private Sub Load()
-            Add(New MenuButton("exit") With {
+            Add(New RuleSelector With {
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre
             })

@@ -1,6 +1,6 @@
 ﻿Imports ProtoBuf
 
-Namespace Rules
+Namespace Gameplay.Rules
     <ProtoContract>
     Public MustInherit Class GameRule
         <ProtoMember(1)>

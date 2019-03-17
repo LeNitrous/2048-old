@@ -1,4 +1,4 @@
-﻿Namespace Rules
+﻿Namespace Gameplay.Rules
     Public Class GameRuleTimeTrial : Inherits GameRule
         Public Overrides ReadOnly Property ID As Integer = 2
         Public Overrides ReadOnly Property Name As String = "Time Trial"

@@ -6,9 +6,9 @@ Imports osu.Framework.Graphics.Sprites
 Imports osu.Framework.Graphics.Textures
 Imports osu.Framework.Input.Events
 Imports Block.Game.Bindables
+Imports Block.Game.Gameplay.Rules
 Imports Block.Game.Graphics
 Imports Block.Game.Graphics.UserInterface
-Imports Block.Game.Rules
 Imports osuTK
 Imports osuTK.Graphics
 

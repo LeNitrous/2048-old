@@ -1,7 +1,7 @@
-﻿Imports Block.Game.Screens.Play.Objects
+﻿Imports Block.Game.Gameplay.Objects
 Imports osuTK
 
-Namespace Screens.Play.Managers
+Namespace Gameplay.Managers
     Public Class GridManager
         Public Grid As Grid
         Public ShouldAddRandomTile As Boolean = True
