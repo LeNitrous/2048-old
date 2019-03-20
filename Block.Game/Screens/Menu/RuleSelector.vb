@@ -53,21 +53,29 @@ Namespace Screens.Menu
                 .Origin = Anchor.Centre,
                 .Size = New Vector2(120)
             }
-            RuleSelected = New SelectorSelectButton(AddressOf OnSelectRule) With {
+            RuleSelected = New SelectorSelectButton With {
                 .Anchor = Anchor.Centre,
-                .Origin = Anchor.Centre
+                .Origin = Anchor.Centre,
+                .ClickAction = AddressOf OnSelectRule
             }
             Children = New List(Of Drawable) From {
-                New SelectorChangeButton(Sub() SelectedRuleId.Add(-1)) With {
-                    .Facing = FacingDirection.Backward,
+                New TextureButton With {
+                    .Icon = "back",
+                    .ClickAction = Sub() SelectedRuleId.Add(-1),
+                    .BaseColour = Colours.DarkerBrown,
                     .Anchor = Anchor.CentreLeft,
-                    .Origin = Anchor.CentreLeft
+                    .Origin = Anchor.CentreLeft,
+                    .Size = New Vector2(140)
                 },
                 RuleSelected,
-                New SelectorChangeButton(Sub() SelectedRuleId.Add(1)) With {
-                    .Facing = FacingDirection.Forward,
+                New TextureButton With {
+                    .Icon = "back",
+                    .ClickAction = Sub() SelectedRuleId.Add(1),
+                    .BaseColour = Colours.DarkerBrown,
                     .Anchor = Anchor.CentreRight,
-                    .Origin = Anchor.CentreRight
+                    .Origin = Anchor.CentreRight,
+                    .Size = New Vector2(140),
+                    .Flipped = True
                 },
                 RuleIconSprite,
                 RuleNameSprite,
@@ -108,70 +116,11 @@ Namespace Screens.Menu
         Private Class SelectorSelectButton : Inherits MenuButton
             Public CurrentRule As Bindable(Of GameRule)
 
-            Public Sub New(Optional ByVal onClick As Action = Nothing)
-                MyBase.New("", onClick)
-            End Sub
-
             <BackgroundDependencyLoader>
             Private Sub Load(ByVal colours As Colours)
                 CurrentRule = New Bindable(Of GameRule)
                 Size = New Vector2(140)
             End Sub
         End Class
-
-        Private Class SelectorChangeButton : Inherits ClickableContainer
-            Public Facing As FacingDirection = FacingDirection.Forward
-            Public ClickAction As Action
-            Private Flash As Sprite
-
-            <Resolved>
-            Private Property Store As TextureStore
-
-            Public Sub New(Optional ByVal onClick As Action = Nothing)
-                ClickAction = onClick
-            End Sub
-
-            <BackgroundDependencyLoader>
-            Private Sub Load(ByVal colours As Colours)
-                Size = New Vector2(140)
-                Flash = CreateSprite()
-                With Flash
-                    .Colour = Color4.WhiteSmoke
-                    .Alpha = 0
-                End With
-                Dim base = CreateSprite()
-                base.Colour = colours.DarkerBrown
-                Children = New List(Of Drawable) From {
-                    New ClickSound,
-                    base,
-                    Flash
-                }
-            End Sub
-
-            Private Function CreateSprite() As Sprite
-                Return New Sprite With {
-                    .Anchor = Anchor.Centre,
-                    .Origin = Anchor.Centre,
-                    .RelativeSizeAxes = Axes.Both,
-                    .Texture = store.Get("Interface/back"),
-                    .Rotation = If(Facing = FacingDirection.Forward, 180.0F, 0)
-                }
-            End Function
-
-            Protected Overrides Function OnClick(e As ClickEvent) As Boolean
-                Flash.ClearTransforms()
-                Flash.Alpha = 0.9
-                Flash.FadeOut(300, Easing.OutQuart)
-                If Not ClickAction Is Nothing Then
-                    ClickAction.Invoke()
-                End If
-                Return MyBase.OnClick(e)
-            End Function
-        End Class
-
-        Public Enum FacingDirection
-            Backward
-            Forward
-        End Enum
     End Class
 End Namespace

@@ -6,19 +6,18 @@ Imports Block.Game.Gameplay.Objects
 
 Namespace Tests.Visuals.TestCaseGameplay
     Public Class TestCaseGrid : Inherits TestCase
-        Public Manager As New GridManager(4)
-
         <BackgroundDependencyLoader>
         Private Sub Load()
-            Add(New DrawableGrid(Manager))
+            Dim manager = New GridManager(4)
+            Dim drawableGrid = New DrawableGrid(manager)
+            Add(drawableGrid)
 
-            AddStep("fill grid", AddressOf FillGrid)
-        End Sub
-
-        Private Sub FillGrid()
-            Manager.Grid.EachCell(Sub(pos, tile)
-                                      Manager.Grid.InsertTile(New Tile(2, pos))
-                                  End Sub)
+            AddStep("fill grid", Sub()
+                                     manager.Grid.EachCell(Sub(pos, tile)
+                                                               manager.Grid.InsertTile(New Tile(2, pos))
+                                                           End Sub)
+                                 End Sub)
+            AddStep("collapse", Sub() drawableGrid.Collapse())
         End Sub
     End Class
 End Namespace

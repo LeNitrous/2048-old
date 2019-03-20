@@ -2,28 +2,31 @@
 
 Namespace Gameplay.Objects
     Public Class Grid
-        Public RNG As New Random
         Public Size As Integer
         Public Cells As Tile(,)
         Public Event TileAdded(tile As Tile)
         Public Event TileRemoved(tile As Tile)
 
-        Public Sub New(s As Integer, Optional previousState As Tile(,) = Nothing)
+        Public Sub New(s As Integer)
             Size = s
-            Cells = If(Not previousState Is Nothing, previousState, Empty())
+            ReDim Cells(Size, Size)
         End Sub
 
-        Public Function Empty() As Tile(,)
-            ReDim Cells(Size, Size)
-            Return Cells
-        End Function
+        Public Sub Empty()
+            EachCell(Sub(pos, tile)
+                         If tile Is Nothing Then Exit Sub
+                         RemoveTile(tile)
+                     End Sub)
+        End Sub
 
-        Public Function GetRandomAvailableCell() As Vector2
-            Dim cells = GetAvailableCells()
-            If cells.Count Then
-                Return cells.ElementAt(RNG.Next(cells.Count))
-            End If
-        End Function
+        Public Sub SetGrid(toSet As Grid)
+            Empty()
+            toSet.EachCell(Sub(pos, tile)
+                               If tile Is Nothing Then Exit Sub
+                               InsertTile(tile)
+                           End Sub)
+            toSet.EachCell(Sub(pos, tile) Console.WriteLine("{0},{1}: {2}", pos.X, pos.Y, If(tile?.Score.Value, 0)))
+        End Sub
 
         Public Function GetAvailableCells() As List(Of Vector2)
             Dim empty As New List(Of Vector2)

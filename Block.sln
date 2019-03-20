@@ -7,7 +7,7 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Block.Game", "Block.Game\Bl
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Block.Desktop", "Block.Desktop\Block.Desktop.vbproj", "{88D8B1A4-1262-4377-8388-51AF02B4A22B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Block.Game.Resources", "Block.Game.Resources\Block.Game.Resources.csproj", "{151A062D-3F9B-44A1-AF4D-8F1812A6440B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Block.Game.Resources", "Block.Game.Resources\Block.Game.Resources.csproj", "{151A062D-3F9B-44A1-AF4D-8F1812A6440B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

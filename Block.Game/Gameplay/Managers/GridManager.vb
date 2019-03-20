@@ -4,8 +4,10 @@ Imports osuTK
 Namespace Gameplay.Managers
     Public Class GridManager
         Public Grid As Grid
+        Public RNG As New Random
         Public ShouldAddRandomTile As Boolean = True
-        Public Event OnEnd(e As EndType)
+        Public ShouldMoveTiles As Boolean = True
+        Public TilesMerged As New List(Of Tile)
         Public Event OnMove(d As MoveDirection)
         Public Event OnTileMerge(t As Tile)
 
@@ -13,20 +15,20 @@ Namespace Gameplay.Managers
             Grid = New Grid(size)
         End Sub
 
-        Public Sub AddRandomTile()
-            If Grid.GetAvailableCells().Count Then
-                Dim value = If(Grid.RNG.NextDouble() < 0.9, 2, 4)
-                Dim position = Grid.GetRandomAvailableCell()
-                Dim tile = New Tile(value, position)
-                Grid.InsertTile(tile)
+        Public Function GetRandomAvailableCell() As Vector2
+            Dim cells = Grid.GetAvailableCells()
+            If cells.Count Then
+                Return cells.ElementAt(RNG.Next(cells.Count))
             End If
-        End Sub
+        End Function
 
-        Public Sub Move(direction As MoveDirection)
+        Public Function Move(direction As MoveDirection) As Boolean
+            If Not ShouldMoveTiles Then Return False
             Dim vector = GetMoveVector(direction)
             Dim traversals = BuildTraversals(vector)
             Dim moved = False
             PrepareTiles()
+            TilesMerged.RemoveAll(Function(t) True)
             traversals.X.ForEach(Sub(x)
                                      traversals.Y.ForEach(Sub(y)
                                                               Dim cell = New Vector2(x, y)
@@ -46,9 +48,7 @@ Namespace Gameplay.Managers
                                                                           tile.UpdatePosition(positions.NextCell, True)
                                                                           nextTile.UpdatePosition(positions.NextCell, True)
                                                                           RaiseEvent OnTileMerge(merged)
-                                                                          If CInt(merged) = 2048 Then
-                                                                              RaiseEvent OnEnd(EndType.Win)
-                                                                          End If
+                                                                          TilesMerged.Add(merged)
                                                                       Else
                                                                           MoveTile(tile, positions.Farthest)
                                                                       End If
@@ -62,21 +62,15 @@ Namespace Gameplay.Managers
                                                           End Sub)
                                  End Sub)
             If moved Then
-                If ShouldAddRandomTile Then
-                    AddRandomTile()
-                End If
-                If Not MovesAvailable() Then
-                    RaiseEvent OnEnd(EndType.Lose)
-                End If
+                RaiseEvent OnMove(direction)
             End If
-            RaiseEvent OnMove(direction)
-        End Sub
 
-        Public Sub AddStartTiles()
-            For i = 0 To 1
-                AddRandomTile()
-            Next
-        End Sub
+            Return moved
+        End Function
+
+        Public Function MovesAvailable() As Boolean
+            Return Grid.CellsAvailable() Or TileMatchesAvailable()
+        End Function
 
         Private Sub MoveTile(ByRef tile As Tile, cell As Vector2)
             Dim tilePos = tile.Position.Value
@@ -127,10 +121,6 @@ Namespace Gameplay.Managers
                 cell = New Vector2(previous.X + vector.X, previous.Y + vector.Y)
             Loop While Grid.WithinBounds(cell) And Grid.CellIsAvailable(cell)
             Return New FarthestPosition(previous, cell)
-        End Function
-
-        Private Function MovesAvailable() As Boolean
-            Return Grid.CellsAvailable() Or TileMatchesAvailable()
         End Function
 
         Private Function TileMatchesAvailable() As Boolean

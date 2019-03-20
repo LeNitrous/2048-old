@@ -1,5 +1,6 @@
 ﻿Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
+Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Graphics.Sprites
 Imports osu.Framework.Graphics.Textures
 Imports osu.Framework.Screens
@@ -11,9 +12,11 @@ Imports osuTK
 Namespace Screens.Menu
     Public Class MainMenu : Inherits Screen
         Private RuleSelect As RuleSelector
+        Private DialogBox As GenericDialog
 
         <BackgroundDependencyLoader>
         Private Sub Load(colours As Colours, store As TextureStore)
+            DialogBox = New GenericDialog
             RuleSelect = New RuleSelector With {
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre,
@@ -30,31 +33,49 @@ Namespace Screens.Menu
                     .Scale = New Vector2(1.5),
                     .Y = -200
                 },
-                New MenuButton("exit", Sub() Game.Exit()) With {
+                New MenuButton() With {
                     .Scale = New Vector2(0.5),
                     .Anchor = Anchor.Centre,
                     .Origin = Anchor.Centre,
+                    .Texture = "exit",
+                    .ClickAction = Sub() Game.Exit(),
                     .Y = 320
                 },
-                New MenuButton("multi") With {
+                New MenuButton With {
                     .Anchor = Anchor.Centre,
                     .Origin = Anchor.Centre,
-                    .Position = New Vector2(-300, 180)
+                    .Texture = "multi",
+                    .Position = New Vector2(-300, 180),
+                    .ClickAction = Sub() PromptDialog("Feature is not ready yet!")
                 },
-                New MenuButton("leaderboard") With {
+                New MenuButton With {
                     .Anchor = Anchor.Centre,
                     .Origin = Anchor.Centre,
-                    .Position = New Vector2(300, 180)
+                    .Texture = "leaderboard",
+                    .Position = New Vector2(300, 180),
+                    .ClickAction = Sub() PromptDialog("Feature is not ready yet!")
                 },
-                New MenuButton("settings") With {
+                New MenuButton With {
                     .Anchor = Anchor.TopRight,
                     .Origin = Anchor.TopRight,
                     .Scale = New Vector2(0.5),
-                    .Position = New Vector2(-10, 50)
-                }
+                    .Texture = "settings",
+                    .Position = New Vector2(-10, 50),
+                    .ClickAction = Sub() PromptDialog("Feature is not ready yet!")
+                },
+                New MenuButton With {
+                    .Scale = New Vector2(0.5),
+                    .Texture = "solo",
+                    .Position = New Vector2(50, 10),
+                    .ClickAction = Sub() PromptDialog("Feature is not ready yet!")
+                },
+                DialogBox
             }
+        End Sub
 
-
+        Private Sub PromptDialog(message As String)
+            DialogBox.Message = message
+            DialogBox.State = Visibility.Visible
         End Sub
 
         Private Sub OnPlay(rule As GameRule)

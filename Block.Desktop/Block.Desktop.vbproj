@@ -6,7 +6,13 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <Configurations>Debug;Release;Tests</Configurations>
     <OptionCompare>Binary</OptionCompare>
+    <StartupObject>Block.Desktop.Program</StartupObject>
+    <RuntimeIdentifiers>win-x64;win-x86;linux-x64;osx-x64</RuntimeIdentifiers>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="battle.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ppy.osu.Framework" Version="2019.315.0" />
@@ -14,6 +20,22 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Block.Game\Block.Game.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="My Project\Resources.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="My Project\Resources.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

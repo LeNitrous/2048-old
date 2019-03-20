@@ -16,6 +16,33 @@ Namespace Tests.Visuals.TestCaseGameplay
             }
             Add(FlowContainer)
 
+
+
+            AddStep("add tiles", AddressOf FillTiles)
+            AddStep("glow", Sub()
+                                For Each tile As DrawableTile In FlowContainer.Children
+                                    tile.Glow()
+                                Next
+                            End Sub)
+            AddStep("drop", Sub()
+                                For Each tile As DrawableTile In FlowContainer.Children
+                                    tile.Drop()
+                                Next
+                            End Sub)
+            AddStep("add tiles", AddressOf FillTiles)
+            AddStep("grow", Sub()
+                                For Each tile As DrawableTile In FlowContainer.Children
+                                    tile.Grow()
+                                Next
+                            End Sub)
+            AddStep("shrink", Sub()
+                                  For Each tile As DrawableTile In FlowContainer.Children
+                                      tile.Shrink()
+                                  Next
+                              End Sub)
+        End Sub
+
+        Private Sub FillTiles()
             Dim i As Integer = 2
             While i <= 16384
                 FlowContainer.Add(New DrawableTile(New Tile(i)))

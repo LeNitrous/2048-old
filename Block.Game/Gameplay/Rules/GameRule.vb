@@ -16,6 +16,6 @@ Namespace Gameplay.Rules
 
         MustOverride ReadOnly Property HasScore As Boolean
 
-        MustOverride ReadOnly Property IsMultiplayer As Boolean
+        MustOverride ReadOnly Property AllowUndo As Boolean
     End Class
 End Namespace

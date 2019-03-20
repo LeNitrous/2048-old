@@ -3,6 +3,7 @@ Imports osu.Framework.Allocation
 Imports osu.Framework.IO.Stores
 Imports Block.Game.Gameplay.Rules
 Imports Block.Game.Graphics
+Imports osu.Framework.Platform
 
 Public Class GameBase : Inherits osu.Framework.Game
     Protected Shadows Dependencies As DependencyContainer
@@ -11,6 +12,10 @@ Public Class GameBase : Inherits osu.Framework.Game
         Dependencies = New DependencyContainer(MyBase.CreateChildDependencies(parent))
         Return Dependencies
     End Function
+
+    Public Sub New()
+        Name = "battle2048"
+    End Sub
 
     <BackgroundDependencyLoader>
     Private Sub Load()
@@ -35,6 +40,14 @@ Public Class GameBase : Inherits osu.Framework.Game
                 Rules.Add(CType(Activator.CreateInstance(Instance), GameRule))
             End If
         Next
+        Rules.Sort(Function(x, y) x.ID.CompareTo(y.ID))
         Return Rules
     End Function
+
+    Public Overrides Sub SetHost(host As GameHost)
+        MyBase.SetHost(host)
+
+        Dim desktopWindow As DesktopGameWindow = host.Window
+        desktopWindow.Title = Name
+    End Sub
 End Class

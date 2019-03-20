@@ -49,6 +49,18 @@ Namespace Gameplay.Drawables
                 Tiles
             }
             AddHandler Manager.Grid.TileAdded, AddressOf OnTileCreated
+            AddHandler Manager.Grid.TileRemoved, AddressOf OnTileRemoved
+        End Sub
+
+        Public Function GetDrawableTileAt(pos As Vector2) As DrawableTile
+            Return Tiles.Children.FirstOrDefault(Function(d As DrawableTile) d.TileObject.Position.Value = pos)
+        End Function
+
+        Public Sub Collapse()
+            Manager.Grid.EachCell(Sub(pos, tile)
+                                      Dim drawableTile = GetDrawableTileAt(tile.Position.Value)
+                                      drawableTile?.Drop()
+                                  End Sub)
         End Sub
 
         Private Function CreateTileSlots() As FillFlowContainer
@@ -76,8 +88,13 @@ Namespace Gameplay.Drawables
             Dim drawableTile As New DrawableTile(tile)
             Tiles.Add(drawableTile)
             If tile.From Is Nothing Then
-                drawableTile.Grow()
+                drawableTile?.Grow()
             End If
+        End Sub
+
+        Private Sub OnTileRemoved(tile As Tile)
+            Dim drawableTile = GetDrawableTileAt(tile.Position.Value)
+            drawableTile?.Shrink()
         End Sub
 
         Public Function OnPressed(action As MoveDirection) As Boolean Implements IKeyBindingHandler(Of MoveDirection).OnPressed

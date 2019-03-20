@@ -2,7 +2,6 @@
 
 Namespace Gameplay.Managers
     Public Class GridInputContainer : Inherits KeyBindingContainer(Of MoveDirection)
-
         Public Overrides ReadOnly Property DefaultKeyBindings As IEnumerable(Of KeyBinding)
             Get
                 Return New List(Of KeyBinding) From {

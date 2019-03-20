@@ -10,7 +10,7 @@ Imports osuTK
 
 Namespace Gameplay.Drawables
     Public Class DrawableTile : Inherits Container
-        Private TileObject As Tile
+        Public TileObject As Tile
         Private Background As RoundedBox
         Private TextSprite As SpriteText
 
@@ -27,7 +27,6 @@ Namespace Gameplay.Drawables
             Position = Vector2.Multiply(TileObject.Position.Value, 128)
             Background = New RoundedBox With {
                 .RelativeSizeAxes = Axes.Both,
-                .Size = New Vector2(0.9),
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre
             }
@@ -39,7 +38,10 @@ Namespace Gameplay.Drawables
             Child = New Container With {
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre,
+                .CornerRadius = 5,
+                .Masking = True,
                 .RelativeSizeAxes = Axes.Both,
+                .Size = New Vector2(0.9),
                 .Children = New List(Of Drawable) From {
                     Background,
                     TextSprite
@@ -55,11 +57,38 @@ Namespace Gameplay.Drawables
             Child.ScaleTo(1, 100, Easing.OutSine)
         End Sub
 
+        Public Sub Shrink()
+            Child.ScaleTo(0, 300, Easing.OutQuad)
+            Delay(300).Expire()
+        End Sub
+
+        Public Sub Glow()
+            Dim glow As New EdgeEffectParameters With {
+                .Colour = Background.Colour,
+                .Hollow = True,
+                .Radius = 25,
+                .Type = EdgeEffectType.Glow
+            }
+            Dim c As Container = Child
+            c.EdgeEffect = glow
+            c.Delay(1000).FadeEdgeEffectTo(0, 500, Easing.Out)
+        End Sub
+
+        Public Sub Drop()
+            Dim random = New Random()
+            Dim speed = random.Next(1000, 2000)
+            Child.MoveToOffset(New Vector2(0, 100), speed, Easing.Out) _
+                .ScaleTo(0, speed * 4, Easing.Out) _
+                .FadeOut(speed, Easing.Out)
+            Delay(speed * 2).Expire()
+        End Sub
+
         Private Sub OnChangeScore(score As ValueChangedEvent(Of Integer))
             UpdateTile(score.NewValue)
             ClearTransforms()
             Child.Scale = New Vector2(0.6)
             Child.ScaleTo(1, 750, Easing.OutElastic)
+            If TileObject.Score.Value >= 2048 Then Glow()
         End Sub
 
         Private Sub OnChangePosition(position As ValueChangedEvent(Of Vector2))
