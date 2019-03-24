@@ -8,6 +8,7 @@ Imports osu.Framework.Input.Events
 Imports Block.Game.Bindables
 Imports Block.Game.Gameplay.Rules
 Imports Block.Game.Graphics
+Imports Block.Game.Graphics.Shapes
 Imports Block.Game.Graphics.UserInterface
 Imports osuTK
 Imports osuTK.Graphics
@@ -19,7 +20,6 @@ Namespace Screens.Menu
         Private RuleSelected As SelectorSelectButton
         Private RuleNameSprite As SpriteText
         Private RuleDescSprite As SpriteText
-        Private RuleIconSprite As Sprite
 
         <Resolved>
         Private Property Store As TextureStore
@@ -32,31 +32,27 @@ Namespace Screens.Menu
 
         <BackgroundDependencyLoader>
         Private Sub Load()
-            Size = New Vector2(600, 200)
+            Size = New Vector2(800, 200)
             RuleNameSprite = New SpriteText With {
                 .Anchor = Anchor.BottomCentre,
                 .Origin = Anchor.BottomCentre,
                 .Colour = Colours.DarkestBrown,
-                .Font = New FontUsage("ClearSans", 36, "Bold"),
-                .Y = 40
+                .Font = New FontUsage("ClearSans", 48, "Bold"),
+                .Y = 90
             }
             RuleDescSprite = New SpriteText With {
                 .Anchor = Anchor.BottomCentre,
                 .Origin = Anchor.BottomCentre,
                 .Colour = Colours.DarkestBrown,
                 .Alpha = 0.8,
-                .Font = New FontUsage("ClearSans", 20),
-                .Y = 54
-            }
-            RuleIconSprite = New Sprite With {
-                .Anchor = Anchor.Centre,
-                .Origin = Anchor.Centre,
-                .Size = New Vector2(120)
+                .Font = New FontUsage("ClearSans", 32),
+                .Y = 120
             }
             RuleSelected = New SelectorSelectButton With {
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre,
-                .ClickAction = AddressOf OnSelectRule
+                .ClickAction = AddressOf OnSelectRule,
+                .Size = New Vector2(200)
             }
             Children = New List(Of Drawable) From {
                 New TextureButton With {
@@ -65,7 +61,7 @@ Namespace Screens.Menu
                     .BaseColour = Colours.DarkerBrown,
                     .Anchor = Anchor.CentreLeft,
                     .Origin = Anchor.CentreLeft,
-                    .Size = New Vector2(140)
+                    .Size = New Vector2(180)
                 },
                 RuleSelected,
                 New TextureButton With {
@@ -74,10 +70,9 @@ Namespace Screens.Menu
                     .BaseColour = Colours.DarkerBrown,
                     .Anchor = Anchor.CentreRight,
                     .Origin = Anchor.CentreRight,
-                    .Size = New Vector2(140),
+                    .Size = New Vector2(180),
                     .Flipped = True
                 },
-                RuleIconSprite,
                 RuleNameSprite,
                 RuleDescSprite
             }
@@ -95,10 +90,6 @@ Namespace Screens.Menu
         End Function
 
         Private Sub OnChangeRule(ByVal rule As ValueChangedEvent(Of GameRule))
-            RuleIconSprite.ClearTransforms()
-            RuleIconSprite.Texture = Store.Get("Interface/mode-" & rule.NewValue.Name.ToLower().Replace(" ", String.Empty))
-            RuleIconSprite.Scale = New Vector2(0.8)
-            RuleIconSprite.ScaleTo(Vector2.One, 1000, Easing.OutElastic)
             RuleNameSprite.Text = rule.NewValue.Name.ToUpper()
             RuleDescSprite.Text = rule.NewValue.Description.ToLower()
         End Sub
@@ -113,14 +104,70 @@ Namespace Screens.Menu
             End If
         End Sub
 
-        Private Class SelectorSelectButton : Inherits MenuButton
+        Private Class SelectorSelectButton : Inherits ClickableContainer
             Public CurrentRule As Bindable(Of GameRule)
+            Public ClickAction As Action
+            Private Flash As Container
+            Private RuleIcon As Sprite
+
+            <Resolved>
+            Private Property Store As TextureStore
 
             <BackgroundDependencyLoader>
             Private Sub Load(ByVal colours As Colours)
                 CurrentRule = New Bindable(Of GameRule)
-                Size = New Vector2(140)
+                Flash = CreateCenterPiece(Color4.WhiteSmoke)
+                Flash.Alpha = 0
+                RuleIcon = New Sprite With {
+                    .Anchor = Anchor.Centre,
+                    .Origin = Anchor.Centre,
+                    .RelativeSizeAxes = Axes.Both,
+                    .Size = New Vector2(0.75)
+                }
+                Children = New List(Of Drawable) From {
+                    New ClickSound,
+                    CreateCenterPiece(colours.DarkerBrown),
+                    RuleIcon,
+                    Flash
+                }
+                AddHandler CurrentRule.ValueChanged, AddressOf OnRuleChange
             End Sub
+
+            Private Sub OnRuleChange(rule As ValueChangedEvent(Of GameRule))
+                RuleIcon.ClearTransforms()
+                RuleIcon.Texture = Store.Get("Interface/mode-" & rule.NewValue.Name.ToLower().Replace(" ", String.Empty))
+                RuleIcon.Scale = New Vector2(0.8)
+                RuleIcon.ScaleTo(Vector2.One, 1000, Easing.OutElastic)
+            End Sub
+
+            Protected Overrides Function OnClick(e As ClickEvent) As Boolean
+                Flash.ClearTransforms()
+                Flash.Alpha = 0.9
+                Flash.FadeOut(300, Easing.Out)
+                ClickAction?.Invoke()
+                Return MyBase.OnClick(e)
+            End Function
+
+            Private Function CreateCenterPiece(colour As Color4) As Container
+                Return New Container With {
+                    .RelativeSizeAxes = Axes.Both,
+                    .Children = New List(Of Drawable) From {
+                        New RoundedBox With {
+                            .RelativeSizeAxes = Axes.Both,
+                            .CornerRadius = 20,
+                            .Colour = colour
+                        },
+                        New RoundedBox With {
+                            .RelativeSizeAxes = Axes.Both,
+                            .CornerRadius = 20,
+                            .Anchor = Anchor.Centre,
+                            .Origin = Anchor.Centre,
+                            .Colour = colour,
+                            .Rotation = 45
+                        }
+                    }
+                }
+            End Function
         End Class
     End Class
 End Namespace

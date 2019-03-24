@@ -21,7 +21,7 @@ Namespace Screens.Menu
                 .Anchor = Anchor.Centre,
                 .Origin = Anchor.Centre,
                 .SelectRule = AddressOf OnPlay,
-                .Y = 50
+                .Y = 100
             }
             InternalChildren = New List(Of Drawable) From {
                 RuleSelect,
@@ -32,28 +32,6 @@ Namespace Screens.Menu
                     .Colour = colours.FromHex("#776e65"),
                     .Scale = New Vector2(1.5),
                     .Y = -200
-                },
-                New MenuButton() With {
-                    .Scale = New Vector2(0.5),
-                    .Anchor = Anchor.Centre,
-                    .Origin = Anchor.Centre,
-                    .Texture = "exit",
-                    .ClickAction = Sub() Game.Exit(),
-                    .Y = 320
-                },
-                New MenuButton With {
-                    .Anchor = Anchor.Centre,
-                    .Origin = Anchor.Centre,
-                    .Texture = "multi",
-                    .Position = New Vector2(-300, 180),
-                    .ClickAction = Sub() PromptDialog("Feature is not ready yet!")
-                },
-                New MenuButton With {
-                    .Anchor = Anchor.Centre,
-                    .Origin = Anchor.Centre,
-                    .Texture = "leaderboard",
-                    .Position = New Vector2(300, 180),
-                    .ClickAction = Sub() PromptDialog("Feature is not ready yet!")
                 },
                 New MenuButton With {
                     .Anchor = Anchor.TopRight,
