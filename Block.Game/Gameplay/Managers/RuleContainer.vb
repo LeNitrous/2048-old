@@ -81,18 +81,16 @@ Namespace Gameplay.Managers
         Private Sub GridOnEnd(e As EndType)
             Watch?.Stop()
 
-            If e = EndType.Lose Then DrawableGrid.Collapse()
-
             Dim r = TryCast(Rule, IHasLeaderboard)
             Dim attempt = New UserAttempt With {
-                .userId = -1,
-                .ruleId = Rule.ID,
-                .score = Score.Value,
-                .moves = Moves.Value,
-                .elapsed = Watch.ElapsedMilliseconds
+                .UserId = -1,
+                .RuleId = Rule.ID,
+                .Score = If(Score IsNot Nothing, Score.Value, -1),
+                .Moves = If(Moves IsNot Nothing, Moves.Value, -1),
+                .Elapsed = If(Watch IsNot Nothing, Watch.ElapsedMilliseconds, -1)
             }
             If r?.GetNewLeadCondition(Database.Attempts, attempt) Then
-                Database.Users.Insert(attempt)
+                Database.Attempts.Insert(attempt)
             End If
 
             RaiseEvent OnEnd(e)

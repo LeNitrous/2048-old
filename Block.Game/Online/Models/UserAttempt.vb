@@ -1,17 +1,10 @@
-﻿Imports ProtoBuf
-
-Namespace Online.Models
-    <ProtoContract>
+﻿Namespace Online.Models
     Public Class UserAttempt
-        <ProtoMember(1)>
-        Public userId As Integer
-        <ProtoMember(2)>
-        Public ruleId As Integer
-        <ProtoMember(3)>
-        Public score As Integer
-        <ProtoMember(4)>
-        Public moves As Integer
-        <ProtoMember(5)>
-        Public elapsed As Integer
+        Public Property Id As Integer
+        Public Property UserId As Integer
+        Public Property RuleId As Integer
+        Public Property Score As Integer
+        Public Property Moves As Integer
+        Public Property Elapsed As Integer
     End Class
 End Namespace

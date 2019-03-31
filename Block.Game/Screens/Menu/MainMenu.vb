@@ -43,9 +43,9 @@ Namespace Screens.Menu
                 },
                 New MenuButton With {
                     .Scale = New Vector2(0.5),
-                    .Texture = "solo",
+                    .Texture = "leaderboard",
                     .Position = New Vector2(50, 10),
-                    .ClickAction = Sub() PromptDialog("Feature is not ready yet!")
+                    .ClickAction = AddressOf OnLeads
                 },
                 DialogBox
             }
@@ -58,6 +58,10 @@ Namespace Screens.Menu
 
         Private Sub OnPlay(rule As GameRule)
             LoadComponentAsync(New Player(rule), Sub(s) Push(s))
+        End Sub
+
+        Private Sub OnLeads()
+            LoadComponentAsync(New Leaderboard.Leaderboard, Sub(s) Push(s))
         End Sub
     End Class
 End Namespace

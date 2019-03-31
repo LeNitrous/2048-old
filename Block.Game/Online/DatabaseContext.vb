@@ -8,7 +8,7 @@ Namespace Online
         Public Attempts As LiteCollection(Of UserAttempt)
 
         Public Sub New()
-            Database = New LiteDatabase("")
+            Database = New LiteDatabase("scores.db")
             Users = Database.GetCollection(Of User)("Users")
             Attempts = Database.GetCollection(Of UserAttempt)("Attempts")
         End Sub
