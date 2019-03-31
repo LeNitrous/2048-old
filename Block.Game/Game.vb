@@ -2,6 +2,7 @@ Imports osu.Framework.Allocation
 Imports osu.Framework.Graphics
 Imports osu.Framework.Graphics.Containers
 Imports osu.Framework.Screens
+Imports Block.Game.Online
 Imports Block.Game.Screens.Menu
 
 Public Class Game : Inherits GameBase
@@ -14,6 +15,7 @@ Public Class Game : Inherits GameBase
         BackgroundStack = New ScreenStack With {.RelativeSizeAxes = Axes.Both}
 
         Dependencies.CacheAs(Me)
+        Dependencies.Cache(New DatabaseContext)
         Dependencies.Cache(BackgroundStack)
 
         Child = New DrawSizePreservingFillContainer With {
@@ -23,6 +25,7 @@ Public Class Game : Inherits GameBase
                 Stack
             }
         }
+
         LoadComponentAsync(New Splash, Sub(s) Stack.Push(s))
     End Sub
 End Class

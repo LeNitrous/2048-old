@@ -24,7 +24,6 @@ Namespace Screens.Play
             }
             AddButton("exit", OnExit)
             AddButton("resume", OnResume)
-            AddButton("restart", OnRestart)
         End Sub
     End Class
 End Namespace

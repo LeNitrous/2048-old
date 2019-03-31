@@ -5,6 +5,8 @@ Imports osu.Framework.Graphics.Containers
 Imports Block.Game.Gameplay.Drawables
 Imports Block.Game.Gameplay.Rules
 Imports Block.Game.Gameplay.Objects
+Imports Block.Game.Online
+Imports Block.Game.Online.Models
 
 Namespace Gameplay.Managers
     Public Class RuleContainer : Inherits CompositeDrawable
@@ -33,6 +35,9 @@ Namespace Gameplay.Managers
                 GridManager.ShouldMoveTiles = Not value
             End Set
         End Property
+
+        <Resolved>
+        Private Property Database As DatabaseContext
 
         Public Sub New(gamerule As GameRule, manager As GridManager)
             GridManager = manager
@@ -79,8 +84,15 @@ Namespace Gameplay.Managers
             If e = EndType.Lose Then DrawableGrid.Collapse()
 
             Dim r = TryCast(Rule, IHasLeaderboard)
-            If r?.GetNewLeadCondition(New RuleManagerInfo(Me)) Then
-                ' Streamlined database inserting logic here
+            Dim attempt = New UserAttempt With {
+                .userId = -1,
+                .ruleId = Rule.ID,
+                .score = Score.Value,
+                .moves = Moves.Value,
+                .elapsed = Watch.ElapsedMilliseconds
+            }
+            If r?.GetNewLeadCondition(Database.Attempts, attempt) Then
+                Database.Users.Insert(attempt)
             End If
 
             RaiseEvent OnEnd(e)
